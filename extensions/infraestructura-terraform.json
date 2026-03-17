@@ -1,0 +1,6 @@
+{
+  "description": "Extensiones para perfil infraestructura-terraform",
+  "recommendations": [
+    "hashicorp.terraform"
+  ]
+}

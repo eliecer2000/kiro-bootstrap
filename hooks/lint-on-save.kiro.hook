@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Lint on Save",
+  "description": "Ejecuta el linter automáticamente al guardar archivos TypeScript o Vue.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "filePatterns": ["**/*.ts", "**/*.vue"]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "npm run lint -- --fix"
+  }
+}

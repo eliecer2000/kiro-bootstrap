@@ -1,0 +1,127 @@
+{
+  "version": "1.0.0",
+  "agents": {
+    "vue-dev": {
+      "name": "vue-dev",
+      "description": "Agente especializado en desarrollo Vue 3 con PrimeVue, Tailwind CSS y Composition API.",
+      "model": "sonnet-4",
+      "file": "agents/vue-dev.json",
+      "steeringFiles": [
+        "steering/project-context.md",
+        "steering/vue-components.md",
+        "steering/i18n.md"
+      ],
+      "skills": ["skills/vue-components"],
+      "profiles": ["frontend-nuxt"]
+    },
+    "server-api": {
+      "name": "server-api",
+      "description": "Agente especializado en rutas API de Nitro server.",
+      "model": "sonnet-4",
+      "file": "agents/server-api.json",
+      "steeringFiles": [
+        "steering/project-context.md",
+        "steering/server-api.md"
+      ],
+      "skills": ["skills/server-api"],
+      "profiles": ["frontend-nuxt"]
+    },
+    "composables-stores": {
+      "name": "composables-stores",
+      "description": "Agente especializado en composables Vue y stores Pinia.",
+      "model": "sonnet-4",
+      "file": "agents/composables-stores.json",
+      "steeringFiles": [
+        "steering/project-context.md",
+        "steering/composables.md",
+        "steering/stores.md"
+      ],
+      "skills": [],
+      "profiles": ["frontend-nuxt"]
+    },
+    "test-agent": {
+      "name": "test-agent",
+      "description": "Agente especializado en testing con Vitest y fast-check.",
+      "model": "sonnet-4",
+      "file": "agents/test-agent.json",
+      "steeringFiles": [
+        "steering/project-context.md",
+        "steering/testing.md"
+      ],
+      "skills": ["skills/testing"],
+      "profiles": ["frontend-nuxt", "backend-lambda", "backend-python"]
+    },
+    "orchestrator": {
+      "name": "orchestrator",
+      "description": "Agente orquestador principal que coordina agentes especializados.",
+      "model": "sonnet-4",
+      "file": "agents/orchestrator.json",
+      "steeringFiles": ["steering/project-context.md"],
+      "skills": [],
+      "profiles": ["frontend-nuxt", "backend-lambda"]
+    },
+    "terraform-agent": {
+      "name": "terraform-agent",
+      "description": "Agente especializado en infraestructura Terraform.",
+      "model": "sonnet-4",
+      "file": "agents/terraform-agent.json",
+      "steeringFiles": [
+        "steering/terraform-standards.md",
+        "steering/aws-standards.md",
+        "steering/security-policies.md"
+      ],
+      "skills": [],
+      "profiles": ["infraestructura-terraform"]
+    },
+    "lambda-agent": {
+      "name": "lambda-agent",
+      "description": "Agente especializado en desarrollo de funciones AWS Lambda con TypeScript.",
+      "model": "sonnet-4",
+      "file": "agents/lambda-agent.json",
+      "steeringFiles": [
+        "steering/project-context.md",
+        "steering/aws-standards.md"
+      ],
+      "skills": [],
+      "profiles": ["backend-lambda"]
+    },
+    "python-agent": {
+      "name": "python-agent",
+      "description": "Agente especializado en desarrollo backend con Python.",
+      "model": "sonnet-4",
+      "file": "agents/python-agent.json",
+      "steeringFiles": [
+        "steering/project-context.md"
+      ],
+      "skills": [],
+      "profiles": ["backend-python"]
+    },
+    "jarvis-bootstrap": {
+      "name": "jarvis-bootstrap",
+      "description": "Agente de bootstrap que configura automáticamente el entorno Kiro.",
+      "model": "haiku-4.5",
+      "file": "agents/jarvis-bootstrap.json",
+      "steeringFiles": ["steering/bootstrap-init.md"],
+      "skills": [],
+      "profiles": ["*"]
+    }
+  },
+  "globalSteeringFiles": [
+    {
+      "file": "steering/jarvis-core.md",
+      "inclusion": "always"
+    },
+    {
+      "file": "steering/git-workflow.md",
+      "inclusion": "always"
+    },
+    {
+      "file": "steering/security-policies.md",
+      "inclusion": "always"
+    },
+    {
+      "file": "steering/cicd-azuredevops.md",
+      "inclusion": "always"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Bootstrap Init",
+  "description": "Activa el agente Jarvis al inicio de sesión para ejecutar el pipeline de configuración automática del proyecto.",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Lee el steering file `~/.kiro/steering/bootstrap-init.md` y ejecuta el pipeline de bootstrap. Lee el manifiesto desde `~/.kiro/kiro-bootstrap/manifest.json` y el registro de agentes desde `~/.kiro/kiro-bootstrap/agents-registry.json`. Detecta el perfil del proyecto, valida el entorno y carga los artefactos Kiro correspondientes. Si no puedes determinar el perfil automáticamente, presenta las opciones al usuario con `userInput`. Al finalizar, muestra el resumen en español."
+  }
+}

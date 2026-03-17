@@ -1,0 +1,19 @@
+{
+  "name": "Backend Python",
+  "description": "Proyecto backend con Python",
+  "detection": {
+    "requiredFiles": ["pyproject.toml"],
+    "alternativeFiles": ["requirements.txt"]
+  },
+  "agents": ["python-agent", "test-agent"],
+  "validations": [
+    {
+      "tool": "python3",
+      "command": "python3 --version",
+      "minVersion": "3.10.0",
+      "required": true,
+      "installHint": "brew install python3 (macOS) | sudo apt install python3 (Linux)"
+    }
+  ],
+  "awsCheck": false
+}
