@@ -30,7 +30,7 @@ readonly BOLD='\033[1m'
 readonly NC='\033[0m' # Sin color
 
 # --- Variables por defecto ---
-KIRO_BOOTSTRAP_REPO="${KIRO_BOOTSTRAP_REPO:-https://bitbucket.org/eliezer-rangel/kiro-steering.git}"
+KIRO_BOOTSTRAP_REPO="${KIRO_BOOTSTRAP_REPO:-https://github.com/eliecer2000/kiro-bootstrap.git}"
 KIRO_BOOTSTRAP_BRANCH="${KIRO_BOOTSTRAP_BRANCH:-main}"
 INSTALL_DIR="$HOME/.kiro/kiro-bootstrap"
 

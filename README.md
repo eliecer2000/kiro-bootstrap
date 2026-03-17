@@ -7,7 +7,7 @@ Repositorio central de configuración de Kiro IDE para todos los proyectos de Es
 Ejecutar en la terminal:
 
 ```bash
-curl -sL https://bitbucket.org/escala24x7/kiro-bootstrap/raw/main/install.sh | bash
+curl -sL https://raw.githubusercontent.com/eliecer2000/kiro-bootstrap/main/install.sh | bash
 ```
 
 Esto descarga el repositorio y configura los artefactos base en `~/.kiro/`.
@@ -185,7 +185,7 @@ done
 
 | Variable                | Descripción                 | Valor por defecto                                        |
 | ----------------------- | --------------------------- | -------------------------------------------------------- |
-| `KIRO_BOOTSTRAP_REPO`   | URL del repositorio central | `https://bitbucket.org/eliezer-rangel/kiro-steering.git` |
+| `KIRO_BOOTSTRAP_REPO`   | URL del repositorio central | `https://github.com/eliecer2000/kiro-bootstrap.git` |
 | `KIRO_BOOTSTRAP_BRANCH` | Rama a utilizar             | `main`                                                   |
 
 ## Licencia
