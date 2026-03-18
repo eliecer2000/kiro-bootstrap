@@ -160,6 +160,11 @@ orbit_resolve_profile() {
   local project_dir="$1"
   local detected profiles_count workload runtime provisioner framework
 
+  if [[ -n "${ORBIT_PROJECT_PROFILE_ID:-}" ]]; then
+    printf '%s\n' "${ORBIT_PROJECT_PROFILE_ID}"
+    return 0
+  fi
+
   if [[ -n "${ORBIT_PROFILE_ID:-}" ]]; then
     printf '%s\n' "${ORBIT_PROFILE_ID}"
     return 0

@@ -169,6 +169,9 @@ execute_pipeline() {
     else
       echo -e "    ${_PL_RED}x Fallo.${_PL_NC}"
       _PIPELINE_RESULTS+=("failed|${order}|${step_id}|${step_name}")
+      echo -e "    ${_PL_RED}x Pipeline detenido por error en ${step_id}.${_PL_NC}"
+      echo ""
+      break
     fi
     echo ""
   done <<< "$steps_output"

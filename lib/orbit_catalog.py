@@ -180,6 +180,8 @@ def emit_pipeline_steps(bootstrap_dir: pathlib.Path) -> None:
 
 def emit_profile_field(bootstrap_dir: pathlib.Path, profile_id: str, field: str | None) -> None:
     profiles = load_profiles(bootstrap_dir)
+    if profile_id not in profiles:
+        raise SystemExit(f"Perfil de proyecto no encontrado: {profile_id}")
     profile = profiles[profile_id]
     if not field:
         print(json.dumps(profile, indent=2))
@@ -271,6 +273,12 @@ def validate_catalog(bootstrap_dir: pathlib.Path) -> int:
 
 
 def main() -> int:
+    if len(sys.argv) >= 2 and sys.argv[1] == "--list-profiles":
+        bootstrap_dir = bootstrap_dir_from(None)
+        for profile_id in load_profiles(bootstrap_dir):
+            print(profile_id)
+        return 0
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--bootstrap-dir", default=None)
     subparsers = parser.add_subparsers(dest="command", required=True)

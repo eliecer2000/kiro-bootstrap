@@ -8,6 +8,7 @@ source "${BOOTSTRAP_DIR}/lib/detect-profile.sh"
 source "${BOOTSTRAP_DIR}/lib/load-artifacts.sh"
 source "${BOOTSTRAP_DIR}/lib/pipeline.sh"
 source "${BOOTSTRAP_DIR}/lib/install-remote-skills.sh"
+source "${BOOTSTRAP_DIR}/validations/common.sh"
 
 PASS=0
 FAIL=0
@@ -49,6 +50,20 @@ if [[ -f "${PROJECT_DIR}/.kiro/hooks/terraform-fmt-on-save.kiro.hook" ]] && [[ !
   pass "hooks segmentados por perfil"
 else
   fail "hooks mal segmentados"
+fi
+
+AWS_DEFER_RESULT="$(ORBIT_VALIDATE_AWS_IDENTITY=no ORBIT_DEPLOY_INTENT=no check_aws_identity 2>/dev/null || true)"
+if echo "${AWS_DEFER_RESULT}" | grep -q "diferida hasta despliegue"; then
+  pass "difiere validacion de credenciales AWS durante bootstrap"
+else
+  fail "no difiere validacion de credenciales AWS durante bootstrap"
+fi
+
+INVALID_PROFILE_RESULT="$(validate_profile_environment "${PROJECT_DIR}" "${BOOTSTRAP_DIR}" "default" 2>&1 || true)"
+if echo "${INVALID_PROFILE_RESULT}" | grep -q "Perfil de proyecto inexistente: default"; then
+  pass "falla con mensaje claro ante perfil invalido"
+else
+  fail "no falla claramente ante perfil invalido"
 fi
 
 FAKE_BIN="${TMPDIR_TEST}/fake-bin"

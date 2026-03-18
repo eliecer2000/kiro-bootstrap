@@ -12,10 +12,12 @@
 Cuando Orbit opera desde el chat de Kiro, primero debe ejecutar el pipeline real del framework:
 
 ```bash
-ORBIT_BOOTSTRAP_DECISION=yes ORBIT_HOME_DECISION=no ORBIT_PROFILE_ID=<profile-id> ORBIT_REMOTE_SKILL_DECISION=no ~/.kiro/orbit/install.sh --resync-project "<ruta>"
+ORBIT_BOOTSTRAP_DECISION=yes ORBIT_HOME_DECISION=no ORBIT_PROJECT_PROFILE_ID=<project-profile-id> ORBIT_REMOTE_SKILL_DECISION=no ~/.kiro/orbit/install.sh --resync-project "<ruta>"
 ```
 
 Solo despues de verificar `.kiro/.orbit-project.json`, `.kiro/agents`, `.kiro/steering`, `.kiro/skills` y `.kiro/hooks` puede iniciar scaffolding del stack.
+
+Ese `project-profile-id` se resuelve internamente desde el tipo de proyecto. Orbit no debe pedir al usuario el ID crudo del catalogo, ni tampoco perfiles o credenciales AWS durante el bootstrap normal. La validacion de identidad AWS queda diferida hasta despliegue o verificacion explicita.
 
 Para resincronizar manualmente:
 

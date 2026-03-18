@@ -48,6 +48,18 @@ else
   fail "Orbit no exige resync antes del scaffolding"
 fi
 
+if rg -n --fixed-strings "ORBIT_PROJECT_PROFILE_ID" "${BOOTSTRAP_DIR}/install.sh" "${BOOTSTRAP_DIR}/hooks/orbit-session.kiro.hook" "${BOOTSTRAP_DIR}/steering/orbit-session.md" "${BOOTSTRAP_DIR}/README.md" "${BOOTSTRAP_DIR}/docs/bootstrap-flow.md" >/dev/null; then
+  pass "Orbit usa project profile id en la interfaz publica"
+else
+  fail "Orbit no usa project profile id en la interfaz publica"
+fi
+
+if rg -n "credenciales AWS diferida|credenciales ni validar identidad AWS|perfil de AWS CLI" "${BOOTSTRAP_DIR}/README.md" "${BOOTSTRAP_DIR}/hooks/orbit-session.kiro.hook" "${BOOTSTRAP_DIR}/steering/orbit-session.md" "${BOOTSTRAP_DIR}/docs/bootstrap-flow.md" >/dev/null; then
+  pass "Orbit difiere credenciales AWS hasta despliegue"
+else
+  fail "Orbit no documenta el diferimiento de credenciales AWS"
+fi
+
 echo ""
 echo "Resultados: ${PASS} ok, ${FAIL} fallos"
 [[ "${FAIL}" -eq 0 ]]

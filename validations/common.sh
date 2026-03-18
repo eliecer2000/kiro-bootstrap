@@ -98,6 +98,11 @@ check_aws_identity() {
     return 0
   fi
 
+  if [[ "${ORBIT_VALIDATE_AWS_IDENTITY:-no}" != "yes" && "${ORBIT_DEPLOY_INTENT:-no}" != "yes" ]]; then
+    echo "PASS aws-sso diferido Validacion de credenciales AWS diferida hasta despliegue o verificacion explicita"
+    return 0
+  fi
+
   if aws sts get-caller-identity >/dev/null 2>&1; then
     local account_id
     account_id="$(aws sts get-caller-identity --query 'Account' --output text 2>/dev/null || echo desconocida)"
@@ -211,7 +216,11 @@ validate_profile_environment() {
   local profile_json validation_lines tool command min_version required install_hint result
   local results=()
 
-  profile_json="$(_vc_catalog profile-field --profile-id "$profile_id")"
+  profile_json="$(_vc_catalog profile-field --profile-id "$profile_id" 2>/dev/null || true)"
+  if [[ -z "$profile_json" ]]; then
+    print_validation_report "FAIL profile no-encontrado Perfil de proyecto inexistente: ${profile_id}"
+    return 1
+  fi
 
   while IFS='|' read -r tool command min_version required install_hint; do
     [[ -z "$tool" ]] && continue
@@ -266,5 +275,9 @@ PY
     done < <(check_env_files "$project_dir" "$env_files" "$env_vars" || true)
   fi
 
-  print_validation_report "${results[@]}"
+  if [[ ${#results[@]} -eq 0 ]]; then
+    print_validation_report
+  else
+    print_validation_report "${results[@]}"
+  fi
 }

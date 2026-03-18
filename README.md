@@ -2,6 +2,8 @@
 
 Framework personal de bootstrap para Kiro con enfoque AWS-first. Orbit detecta o resuelve el tipo de proyecto, valida el entorno, carga agentes/steering/skills por perfil, recomienda extensiones y puede resincronizar `.kiro` cuando el proyecto cambia.
 
+Orbit usa `sonnet-4.6` para la configuracion del entorno y onboarding del proyecto.
+
 ## Instalacion
 
 ```bash
@@ -31,12 +33,14 @@ Comandos principales:
 Cuando el usuario pide configurar el entorno, Orbit debe ejecutar primero el pipeline real del framework y solo despues continuar con el scaffolding del stack. El patron esperado es:
 
 ```bash
-ORBIT_BOOTSTRAP_DECISION=yes ORBIT_HOME_DECISION=no ORBIT_PROFILE_ID=<profile-id> ORBIT_REMOTE_SKILL_DECISION=no ~/.kiro/orbit/install.sh --resync-project "<ruta>"
+ORBIT_BOOTSTRAP_DECISION=yes ORBIT_HOME_DECISION=no ORBIT_PROJECT_PROFILE_ID=<project-profile-id> ORBIT_REMOTE_SKILL_DECISION=no ~/.kiro/orbit/install.sh --resync-project "<ruta>"
 ```
 
 Si el usuario aprueba skills remotas, `ORBIT_REMOTE_SKILL_DECISION` debe ir en `yes`.
 
 No se debe iniciar `cdk init`, `terraform init` ni scaffolding de aplicacion hasta que existan `.kiro/.orbit-project.json`, `.kiro/agents`, `.kiro/steering`, `.kiro/skills` y `.kiro/hooks`.
+
+Durante el bootstrap normal no se deben pedir perfiles de AWS CLI, credenciales ni validar identidad AWS. Eso se difiere hasta que el usuario diga explicitamente que quiere desplegar o verificar su conexion AWS.
 
 ## Perfiles Soportados
 

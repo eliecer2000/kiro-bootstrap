@@ -57,15 +57,15 @@ else
 fi
 
 unset ORBIT_TEST_WORKLOAD ORBIT_TEST_PROVISIONER
-export ORBIT_PROFILE_ID=aws-infra-cdk-typescript
+export ORBIT_PROJECT_PROFILE_ID=aws-infra-cdk-typescript
 resolved="$(orbit_resolve_profile "${TMPDIR_TEST}")"
 if [[ "${resolved}" == "aws-infra-cdk-typescript" ]]; then
-  pass "permite fijar perfil con ORBIT_PROFILE_ID"
+  pass "permite fijar perfil con ORBIT_PROJECT_PROFILE_ID"
 else
-  fail "no respeta ORBIT_PROFILE_ID"
+  fail "no respeta ORBIT_PROJECT_PROFILE_ID"
 fi
 
-unset ORBIT_PROFILE_ID
+unset ORBIT_PROJECT_PROFILE_ID
 export ORBIT_BOOTSTRAP_DECISION=no
 export ORBIT_SESSION_ABORTED=0
 export ORBIT_SESSION_BOOTSTRAP_DECLINED=0

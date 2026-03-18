@@ -1,7 +1,7 @@
 {
   "version": "2.0.0",
   "bootstrapAgent": "orbit",
-  "bootstrapModel": "haiku-4.5",
+  "bootstrapModel": "sonnet-4.6",
   "remoteSkillsAllowlist": [
     {
       "id": "github-documentation-writer",
@@ -65,7 +65,7 @@
       "steeringPacks": ["core", "git", "security", "aws-shared", "testing", "observability"],
       "localSkills": ["orbit-bootstrap"],
       "remoteSkills": ["github-documentation-writer", "github-refactor-plan"],
-      "modelDefault": "haiku-4.5",
+      "modelDefault": "sonnet-4.6",
       "acceptanceChecklist": [
         "No insistir tras rechazo de bootstrap en la misma sesion.",
         "No insistir tras rechazo del prompt HOME en la misma sesion.",
