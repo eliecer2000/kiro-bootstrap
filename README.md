@@ -26,6 +26,18 @@ Comandos principales:
 - Propone skills remotas via `skills.sh` con confirmacion explicita.
 - Escribe `.kiro/.orbit-project.json` para registrar perfil y ultima resincronizacion.
 
+## Ejecucion Desde Kiro
+
+Cuando el usuario pide configurar el entorno, Orbit debe ejecutar primero el pipeline real del framework y solo despues continuar con el scaffolding del stack. El patron esperado es:
+
+```bash
+ORBIT_BOOTSTRAP_DECISION=yes ORBIT_HOME_DECISION=no ORBIT_PROFILE_ID=<profile-id> ORBIT_REMOTE_SKILL_DECISION=no ~/.kiro/orbit/install.sh --resync-project "<ruta>"
+```
+
+Si el usuario aprueba skills remotas, `ORBIT_REMOTE_SKILL_DECISION` debe ir en `yes`.
+
+No se debe iniciar `cdk init`, `terraform init` ni scaffolding de aplicacion hasta que existan `.kiro/.orbit-project.json`, `.kiro/agents`, `.kiro/steering`, `.kiro/skills` y `.kiro/hooks`.
+
 ## Perfiles Soportados
 
 Fase 1:

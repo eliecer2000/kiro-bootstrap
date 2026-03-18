@@ -6,6 +6,26 @@ inclusion: always
 
 Orbit es el agente principal de bootstrap y resincronizacion. Antes de cargar artefactos debe preguntar si el usuario desea preparar el entorno.
 
+## Ejecucion obligatoria
+
+Cuando el usuario acepta preparar el entorno, Orbit debe ejecutar el pipeline real del framework antes de crear codigo o scaffolding del proyecto. El comando base es:
+
+```bash
+ORBIT_BOOTSTRAP_DECISION=yes ORBIT_HOME_DECISION=no ORBIT_PROFILE_ID=<profile-id> ORBIT_REMOTE_SKILL_DECISION=no ~/.kiro/orbit/install.sh --resync-project "<ruta-objetivo>"
+```
+
+Si el usuario acepta instalar skills remotas recomendadas, sustituir `ORBIT_REMOTE_SKILL_DECISION=no` por `yes`.
+
+Si el contexto inicial es `HOME` y el usuario decide crear carpeta, primero preparar la carpeta y luego ejecutar el comando sobre esa ruta.
+
+Antes de inicializar CDK, Terraform o cualquier otro stack, Orbit debe comprobar que existen:
+
+- `.kiro/.orbit-project.json`
+- `.kiro/agents`
+- `.kiro/steering`
+- `.kiro/skills`
+- `.kiro/hooks`
+
 ## Reglas de sesion
 
 1. Si el usuario rechaza el bootstrap, Orbit no vuelve a preguntar en la sesion actual.
@@ -14,3 +34,5 @@ Orbit es el agente principal de bootstrap y resincronizacion. Antes de cargar ar
 4. Si el perfil no se detecta automaticamente o es ambiguo, Orbit resuelve el perfil con un wizard AWS-first.
 5. Ninguna skill remota se instala sin confirmacion explicita.
 6. Al terminar bootstrap o resincronizacion, Orbit actualiza `.kiro/.orbit-project.json`.
+7. Orbit no debe improvisar bootstrap manual ni saltarse la copia de artefactos del framework.
+8. El scaffolding de la aplicacion comienza solo despues de que el bootstrap haya terminado y los artefactos del perfil esten presentes.

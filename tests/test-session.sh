@@ -56,6 +56,27 @@ else
   fail "wizard no resuelve perfil esperado"
 fi
 
+unset ORBIT_TEST_WORKLOAD ORBIT_TEST_PROVISIONER
+export ORBIT_PROFILE_ID=aws-infra-cdk-typescript
+resolved="$(orbit_resolve_profile "${TMPDIR_TEST}")"
+if [[ "${resolved}" == "aws-infra-cdk-typescript" ]]; then
+  pass "permite fijar perfil con ORBIT_PROFILE_ID"
+else
+  fail "no respeta ORBIT_PROFILE_ID"
+fi
+
+unset ORBIT_PROFILE_ID
+export ORBIT_BOOTSTRAP_DECISION=no
+export ORBIT_SESSION_ABORTED=0
+export ORBIT_SESSION_BOOTSTRAP_DECLINED=0
+orbit_session_gate "${TMPDIR_TEST}" >/dev/null 2>&1 || true
+if [[ "${ORBIT_SESSION_ABORTED}" == "1" ]]; then
+  pass "acepta decisiones de bootstrap por variables reales"
+else
+  fail "no acepta decisiones de bootstrap por variables reales"
+fi
+unset ORBIT_BOOTSTRAP_DECISION
+
 echo ""
 echo "Resultados: ${PASS} ok, ${FAIL} fallos"
 [[ "${FAIL}" -eq 0 ]]

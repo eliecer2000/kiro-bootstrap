@@ -22,7 +22,7 @@ log_warn() { echo -e "${YELLOW}[WARN]${NC} $1"; }
 log_error() { echo -e "${RED}[ERROR]${NC} $1"; }
 
 print_help() {
-  cat <<EOF
+  cat <<'EOF'
 Orbit Bootstrap
 
 Uso:
@@ -40,6 +40,15 @@ Variables de entorno:
   KIRO_BOOTSTRAP_REPO      Repositorio Git a clonar.
   KIRO_BOOTSTRAP_BRANCH    Rama a instalar o actualizar.
   ORBIT_INSTALL_DIR        Directorio local de instalacion (default: ~/.kiro/orbit).
+  ORBIT_PROFILE_ID         Fuerza el perfil resuelto durante bootstrap o resincronizacion.
+  ORBIT_BOOTSTRAP_DECISION Responde bootstrap sin prompt (`yes` o `no`).
+  ORBIT_HOME_DECISION      Responde el prompt HOME sin interaccion (`yes` o `no`).
+  ORBIT_PROJECT_NAME       Nombre de carpeta a crear cuando se arranca desde HOME.
+  ORBIT_WORKLOAD           Respuesta del wizard para workload.
+  ORBIT_RUNTIME            Respuesta del wizard para runtime.
+  ORBIT_PROVISIONER        Respuesta del wizard para provisioner.
+  ORBIT_FRAMEWORK          Respuesta del wizard para framework.
+  ORBIT_REMOTE_SKILL_DECISION  Decision por defecto para remote skills (`yes` o `no`).
 EOF
 }
 

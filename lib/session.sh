@@ -17,6 +17,45 @@ _orbit_prompt_choice() {
   local default_value="${3:-}"
   local answer=""
 
+  case "$answer_var" in
+    bootstrap)
+      if [[ -n "${ORBIT_BOOTSTRAP_DECISION:-}" ]]; then
+        printf -v "$answer_var" '%s' "${ORBIT_BOOTSTRAP_DECISION}"
+        return 0
+      fi
+      ;;
+    home)
+      if [[ -n "${ORBIT_HOME_DECISION:-}" ]]; then
+        printf -v "$answer_var" '%s' "${ORBIT_HOME_DECISION}"
+        return 0
+      fi
+      ;;
+    workload)
+      if [[ -n "${ORBIT_WORKLOAD:-}" ]]; then
+        printf -v "$answer_var" '%s' "${ORBIT_WORKLOAD}"
+        return 0
+      fi
+      ;;
+    runtime)
+      if [[ -n "${ORBIT_RUNTIME:-}" ]]; then
+        printf -v "$answer_var" '%s' "${ORBIT_RUNTIME}"
+        return 0
+      fi
+      ;;
+    provisioner)
+      if [[ -n "${ORBIT_PROVISIONER:-}" ]]; then
+        printf -v "$answer_var" '%s' "${ORBIT_PROVISIONER}"
+        return 0
+      fi
+      ;;
+    framework)
+      if [[ -n "${ORBIT_FRAMEWORK:-}" ]]; then
+        printf -v "$answer_var" '%s' "${ORBIT_FRAMEWORK}"
+        return 0
+      fi
+      ;;
+  esac
+
   if [[ "$answer_var" == "bootstrap" && -n "${ORBIT_TEST_BOOTSTRAP_DECISION:-}" ]]; then
     printf -v "$answer_var" '%s' "${ORBIT_TEST_BOOTSTRAP_DECISION}"
     return 0
@@ -51,6 +90,10 @@ _orbit_prompt_choice() {
 }
 
 _orbit_prompt_project_name() {
+  if [[ -n "${ORBIT_PROJECT_NAME:-}" ]]; then
+    printf '%s\n' "${ORBIT_PROJECT_NAME}"
+    return 0
+  fi
   if [[ -n "${ORBIT_TEST_PROJECT_NAME:-}" ]]; then
     printf '%s\n' "${ORBIT_TEST_PROJECT_NAME}"
     return 0
@@ -116,6 +159,12 @@ orbit_session_gate() {
 orbit_resolve_profile() {
   local project_dir="$1"
   local detected profiles_count workload runtime provisioner framework
+
+  if [[ -n "${ORBIT_PROFILE_ID:-}" ]]; then
+    printf '%s\n' "${ORBIT_PROFILE_ID}"
+    return 0
+  fi
+
   detected="$(detect_profiles "$project_dir" 2>/dev/null || true)"
   profiles_count="$(printf '%s\n' "$detected" | sed '/^$/d' | wc -l | tr -d ' ')"
 

@@ -42,6 +42,12 @@ else
   fail "install.sh falla via stdin con --help"
 fi
 
+if rg -n --fixed-strings "install.sh --resync-project" "${BOOTSTRAP_DIR}/hooks/orbit-session.kiro.hook" "${BOOTSTRAP_DIR}/steering/orbit-session.md" "${BOOTSTRAP_DIR}/agents/orbit.json" >/dev/null; then
+  pass "Orbit exige resync antes del scaffolding"
+else
+  fail "Orbit no exige resync antes del scaffolding"
+fi
+
 echo ""
 echo "Resultados: ${PASS} ok, ${FAIL} fallos"
 [[ "${FAIL}" -eq 0 ]]

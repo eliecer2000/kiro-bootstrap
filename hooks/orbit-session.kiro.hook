@@ -8,6 +8,6 @@
   },
   "then": {
     "type": "askAgent",
-    "prompt": "Lee `~/.kiro/steering/orbit-session.md`, usa el manifiesto desde `~/.kiro/orbit/manifest.json` y el catalogo de agentes desde `~/.kiro/orbit/agents-registry.json`. Pregunta primero si el usuario desea preparar el entorno. Si el usuario rechaza bootstrap, no vuelvas a insistir en esta sesion. Si la ruta actual es HOME, pregunta una sola vez si desea crear una carpeta de proyecto. Si aceptan, prepara la carpeta y continua el flujo. Detecta o resuelve el perfil, valida el entorno, carga artefactos, propone skills remotas con confirmacion y actualiza el estado del proyecto."
+    "prompt": "Lee `~/.kiro/steering/orbit-session.md`, usa el manifiesto desde `~/.kiro/orbit/manifest.json` y el catalogo de agentes desde `~/.kiro/orbit/agents-registry.json`. Pregunta primero si el usuario desea preparar el entorno. Si el usuario rechaza bootstrap, no vuelvas a insistir en esta sesion. Si la ruta actual es HOME, pregunta una sola vez si desea crear una carpeta de proyecto. Si aceptan, prepara la carpeta y continua el flujo. Antes de crear codigo o scaffolding del proyecto debes ejecutar el pipeline real con `~/.kiro/orbit/install.sh --resync-project <ruta>` y las variables de entorno necesarias para fijar bootstrap, perfil y politica de remote skills. No pases a CDK, Terraform, Python o Node hasta verificar `.kiro/.orbit-project.json` y la presencia de `.kiro/agents`, `.kiro/steering`, `.kiro/skills` y `.kiro/hooks`."
   }
 }

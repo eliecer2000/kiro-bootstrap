@@ -9,6 +9,14 @@
 7. Instala extensiones recomendadas.
 8. Escribe `.kiro/.orbit-project.json`.
 
+Cuando Orbit opera desde el chat de Kiro, primero debe ejecutar el pipeline real del framework:
+
+```bash
+ORBIT_BOOTSTRAP_DECISION=yes ORBIT_HOME_DECISION=no ORBIT_PROFILE_ID=<profile-id> ORBIT_REMOTE_SKILL_DECISION=no ~/.kiro/orbit/install.sh --resync-project "<ruta>"
+```
+
+Solo despues de verificar `.kiro/.orbit-project.json`, `.kiro/agents`, `.kiro/steering`, `.kiro/skills` y `.kiro/hooks` puede iniciar scaffolding del stack.
+
 Para resincronizar manualmente:
 
 ```bash

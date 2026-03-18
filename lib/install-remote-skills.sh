@@ -56,6 +56,11 @@ _confirm_remote_skill() {
     return 0
   fi
 
+  if [[ -n "${ORBIT_REMOTE_SKILL_DECISION:-}" ]]; then
+    [[ "${ORBIT_REMOTE_SKILL_DECISION}" == "yes" || "${ORBIT_REMOTE_SKILL_DECISION}" == "y" || "${ORBIT_REMOTE_SKILL_DECISION}" == "approve" ]]
+    return $?
+  fi
+
   if [[ -n "${ORBIT_TEST_REMOTE_SKILL_DECISION:-}" ]]; then
     [[ "${ORBIT_TEST_REMOTE_SKILL_DECISION}" == "yes" ]]
     return $?
