@@ -36,6 +36,12 @@ else
   fail "install.sh con errores de sintaxis"
 fi
 
+if output="$(bash -s -- --help < "${BOOTSTRAP_DIR}/install.sh")" && echo "${output}" | grep -q "Orbit Bootstrap"; then
+  pass "install.sh funciona via stdin con --help"
+else
+  fail "install.sh falla via stdin con --help"
+fi
+
 echo ""
 echo "Resultados: ${PASS} ok, ${FAIL} fallos"
 [[ "${FAIL}" -eq 0 ]]
