@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Terraform Validate After Task",
+  "description": "Ejecuta terraform validate al terminar una tarea de infraestructura.",
+  "version": "1",
+  "when": {
+    "type": "postTaskExecution"
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "terraform validate"
+  }
+}

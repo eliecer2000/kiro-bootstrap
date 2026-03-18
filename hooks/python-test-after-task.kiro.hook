@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Python Test After Task",
+  "description": "Ejecuta pytest al terminar una tarea.",
+  "version": "1",
+  "when": {
+    "type": "postTaskExecution"
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "python3 -m pytest"
+  }
+}

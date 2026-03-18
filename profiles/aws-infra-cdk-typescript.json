@@ -1,0 +1,67 @@
+{
+  "id": "aws-infra-cdk-typescript",
+  "phase": 1,
+  "enabled": true,
+  "name": "AWS Infra (CDK TypeScript)",
+  "description": "Infraestructura AWS con CDK en TypeScript.",
+  "dimensions": {
+    "cloud": "aws",
+    "workload": "infra",
+    "runtime": "typescript",
+    "provisioner": "cdk",
+    "framework": "none",
+    "features": ["infra", "cdk", "typescript"]
+  },
+  "wizard": {
+    "workload": "infra",
+    "provisioner": "cdk"
+  },
+  "detection": {
+    "priority": 255,
+    "requiredFiles": ["cdk.json", "package.json"],
+    "packageJsonDependencies": ["aws-cdk-lib"],
+    "anyGlobs": ["bin/**/*.ts", "lib/**/*.ts"]
+  },
+  "tooling": {
+    "linters": ["eslint"],
+    "formatters": ["prettier"],
+    "tests": ["vitest"],
+    "typecheck": ["tsc"],
+    "aws": ["awscli", "node"],
+    "notes": ["Mantener scripts cdk synth, lint, format y test."]
+  },
+  "agents": ["orbit", "aws-architect", "aws-cdk", "aws-iam-security", "aws-observability", "aws-test-quality"],
+  "steeringPacks": ["core", "git", "security", "aws-shared", "runtime-typescript", "cdk", "testing", "observability"],
+  "localSkills": ["orbit-bootstrap", "typescript-runtime", "aws-cdk", "aws-testing", "aws-observability"],
+  "remoteSkills": ["supercent-code-review"],
+  "hooks": ["node-format-on-save.kiro.hook", "node-lint-on-save.kiro.hook", "node-test-after-task.kiro.hook"],
+  "extensionPacks": ["base", "cdk-typescript"],
+  "validations": [
+    {
+      "tool": "node",
+      "command": "node --version",
+      "minVersion": "18.0.0",
+      "required": true,
+      "installHint": "brew install node (macOS) | sudo apt install nodejs (Linux)"
+    },
+    {
+      "tool": "npm",
+      "command": "npm --version",
+      "minVersion": "9.0.0",
+      "required": true,
+      "installHint": "Se instala con Node.js"
+    },
+    {
+      "tool": "aws",
+      "command": "aws --version",
+      "minVersion": "2.0.0",
+      "required": true,
+      "installHint": "brew install awscli (macOS) | sudo apt install awscli (Linux)"
+    }
+  ],
+  "envCheck": {
+    "files": [],
+    "requiredVars": []
+  },
+  "awsCheck": true
+}

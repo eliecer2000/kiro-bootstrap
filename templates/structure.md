@@ -1,13 +1,9 @@
-# Estructura del Proyecto
+# Repository Structure
 
 ## Directorios Principales
 
-<!-- Descripción de la estructura de directorios -->
+## Capas Tecnicas
 
-## Convenciones de Archivos
+## Convenciones de Nombres
 
-<!-- Naming conventions y organización -->
-
-## Dependencias Clave
-
-<!-- Dependencias principales del proyecto -->
+## Puntos de Extension Orbit

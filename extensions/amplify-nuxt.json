@@ -1,0 +1,8 @@
+{
+  "description": "Fase 2: tooling para Amplify con Nuxt.",
+  "recommendations": [
+    "vue.volar",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
+  ]
+}

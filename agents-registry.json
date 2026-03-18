@@ -1,127 +1,469 @@
 {
-  "version": "1.0.0",
+  "version": "2.0.0",
+  "bootstrapAgent": "orbit",
+  "bootstrapModel": "haiku-4.5",
+  "remoteSkillsAllowlist": [
+    {
+      "id": "github-documentation-writer",
+      "package": "github/awesome-copilot@documentation-writer",
+      "purpose": "Documentacion de arquitectura, procesos y catalogos tecnicos.",
+      "source": "skills.sh",
+      "installMode": "confirm"
+    },
+    {
+      "id": "github-refactor-plan",
+      "package": "github/awesome-copilot@refactor-plan",
+      "purpose": "Planes de refactor, roadmap tecnico y descomposicion de entregas.",
+      "source": "skills.sh",
+      "installMode": "confirm"
+    },
+    {
+      "id": "supercent-api-documentation",
+      "package": "supercent-io/skills-template@api-documentation",
+      "purpose": "Documentacion de APIs y contratos de integracion.",
+      "source": "skills.sh",
+      "installMode": "confirm"
+    },
+    {
+      "id": "supercent-code-review",
+      "package": "supercent-io/skills-template@code-review",
+      "purpose": "Revision de codigo para cambios grandes y checklists de calidad.",
+      "source": "skills.sh",
+      "installMode": "confirm"
+    }
+  ],
   "agents": {
-    "vue-dev": {
-      "name": "vue-dev",
-      "description": "Agente especializado en desarrollo Vue 3 con PrimeVue, Tailwind CSS y Composition API.",
-      "model": "sonnet-4",
-      "file": "agents/vue-dev.json",
-      "steeringFiles": [
-        "steering/project-context.md",
-        "steering/vue-components.md",
-        "steering/i18n.md"
+    "orbit": {
+      "name": "orbit",
+      "description": "Agente principal de bootstrap y orquestacion de Orbit.",
+      "file": "agents/orbit.json",
+      "role": "Bootstrap, onboarding, resincronizacion y coordinacion economica",
+      "responsibilities": [
+        "Preguntar si el usuario desea preparar el entorno.",
+        "Gestionar la sesion inicial cuando el contexto arranca en HOME.",
+        "Detectar o resolver el perfil del proyecto.",
+        "Coordinar resincronizacion, conflictos y estado del proyecto.",
+        "Proponer e instalar skills remotas con confirmacion."
       ],
-      "skills": ["skills/vue-components"],
-      "profiles": ["frontend-nuxt"]
-    },
-    "server-api": {
-      "name": "server-api",
-      "description": "Agente especializado en rutas API de Nitro server.",
-      "model": "sonnet-4",
-      "file": "agents/server-api.json",
-      "steeringFiles": [
-        "steering/project-context.md",
-        "steering/server-api.md"
+      "ownedTasks": [
+        "session-gates",
+        "detect-profile",
+        "write-project-state",
+        "remote-skills-gating"
       ],
-      "skills": ["skills/server-api"],
-      "profiles": ["frontend-nuxt"]
-    },
-    "composables-stores": {
-      "name": "composables-stores",
-      "description": "Agente especializado en composables Vue y stores Pinia.",
-      "model": "sonnet-4",
-      "file": "agents/composables-stores.json",
-      "steeringFiles": [
-        "steering/project-context.md",
-        "steering/composables.md",
-        "steering/stores.md"
+      "handoffs": [
+        {
+          "to": "aws-architect",
+          "when": "Se requiere diseno de arquitectura o definicion de capas del sistema."
+        },
+        {
+          "to": "aws-test-quality",
+          "when": "Se necesitan pruebas, criterios de aceptacion o quality gates."
+        }
       ],
-      "skills": [],
-      "profiles": ["frontend-nuxt"]
-    },
-    "test-agent": {
-      "name": "test-agent",
-      "description": "Agente especializado en testing con Vitest y fast-check.",
-      "model": "sonnet-4",
-      "file": "agents/test-agent.json",
-      "steeringFiles": [
-        "steering/project-context.md",
-        "steering/testing.md"
+      "supportedProfiles": ["*"],
+      "steeringPacks": ["core", "git", "security", "aws-shared", "testing", "observability"],
+      "localSkills": ["orbit-bootstrap"],
+      "remoteSkills": ["github-documentation-writer", "github-refactor-plan"],
+      "modelDefault": "haiku-4.5",
+      "acceptanceChecklist": [
+        "No insistir tras rechazo de bootstrap en la misma sesion.",
+        "No insistir tras rechazo del prompt HOME en la misma sesion.",
+        "No instalar skills remotas sin confirmacion.",
+        "Escribir .kiro/.orbit-project.json despues del bootstrap o resincronizacion."
       ],
-      "skills": ["skills/testing"],
-      "profiles": ["frontend-nuxt", "backend-lambda", "backend-python"]
+      "phase": 1
     },
-    "orchestrator": {
-      "name": "orchestrator",
-      "description": "Agente orquestador principal que coordina agentes especializados.",
-      "model": "sonnet-4",
-      "file": "agents/orchestrator.json",
-      "steeringFiles": ["steering/project-context.md"],
-      "skills": [],
-      "profiles": ["frontend-nuxt", "backend-lambda"]
+    "aws-architect": {
+      "name": "aws-architect",
+      "description": "Agente de arquitectura AWS y decisiones de diseno.",
+      "file": "agents/aws-architect.json",
+      "role": "Arquitectura y tradeoffs tecnicos para servicios AWS",
+      "responsibilities": [
+        "Definir patrones serverless y limites de servicios.",
+        "Alinear runtime, IaC y despliegue con el perfil del proyecto.",
+        "Guiar decisiones entre Lambda, API, eventos y datos."
+      ],
+      "ownedTasks": [
+        "service-boundaries",
+        "aws-architecture-decisions"
+      ],
+      "handoffs": [
+        {
+          "to": "aws-iam-security",
+          "when": "Las decisiones afectan IAM, networking, secretos o compliance."
+        },
+        {
+          "to": "aws-terraform",
+          "when": "La implementacion principal se hace con Terraform."
+        },
+        {
+          "to": "aws-cdk",
+          "when": "La implementacion principal se hace con CDK."
+        }
+      ],
+      "supportedProfiles": [
+        "aws-backend-api-python",
+        "aws-backend-api-typescript",
+        "aws-backend-api-javascript",
+        "aws-backend-lambda-python",
+        "aws-backend-lambda-typescript",
+        "aws-backend-lambda-javascript",
+        "aws-infra-terraform",
+        "aws-infra-cdk-typescript",
+        "aws-shared-lib-python",
+        "aws-shared-lib-typescript",
+        "aws-shared-lib-javascript"
+      ],
+      "steeringPacks": ["core", "security", "aws-shared", "observability"],
+      "localSkills": ["aws-architecture"],
+      "remoteSkills": ["github-documentation-writer"],
+      "modelDefault": "sonnet-4",
+      "acceptanceChecklist": [
+        "Documentar decisiones de arquitectura y restricciones.",
+        "Explicitar tradeoffs entre servicios AWS.",
+        "Alinear el diseno con el perfil activo."
+      ],
+      "phase": 1
     },
-    "terraform-agent": {
-      "name": "terraform-agent",
+    "aws-lambda-python": {
+      "name": "aws-lambda-python",
+      "description": "Agente especializado en Lambda con Python.",
+      "file": "agents/aws-lambda-python.json",
+      "role": "Implementacion de funciones Lambda en Python",
+      "responsibilities": [
+        "Handlers, empaquetado, dependencias y convenciones Python.",
+        "Observabilidad, testing y cold starts.",
+        "Integracion con AWS SDK para Python."
+      ],
+      "ownedTasks": ["lambda-python-runtime", "python-serverless-implementation"],
+      "handoffs": [
+        {
+          "to": "aws-api-integration",
+          "when": "La Lambda expone o consume contratos HTTP/eventos de integracion."
+        },
+        {
+          "to": "aws-test-quality",
+          "when": "Se requieren tests unitarios o de integracion."
+        }
+      ],
+      "supportedProfiles": ["aws-backend-lambda-python"],
+      "steeringPacks": ["core", "aws-shared", "runtime-python", "lambda", "testing", "observability"],
+      "localSkills": ["python-runtime", "aws-lambda-python", "aws-testing"],
+      "remoteSkills": ["supercent-code-review"],
+      "modelDefault": "sonnet-4",
+      "acceptanceChecklist": [
+        "Mantener handlers claros y pequenos.",
+        "Usar tooling Python del perfil.",
+        "Cubrir errores y logs principales."
+      ],
+      "phase": 1
+    },
+    "aws-lambda-typescript": {
+      "name": "aws-lambda-typescript",
+      "description": "Agente especializado en Lambda con TypeScript y JavaScript.",
+      "file": "agents/aws-lambda-typescript.json",
+      "role": "Implementacion de funciones Lambda en Node.js",
+      "responsibilities": [
+        "Handlers, bundling, AWS SDK v3 y tipado.",
+        "Configuracion Node para runtimes AWS.",
+        "Testing y trazabilidad operativa."
+      ],
+      "ownedTasks": ["lambda-node-runtime", "node-serverless-implementation"],
+      "handoffs": [
+        {
+          "to": "aws-api-integration",
+          "when": "La Lambda atiende endpoints o contratos de integracion."
+        },
+        {
+          "to": "aws-test-quality",
+          "when": "Se requieren pruebas y quality gates."
+        }
+      ],
+      "supportedProfiles": [
+        "aws-backend-lambda-typescript",
+        "aws-backend-lambda-javascript"
+      ],
+      "steeringPacks": ["core", "aws-shared", "runtime-typescript", "runtime-javascript", "lambda", "testing", "observability"],
+      "localSkills": ["typescript-runtime", "javascript-runtime", "aws-lambda-typescript", "aws-testing"],
+      "remoteSkills": ["supercent-code-review"],
+      "modelDefault": "sonnet-4",
+      "acceptanceChecklist": [
+        "Alinear bundling y runtime con Lambda.",
+        "Usar scripts Node coherentes con el perfil.",
+        "Mantener errores y observabilidad consistentes."
+      ],
+      "phase": 1
+    },
+    "aws-api-integration": {
+      "name": "aws-api-integration",
+      "description": "Agente de contratos API, eventos e integraciones AWS.",
+      "file": "agents/aws-api-integration.json",
+      "role": "Integraciones HTTP, eventos, auth y contratos",
+      "responsibilities": [
+        "Diseñar contratos de API Gateway y eventos.",
+        "Modelar auth, errores y compatibilidad de contratos.",
+        "Alinear integraciones con pruebas y observabilidad."
+      ],
+      "ownedTasks": ["api-contracts", "event-integration"],
+      "handoffs": [
+        {
+          "to": "aws-lambda-python",
+          "when": "La implementacion objetivo es Python."
+        },
+        {
+          "to": "aws-lambda-typescript",
+          "when": "La implementacion objetivo es Node.js."
+        }
+      ],
+      "supportedProfiles": [
+        "aws-backend-api-python",
+        "aws-backend-api-typescript",
+        "aws-backend-api-javascript"
+      ],
+      "steeringPacks": ["core", "aws-shared", "api", "testing", "observability"],
+      "localSkills": ["aws-api", "aws-testing"],
+      "remoteSkills": ["supercent-api-documentation"],
+      "modelDefault": "sonnet-4",
+      "acceptanceChecklist": [
+        "Documentar contratos y errores.",
+        "Mantener integraciones consistentes con auth y observabilidad."
+      ],
+      "phase": 1
+    },
+    "aws-terraform": {
+      "name": "aws-terraform",
       "description": "Agente especializado en infraestructura Terraform.",
-      "model": "sonnet-4",
-      "file": "agents/terraform-agent.json",
-      "steeringFiles": [
-        "steering/terraform-standards.md",
-        "steering/aws-standards.md",
-        "steering/security-policies.md"
+      "file": "agents/aws-terraform.json",
+      "role": "Infraestructura AWS con Terraform",
+      "responsibilities": [
+        "Modulos, providers, state y convenciones Terraform.",
+        "Seguridad, validaciones y despliegue IaC.",
+        "Estandarizar naming, tags y estructura."
       ],
-      "skills": [],
-      "profiles": ["infraestructura-terraform"]
-    },
-    "lambda-agent": {
-      "name": "lambda-agent",
-      "description": "Agente especializado en desarrollo de funciones AWS Lambda con TypeScript.",
-      "model": "sonnet-4",
-      "file": "agents/lambda-agent.json",
-      "steeringFiles": [
-        "steering/project-context.md",
-        "steering/aws-standards.md"
+      "ownedTasks": ["terraform-modules", "terraform-environment-design"],
+      "handoffs": [
+        {
+          "to": "aws-iam-security",
+          "when": "Los cambios incluyen IAM, redes o secretos."
+        }
       ],
-      "skills": [],
-      "profiles": ["backend-lambda"]
-    },
-    "python-agent": {
-      "name": "python-agent",
-      "description": "Agente especializado en desarrollo backend con Python.",
-      "model": "sonnet-4",
-      "file": "agents/python-agent.json",
-      "steeringFiles": [
-        "steering/project-context.md"
+      "supportedProfiles": ["aws-infra-terraform"],
+      "steeringPacks": ["core", "security", "aws-shared", "terraform", "observability"],
+      "localSkills": ["aws-terraform"],
+      "remoteSkills": ["supercent-code-review"],
+      "modelDefault": "sonnet-4",
+      "acceptanceChecklist": [
+        "Mantener configuraciones Terraform validables.",
+        "Aplicar estructura de modulos y naming coherente."
       ],
-      "skills": [],
-      "profiles": ["backend-python"]
+      "phase": 1
     },
-    "jarvis-bootstrap": {
-      "name": "jarvis-bootstrap",
-      "description": "Agente de bootstrap que configura automáticamente el entorno Kiro.",
-      "model": "haiku-4.5",
-      "file": "agents/jarvis-bootstrap.json",
-      "steeringFiles": ["steering/bootstrap-init.md"],
-      "skills": [],
-      "profiles": ["*"]
+    "aws-cdk": {
+      "name": "aws-cdk",
+      "description": "Agente especializado en infraestructura AWS con CDK.",
+      "file": "agents/aws-cdk.json",
+      "role": "Infraestructura AWS con AWS CDK",
+      "responsibilities": [
+        "Stacks, constructs, synth/deploy y patrones CDK.",
+        "Separacion entre app, stacks y constructs reutilizables.",
+        "Alineacion con seguridad y observabilidad."
+      ],
+      "ownedTasks": ["cdk-stacks", "cdk-constructs"],
+      "handoffs": [
+        {
+          "to": "aws-iam-security",
+          "when": "La infraestructura exige revisiones de permisos y secretos."
+        }
+      ],
+      "supportedProfiles": ["aws-infra-cdk-typescript"],
+      "steeringPacks": ["core", "security", "aws-shared", "runtime-typescript", "cdk", "observability"],
+      "localSkills": ["typescript-runtime", "aws-cdk"],
+      "remoteSkills": ["supercent-code-review"],
+      "modelDefault": "sonnet-4",
+      "acceptanceChecklist": [
+        "Mantener stacks pequenos y constructs reutilizables.",
+        "Alinear scripts de synth y deploy con el perfil."
+      ],
+      "phase": 1
+    },
+    "aws-iam-security": {
+      "name": "aws-iam-security",
+      "description": "Agente de seguridad AWS e IAM.",
+      "file": "agents/aws-iam-security.json",
+      "role": "Least privilege, secretos, red y cumplimiento",
+      "responsibilities": [
+        "Definir permisos minimos y boundaries.",
+        "Revisar secretos, cifrado y configuracion de red.",
+        "Endurecer configuraciones de servicios y datos."
+      ],
+      "ownedTasks": ["iam-review", "secret-management", "networking-review"],
+      "handoffs": [
+        {
+          "to": "aws-architect",
+          "when": "Se necesitan ajustes mayores de arquitectura."
+        }
+      ],
+      "supportedProfiles": ["*"],
+      "steeringPacks": ["core", "security", "aws-shared", "observability"],
+      "localSkills": ["aws-security"],
+      "remoteSkills": ["supercent-code-review"],
+      "modelDefault": "sonnet-4",
+      "acceptanceChecklist": [
+        "Aplicar least privilege.",
+        "No introducir secretos en configuracion publica.",
+        "Documentar riesgos y mitigaciones."
+      ],
+      "phase": 1
+    },
+    "aws-data-dynamodb": {
+      "name": "aws-data-dynamodb",
+      "description": "Agente de modelado DynamoDB y patrones de acceso.",
+      "file": "agents/aws-data-dynamodb.json",
+      "role": "Modelado de datos y access patterns para DynamoDB",
+      "responsibilities": [
+        "Definir claves, GSIs y access patterns.",
+        "Alinear consultas, capacidad y consistencia.",
+        "Optimizar modelado para cargas serverless."
+      ],
+      "ownedTasks": ["dynamodb-modeling", "query-patterns"],
+      "handoffs": [
+        {
+          "to": "aws-architect",
+          "when": "El modelado impacta arquitectura o contratos."
+        }
+      ],
+      "supportedProfiles": [
+        "aws-backend-api-python",
+        "aws-backend-api-typescript",
+        "aws-backend-api-javascript",
+        "aws-backend-lambda-python",
+        "aws-backend-lambda-typescript",
+        "aws-backend-lambda-javascript"
+      ],
+      "steeringPacks": ["core", "aws-shared", "observability"],
+      "localSkills": ["aws-dynamodb"],
+      "remoteSkills": [],
+      "modelDefault": "sonnet-4",
+      "acceptanceChecklist": [
+        "Explicitar access patterns antes del esquema.",
+        "Evitar modelado centrado en tablas sin queries reales."
+      ],
+      "phase": 1
+    },
+    "aws-observability": {
+      "name": "aws-observability",
+      "description": "Agente de logs, metricas, trazas y alarmas.",
+      "file": "agents/aws-observability.json",
+      "role": "Observabilidad operativa para workloads AWS",
+      "responsibilities": [
+        "Definir logs estructurados y correlacion.",
+        "Alinear metricas, alarmas y dashboards.",
+        "Introducir trazabilidad minima desde el bootstrap."
+      ],
+      "ownedTasks": ["logging", "metrics", "alarms", "dashboards"],
+      "handoffs": [
+        {
+          "to": "aws-test-quality",
+          "when": "La observabilidad debe cubrirse con pruebas o smoke checks."
+        }
+      ],
+      "supportedProfiles": ["*"],
+      "steeringPacks": ["core", "aws-shared", "observability", "testing"],
+      "localSkills": ["aws-observability"],
+      "remoteSkills": [],
+      "modelDefault": "sonnet-4",
+      "acceptanceChecklist": [
+        "Agregar convenciones de logs y metricas desde el inicio.",
+        "No dejar alarmas y trazas fuera del diseno."
+      ],
+      "phase": 1
+    },
+    "aws-test-quality": {
+      "name": "aws-test-quality",
+      "description": "Agente de pruebas y quality gates para Orbit.",
+      "file": "agents/aws-test-quality.json",
+      "role": "Pruebas, quality gates y aceptacion tecnica",
+      "responsibilities": [
+        "Definir pruebas unitarias, de integracion y contratos.",
+        "Alinear tooling de test con cada runtime.",
+        "Revisar quality gates y escenarios criticos."
+      ],
+      "ownedTasks": ["test-plan", "quality-gates", "contract-tests"],
+      "handoffs": [
+        {
+          "to": "orbit",
+          "when": "Se requiere actualizar documentacion o estado del proyecto."
+        }
+      ],
+      "supportedProfiles": ["*"],
+      "steeringPacks": ["core", "testing", "observability"],
+      "localSkills": ["aws-testing"],
+      "remoteSkills": ["supercent-code-review"],
+      "modelDefault": "sonnet-4",
+      "acceptanceChecklist": [
+        "Definir escenarios minimos por perfil.",
+        "Cubrir contratos y errores principales.",
+        "Alinear quality gates con el runtime."
+      ],
+      "phase": 1
+    },
+    "aws-amplify-react": {
+      "name": "aws-amplify-react",
+      "description": "Agente para Amplify con React.",
+      "file": "agents/aws-amplify-react.json",
+      "role": "Frontend Amplify con React",
+      "responsibilities": [
+        "Preparar entorno React + Amplify.",
+        "Guiar integracion con autenticacion y hosting Amplify."
+      ],
+      "ownedTasks": ["amplify-react"],
+      "handoffs": [],
+      "supportedProfiles": ["aws-amplify-react"],
+      "steeringPacks": ["core", "aws-shared", "amplify", "runtime-typescript", "testing"],
+      "localSkills": ["typescript-runtime"],
+      "remoteSkills": ["github-documentation-writer"],
+      "modelDefault": "sonnet-4",
+      "acceptanceChecklist": ["Reservado para fase 2."],
+      "phase": 2
+    },
+    "aws-amplify-vue": {
+      "name": "aws-amplify-vue",
+      "description": "Agente para Amplify con Vue.",
+      "file": "agents/aws-amplify-vue.json",
+      "role": "Frontend Amplify con Vue",
+      "responsibilities": [
+        "Preparar entorno Vue + Amplify.",
+        "Guiar integracion con autenticacion y hosting Amplify."
+      ],
+      "ownedTasks": ["amplify-vue"],
+      "handoffs": [],
+      "supportedProfiles": ["aws-amplify-vue"],
+      "steeringPacks": ["core", "aws-shared", "amplify", "runtime-typescript", "testing"],
+      "localSkills": ["typescript-runtime"],
+      "remoteSkills": ["github-documentation-writer"],
+      "modelDefault": "sonnet-4",
+      "acceptanceChecklist": ["Reservado para fase 2."],
+      "phase": 2
+    },
+    "aws-amplify-nuxt": {
+      "name": "aws-amplify-nuxt",
+      "description": "Agente para Amplify con Nuxt.",
+      "file": "agents/aws-amplify-nuxt.json",
+      "role": "Frontend Amplify con Nuxt",
+      "responsibilities": [
+        "Preparar entorno Nuxt + Amplify.",
+        "Guiar integracion con autenticacion y hosting Amplify."
+      ],
+      "ownedTasks": ["amplify-nuxt"],
+      "handoffs": [],
+      "supportedProfiles": ["aws-amplify-nuxt"],
+      "steeringPacks": ["core", "aws-shared", "amplify", "runtime-typescript", "testing"],
+      "localSkills": ["typescript-runtime"],
+      "remoteSkills": ["github-documentation-writer"],
+      "modelDefault": "sonnet-4",
+      "acceptanceChecklist": ["Reservado para fase 2."],
+      "phase": 2
     }
-  },
-  "globalSteeringFiles": [
-    {
-      "file": "steering/jarvis-core.md",
-      "inclusion": "always"
-    },
-    {
-      "file": "steering/git-workflow.md",
-      "inclusion": "always"
-    },
-    {
-      "file": "steering/security-policies.md",
-      "inclusion": "always"
-    },
-    {
-      "file": "steering/cicd-azuredevops.md",
-      "inclusion": "always"
-    }
-  ]
+  }
 }

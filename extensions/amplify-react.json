@@ -1,0 +1,7 @@
+{
+  "description": "Fase 2: tooling para Amplify con React.",
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode"
+  ]
+}

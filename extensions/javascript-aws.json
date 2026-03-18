@@ -1,0 +1,8 @@
+{
+  "description": "Tooling base para JavaScript en AWS.",
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "christian-kohler.npm-intellisense"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Orbit Session",
+  "description": "Activa Orbit al inicio de la sesion para ofrecer bootstrap o resincronizacion del entorno.",
+  "version": "1",
+  "when": {
+    "type": "userTriggered"
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "Lee `~/.kiro/steering/orbit-session.md`, usa el manifiesto desde `~/.kiro/orbit/manifest.json` y el catalogo de agentes desde `~/.kiro/orbit/agents-registry.json`. Pregunta primero si el usuario desea preparar el entorno. Si el usuario rechaza bootstrap, no vuelvas a insistir en esta sesion. Si la ruta actual es HOME, pregunta una sola vez si desea crear una carpeta de proyecto. Si aceptan, prepara la carpeta y continua el flujo. Detecta o resuelve el perfil, valida el entorno, carga artefactos, propone skills remotas con confirmacion y actualiza el estado del proyecto."
+  }
+}

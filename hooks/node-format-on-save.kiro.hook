@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Node Format On Save",
+  "description": "Formatea proyectos Node.js con prettier al guardar.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "filePatterns": ["**/*.js", "**/*.cjs", "**/*.mjs", "**/*.ts", "**/*.tsx"]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "npm run format -- --write"
+  }
+}

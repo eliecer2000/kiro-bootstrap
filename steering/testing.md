@@ -2,6 +2,6 @@
 inclusion: manual
 ---
 
-# Testing – Estándares
+# Testing
 
-Estándares de testing con Vitest y fast-check: unit tests, property-based testing, cobertura y convenciones.
+Cada cambio relevante debe tener una estrategia minima de pruebas. Priorizar pruebas pequenas, contratos, escenarios de error y quality gates acordes al runtime.

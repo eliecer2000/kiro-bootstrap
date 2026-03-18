@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Terraform Fmt On Save",
+  "description": "Ejecuta terraform fmt sobre archivos Terraform.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "filePatterns": ["**/*.tf", "**/*.tfvars"]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "terraform fmt -recursive"
+  }
+}

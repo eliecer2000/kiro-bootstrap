@@ -1,9 +1,0 @@
-{
-  "description": "Extensiones para perfil backend-lambda (TypeScript + AWS SDK)",
-  "recommendations": [
-    "christian-kohler.npm-intellisense",
-    "wix.vscode-import-cost",
-    "ms-vscode.vscode-typescript-next",
-    "imgildev.vscode-code-log-plus"
-  ]
-}

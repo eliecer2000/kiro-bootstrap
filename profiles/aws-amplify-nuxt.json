@@ -1,0 +1,44 @@
+{
+  "id": "aws-amplify-nuxt",
+  "phase": 2,
+  "enabled": false,
+  "name": "AWS Amplify Nuxt",
+  "description": "Fase 2: frontend Amplify con Nuxt.",
+  "dimensions": {
+    "cloud": "aws",
+    "workload": "frontend-amplify",
+    "runtime": "typescript",
+    "provisioner": "amplify",
+    "framework": "nuxt",
+    "features": ["frontend", "amplify", "nuxt"]
+  },
+  "wizard": {
+    "workload": "frontend-amplify",
+    "framework": "nuxt"
+  },
+  "detection": {
+    "priority": 120,
+    "requiredFiles": ["package.json"],
+    "packageJsonDependencies": ["aws-amplify", "nuxt"]
+  },
+  "tooling": {
+    "linters": ["eslint"],
+    "formatters": ["prettier"],
+    "tests": ["vitest"],
+    "typecheck": ["tsc"],
+    "aws": ["node"],
+    "notes": ["Reservado para fase 2."]
+  },
+  "agents": ["orbit", "aws-amplify-nuxt"],
+  "steeringPacks": ["core", "git", "security", "aws-shared", "amplify", "runtime-typescript", "testing", "observability"],
+  "localSkills": ["orbit-bootstrap", "typescript-runtime"],
+  "remoteSkills": ["github-documentation-writer"],
+  "hooks": ["node-format-on-save.kiro.hook", "node-lint-on-save.kiro.hook", "node-test-after-task.kiro.hook"],
+  "extensionPacks": ["base", "amplify-nuxt"],
+  "validations": [],
+  "envCheck": {
+    "files": [],
+    "requiredVars": []
+  },
+  "awsCheck": false
+}

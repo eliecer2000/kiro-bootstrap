@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Python Lint On Save",
+  "description": "Ejecuta ruff sobre proyectos Python al guardar.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "filePatterns": ["**/*.py"]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "python3 -m ruff check ."
+  }
+}

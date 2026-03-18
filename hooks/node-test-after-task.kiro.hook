@@ -1,0 +1,13 @@
+{
+  "enabled": true,
+  "name": "Node Test After Task",
+  "description": "Ejecuta tests Node.js al terminar una tarea.",
+  "version": "1",
+  "when": {
+    "type": "postTaskExecution"
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "npm run test"
+  }
+}

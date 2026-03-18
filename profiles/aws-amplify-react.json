@@ -1,0 +1,44 @@
+{
+  "id": "aws-amplify-react",
+  "phase": 2,
+  "enabled": false,
+  "name": "AWS Amplify React",
+  "description": "Fase 2: frontend Amplify con React.",
+  "dimensions": {
+    "cloud": "aws",
+    "workload": "frontend-amplify",
+    "runtime": "typescript",
+    "provisioner": "amplify",
+    "framework": "react",
+    "features": ["frontend", "amplify", "react"]
+  },
+  "wizard": {
+    "workload": "frontend-amplify",
+    "framework": "react"
+  },
+  "detection": {
+    "priority": 120,
+    "requiredFiles": ["package.json"],
+    "packageJsonDependencies": ["aws-amplify", "react"]
+  },
+  "tooling": {
+    "linters": ["eslint"],
+    "formatters": ["prettier"],
+    "tests": ["vitest"],
+    "typecheck": ["tsc"],
+    "aws": ["node"],
+    "notes": ["Reservado para fase 2."]
+  },
+  "agents": ["orbit", "aws-amplify-react"],
+  "steeringPacks": ["core", "git", "security", "aws-shared", "amplify", "runtime-typescript", "testing", "observability"],
+  "localSkills": ["orbit-bootstrap", "typescript-runtime"],
+  "remoteSkills": ["github-documentation-writer"],
+  "hooks": ["node-format-on-save.kiro.hook", "node-lint-on-save.kiro.hook", "node-test-after-task.kiro.hook"],
+  "extensionPacks": ["base", "amplify-react"],
+  "validations": [],
+  "envCheck": {
+    "files": [],
+    "requiredVars": []
+  },
+  "awsCheck": false
+}

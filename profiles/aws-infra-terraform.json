@@ -1,0 +1,66 @@
+{
+  "id": "aws-infra-terraform",
+  "phase": 1,
+  "enabled": true,
+  "name": "AWS Infra (Terraform)",
+  "description": "Infraestructura AWS con Terraform.",
+  "dimensions": {
+    "cloud": "aws",
+    "workload": "infra",
+    "runtime": "none",
+    "provisioner": "terraform",
+    "framework": "none",
+    "features": ["infra", "terraform"]
+  },
+  "wizard": {
+    "workload": "infra",
+    "provisioner": "terraform"
+  },
+  "detection": {
+    "priority": 260,
+    "requiredFiles": ["backend.tf"],
+    "anyGlobs": ["*.tf", "infra/**/*.tf"]
+  },
+  "tooling": {
+    "linters": ["terraform fmt"],
+    "formatters": ["terraform fmt"],
+    "tests": ["terraform validate"],
+    "typecheck": [],
+    "aws": ["awscli", "terraform"],
+    "notes": ["Mantener fmt y validate como validacion basica."]
+  },
+  "agents": ["orbit", "aws-architect", "aws-terraform", "aws-iam-security", "aws-observability"],
+  "steeringPacks": ["core", "git", "security", "aws-shared", "terraform", "observability"],
+  "localSkills": ["orbit-bootstrap", "aws-terraform", "aws-security", "aws-observability"],
+  "remoteSkills": ["supercent-code-review"],
+  "hooks": ["terraform-fmt-on-save.kiro.hook", "terraform-validate-after-task.kiro.hook"],
+  "extensionPacks": ["base", "terraform"],
+  "validations": [
+    {
+      "tool": "terraform",
+      "command": "terraform --version",
+      "minVersion": "1.5.0",
+      "required": true,
+      "installHint": "brew install terraform (macOS) | sudo apt install terraform (Linux)"
+    },
+    {
+      "tool": "aws",
+      "command": "aws --version",
+      "minVersion": "2.0.0",
+      "required": true,
+      "installHint": "brew install awscli (macOS) | sudo apt install awscli (Linux)"
+    },
+    {
+      "tool": "git",
+      "command": "git --version",
+      "minVersion": "2.30.0",
+      "required": true,
+      "installHint": "brew install git (macOS) | sudo apt install git (Linux)"
+    }
+  ],
+  "envCheck": {
+    "files": [],
+    "requiredVars": []
+  },
+  "awsCheck": true
+}

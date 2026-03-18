@@ -1,0 +1,60 @@
+{
+  "id": "aws-shared-lib-typescript",
+  "phase": 1,
+  "enabled": true,
+  "name": "AWS Shared Library (TypeScript)",
+  "description": "Libreria compartida TypeScript para workloads AWS.",
+  "dimensions": {
+    "cloud": "aws",
+    "workload": "shared-lib",
+    "runtime": "typescript",
+    "provisioner": "none",
+    "framework": "none",
+    "features": ["shared-lib", "typescript"]
+  },
+  "wizard": {
+    "workload": "shared-lib",
+    "runtime": "typescript"
+  },
+  "detection": {
+    "priority": 175,
+    "requiredFiles": ["package.json", "tsconfig.json"],
+    "anyGlobs": ["src/**/*.ts", "lib/**/*.ts"],
+    "excludeFiles": ["cdk.json"]
+  },
+  "tooling": {
+    "linters": ["eslint"],
+    "formatters": ["prettier"],
+    "tests": ["vitest"],
+    "typecheck": ["tsc"],
+    "aws": ["node"],
+    "notes": ["Perfil para librerias compartidas y wrappers TypeScript."]
+  },
+  "agents": ["orbit", "aws-architect", "aws-test-quality"],
+  "steeringPacks": ["core", "git", "security", "aws-shared", "runtime-typescript", "testing"],
+  "localSkills": ["orbit-bootstrap", "typescript-runtime", "aws-testing"],
+  "remoteSkills": [],
+  "hooks": ["node-format-on-save.kiro.hook", "node-lint-on-save.kiro.hook", "node-test-after-task.kiro.hook"],
+  "extensionPacks": ["base", "typescript-aws"],
+  "validations": [
+    {
+      "tool": "node",
+      "command": "node --version",
+      "minVersion": "18.0.0",
+      "required": true,
+      "installHint": "brew install node (macOS) | sudo apt install nodejs (Linux)"
+    },
+    {
+      "tool": "npm",
+      "command": "npm --version",
+      "minVersion": "9.0.0",
+      "required": true,
+      "installHint": "Se instala con Node.js"
+    }
+  ],
+  "envCheck": {
+    "files": [],
+    "requiredVars": []
+  },
+  "awsCheck": false
+}

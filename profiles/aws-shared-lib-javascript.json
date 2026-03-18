@@ -1,0 +1,60 @@
+{
+  "id": "aws-shared-lib-javascript",
+  "phase": 1,
+  "enabled": true,
+  "name": "AWS Shared Library (JavaScript)",
+  "description": "Libreria compartida JavaScript para workloads AWS.",
+  "dimensions": {
+    "cloud": "aws",
+    "workload": "shared-lib",
+    "runtime": "javascript",
+    "provisioner": "none",
+    "framework": "none",
+    "features": ["shared-lib", "javascript"]
+  },
+  "wizard": {
+    "workload": "shared-lib",
+    "runtime": "javascript"
+  },
+  "detection": {
+    "priority": 170,
+    "requiredFiles": ["package.json"],
+    "anyGlobs": ["src/**/*.js", "lib/**/*.js"],
+    "excludeFiles": ["tsconfig.json", "cdk.json"]
+  },
+  "tooling": {
+    "linters": ["eslint"],
+    "formatters": ["prettier"],
+    "tests": ["vitest"],
+    "typecheck": ["jsdoc"],
+    "aws": ["node"],
+    "notes": ["Perfil para librerias compartidas JavaScript."]
+  },
+  "agents": ["orbit", "aws-architect", "aws-test-quality"],
+  "steeringPacks": ["core", "git", "security", "aws-shared", "runtime-javascript", "testing"],
+  "localSkills": ["orbit-bootstrap", "javascript-runtime", "aws-testing"],
+  "remoteSkills": [],
+  "hooks": ["node-format-on-save.kiro.hook", "node-lint-on-save.kiro.hook", "node-test-after-task.kiro.hook"],
+  "extensionPacks": ["base", "javascript-aws"],
+  "validations": [
+    {
+      "tool": "node",
+      "command": "node --version",
+      "minVersion": "18.0.0",
+      "required": true,
+      "installHint": "brew install node (macOS) | sudo apt install nodejs (Linux)"
+    },
+    {
+      "tool": "npm",
+      "command": "npm --version",
+      "minVersion": "9.0.0",
+      "required": true,
+      "installHint": "Se instala con Node.js"
+    }
+  ],
+  "envCheck": {
+    "files": [],
+    "requiredVars": []
+  },
+  "awsCheck": false
+}

@@ -1,193 +1,108 @@
-# kiro-bootstrap — Escala 24x7
+# Orbit Bootstrap
 
-Repositorio central de configuración de Kiro IDE para todos los proyectos de Escala 24x7. Provee un sistema de bootstrap automatizado que detecta el tipo de proyecto y carga los agentes, steering files, skills y hooks correspondientes.
+Framework personal de bootstrap para Kiro con enfoque AWS-first. Orbit detecta o resuelve el tipo de proyecto, valida el entorno, carga agentes/steering/skills por perfil, recomienda extensiones y puede resincronizar `.kiro` cuando el proyecto cambia.
 
-## Instalación
-
-Ejecutar en la terminal:
+## Instalacion
 
 ```bash
 curl -sL https://raw.githubusercontent.com/eliecer2000/kiro-bootstrap/main/install.sh | bash
 ```
 
-Esto descarga el repositorio y configura los artefactos base en `~/.kiro/`.
-
-### Requisitos previos
-
-- macOS o Linux
-- `git` instalado y disponible en el PATH
-- `curl` instalado y disponible en el PATH
-
-### Actualización
+Comandos principales:
 
 ```bash
-~/.kiro/install.sh --update
+~/.kiro/orbit/install.sh --help
+~/.kiro/orbit/install.sh --update
+~/.kiro/orbit/install.sh --resync-project .
 ```
 
-Si la versión local ya coincide con la remota, el sistema informa que está actualizado y omite la re-ejecución.
+## Que Hace Orbit
 
-## Estructura del repositorio
+- Pregunta si deseas preparar el entorno antes de ejecutar bootstrap.
+- Si arrancas en `HOME`, ofrece crear una carpeta de proyecto una sola vez por sesion.
+- Detecta perfiles AWS-first o lanza un wizard guiado por workload, runtime y provisioner.
+- Valida tooling del runtime.
+- Carga agentes, steering, skills locales y hooks compatibles con el perfil.
+- Propone skills remotas via `skills.sh` con confirmacion explicita.
+- Escribe `.kiro/.orbit-project.json` para registrar perfil y ultima resincronizacion.
 
-```
-kiro-bootstrap/
-├── install.sh              # Instalador bash
-├── manifest.json           # Manifiesto de perfiles y pipeline
-├── agents-registry.json    # Registro centralizado de agentes
-├── README.md               # Este archivo
-├── agents/                 # Definiciones JSON de agentes Kiro
-├── steering/               # Steering files (Markdown con frontmatter)
-├── skills/                 # Skills (directorios con SKILL.md)
-├── hooks/                  # Hooks de Kiro (.kiro.hook)
-├── templates/              # Templates reutilizables (Markdown)
-├── profiles/               # Configuración por perfil de proyecto
-└── validations/            # Scripts de validación de entorno por perfil
-```
+## Perfiles Soportados
 
-### Descripción de directorios
+Fase 1:
 
-| Directorio     | Contenido                                                                                 |
-| -------------- | ----------------------------------------------------------------------------------------- |
-| `agents/`      | Archivos JSON con la definición de cada agente (nombre, modelo, prompt, tools, resources) |
-| `steering/`    | Archivos Markdown con reglas de comportamiento, estándares y contexto para los agentes    |
-| `skills/`      | Subdirectorios con un archivo `SKILL.md` que define cada skill                            |
-| `hooks/`       | Archivos `.kiro.hook` en formato JSON que definen automatizaciones                        |
-| `templates/`   | Plantillas Markdown reutilizables para specs, documentación, etc.                         |
-| `profiles/`    | Archivos JSON con la configuración específica de cada perfil de proyecto                  |
-| `validations/` | Scripts bash de validación de entorno organizados por perfil                              |
+- `aws-backend-api-python`
+- `aws-backend-api-typescript`
+- `aws-backend-api-javascript`
+- `aws-backend-lambda-python`
+- `aws-backend-lambda-typescript`
+- `aws-backend-lambda-javascript`
+- `aws-infra-terraform`
+- `aws-infra-cdk-typescript`
+- `aws-shared-lib-python`
+- `aws-shared-lib-typescript`
+- `aws-shared-lib-javascript`
 
-## Perfiles de proyecto soportados
+Fase 2 preparada en catalogo:
 
-| Perfil                      | Detección automática                                            |
-| --------------------------- | --------------------------------------------------------------- |
-| `frontend-nuxt`             | `nuxt.config.ts` + dependencia `nuxt` en `package.json`         |
-| `infraestructura-terraform` | Archivos `*.tf` + `backend.tf`                                  |
-| `backend-lambda`            | Dependencia `@aws-sdk/*` en `package.json` sin `nuxt.config.ts` |
-| `backend-python`            | `pyproject.toml` o `requirements.txt`                           |
+- `aws-amplify-react`
+- `aws-amplify-vue`
+- `aws-amplify-nuxt`
 
-## Cómo agregar un nuevo agente
+## Catalogo de Agentes AWS
 
-1. Crear el archivo JSON del agente en `agents/`. Ejemplo:
+- `orbit`: bootstrap, onboarding, resincronizacion, gating de skills remotas y escritura del estado del proyecto.
+- `aws-architect`: arquitectura, segmentacion del sistema y decisiones AWS-first.
+- `aws-lambda-python`: Lambda Python, handlers, empaquetado, pruebas y observabilidad.
+- `aws-lambda-typescript`: Lambda TypeScript/JavaScript, bundling, AWS SDK v3 y runtime Node.js.
+- `aws-api-integration`: contratos HTTP, eventos, auth e integraciones.
+- `aws-terraform`: Terraform, modulos, state y despliegue IaC.
+- `aws-cdk`: stacks, constructs y flujos CDK.
+- `aws-iam-security`: IAM, secretos, cifrado y endurecimiento basico.
+- `aws-data-dynamodb`: modelado DynamoDB y access patterns.
+- `aws-observability`: logs, metricas, alarmas y trazas.
+- `aws-test-quality`: pruebas, contratos y quality gates.
 
-```json
-{
-  "name": "mi-agente",
-  "description": "Descripción del agente.",
-  "model": "sonnet-4",
-  "prompt": "Instrucciones del agente...",
-  "tools": ["*"],
-  "resources": [],
-  "welcomeMessage": "Agente activado."
-}
-```
+## Estructura
 
-2. Registrar el agente en `agents-registry.json` agregando una entrada en `agents`:
-
-```json
-{
-  "mi-agente": {
-    "name": "mi-agente",
-    "description": "Descripción del agente.",
-    "model": "sonnet-4",
-    "file": "agents/mi-agente.json",
-    "steeringFiles": ["steering/mi-steering.md"],
-    "skills": ["skills/mi-skill"],
-    "profiles": ["frontend-nuxt"]
-  }
-}
+```text
+agents/       Definiciones JSON de agentes Orbit
+profiles/     Fuente de verdad por perfil
+steering/     Packs de reglas por capa
+skills/       Skills locales del framework
+hooks/        Automatizaciones segmentadas por runtime
+extensions/   Packs de extensiones de Kiro
+lib/          Runtime shell + parser del catalogo
+validations/  Validacion declarativa por perfil
+docs/         Guias de uso, catalogo y authoring
+templates/    Plantillas de contexto tecnico y onboarding
 ```
 
-3. Crear los steering files y skills referenciados en los directorios correspondientes.
+## Skills.sh
 
-4. El pipeline de bootstrap cargará automáticamente el nuevo agente en los proyectos que coincidan con los perfiles definidos en `profiles`.
+Orbit usa un allowlist de skills remotas en `agents-registry.json`. Cuando una skill remota es necesaria:
 
-## Cómo agregar un nuevo perfil de proyecto
+1. Muestra el paquete, el proposito y el comando exacto.
+2. Pide confirmacion.
+3. Ejecuta `npx skills add <package> -g -y` solo si el usuario acepta.
 
-1. Agregar la definición del perfil en `manifest.json` dentro de `profiles`, incluyendo:
-   - Reglas de detección (`detection`)
-   - Agentes asociados (`agents`)
-   - Validaciones de entorno (`validations`)
+## Agregar Nuevos Agentes
 
-2. Crear el archivo de perfil en `profiles/<nombre-perfil>.json`.
+1. Crear el JSON del agente en `agents/`.
+2. Registrar el contrato completo en `agents-registry.json`.
+3. Asociar steering packs, skills locales y remote skills permitidas.
+4. Declarar perfiles soportados.
+5. Documentar el agente y agregar cobertura minima en tests.
 
-3. Crear el script de validación en `validations/<nombre-perfil>.sh`.
+## Documentacion
 
-4. Asignar el nuevo perfil a los agentes correspondientes en `agents-registry.json`.
+- [Arquitectura](docs/architecture.md)
+- [Flujo de Bootstrap](docs/bootstrap-flow.md)
+- [Matriz de Perfiles](docs/profile-matrix.md)
+- [Catalogo de Agentes](docs/agent-catalog.md)
+- [Authoring](docs/authoring.md)
 
-## Ejemplo de uso
-
-### Flujo completo de bootstrap
-
-Al abrir Kiro en un proyecto con `nuxt.config.ts` y `package.json` con dependencia `nuxt`, el agente Jarvis se activa automáticamente y ejecuta:
-
-```
-▶ Iniciando Pipeline de Configuración...
-
-  ▷ Paso 1: Detección de Perfil de Proyecto
-    ✓ Perfil detectado: frontend-nuxt
-
-  ▷ Paso 2: Validación de Entorno
-    ✓ node v20.11.0 ≥ 18.0.0 — aprobado
-    ✓ npm 10.2.4 ≥ 9.0.0 — aprobado
-    ✓ git 2.43.0 ≥ 2.30.0 — aprobado
-
-  ▷ Paso 3: Carga de Artefactos
-    Agentes:
-      + Nuevo: vue-dev.json
-      + Nuevo: server-api.json
-      + Nuevo: orchestrator.json
-    Steering files:
-      + Nuevo: project-context.md
-      + Nuevo: vue-components.md
-      + Nuevo: jarvis-core.md (global)
-      + Nuevo: git-workflow.md (global)
-    Skills:
-      + Nuevo: vue-components/
-
-  Resumen de carga: 7 nuevos, 0 sin cambios, 0 modificados
-
-════════════════════════════════════════════════════
-  Reporte del Pipeline de Configuración
-════════════════════════════════════════════════════
-  ✓ [1] Detección de Perfil — éxito
-  ✓ [2] Validación de Entorno — éxito
-  ✓ [3] Carga de Artefactos — éxito
-
-  Pipeline completado exitosamente.
-```
-
-### Ejecución de tests
-
-Para verificar que el sistema funciona correctamente:
+## Tests
 
 ```bash
-# Tests del cargador de artefactos (50 tests)
-bash kiro-bootstrap/tests/test-load-artifacts.sh
-
-# Tests de integración del pipeline completo (66 tests)
-bash kiro-bootstrap/tests/test-integration-pipeline.sh
+bash tests/test-all.sh
 ```
-
-### Validación de archivos
-
-```bash
-# Validar todos los JSON
-for f in kiro-bootstrap/*.json kiro-bootstrap/agents/*.json kiro-bootstrap/profiles/*.json; do
-  python3 -m json.tool "$f" > /dev/null && echo "✓ $f" || echo "✗ $f"
-done
-
-# Validar sintaxis de scripts bash
-for f in kiro-bootstrap/install.sh kiro-bootstrap/lib/*.sh kiro-bootstrap/validations/*.sh; do
-  bash -n "$f" && echo "✓ $f" || echo "✗ $f"
-done
-```
-
-## Variables de entorno
-
-| Variable                | Descripción                 | Valor por defecto                                        |
-| ----------------------- | --------------------------- | -------------------------------------------------------- |
-| `KIRO_BOOTSTRAP_REPO`   | URL del repositorio central | `https://github.com/eliecer2000/kiro-bootstrap.git` |
-| `KIRO_BOOTSTRAP_BRANCH` | Rama a utilizar             | `main`                                                   |
-
-## Licencia
-
-Uso interno — Escala 24x7.

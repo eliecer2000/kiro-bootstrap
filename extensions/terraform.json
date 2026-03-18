@@ -1,0 +1,6 @@
+{
+  "description": "Tooling para Terraform en AWS.",
+  "recommendations": [
+    "hashicorp.terraform"
+  ]
+}

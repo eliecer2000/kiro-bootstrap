@@ -1,0 +1,9 @@
+{
+  "description": "Tooling para AWS CDK con TypeScript.",
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "ms-vscode.vscode-typescript-next",
+    "amazonwebservices.aws-toolkit-vscode"
+  ]
+}

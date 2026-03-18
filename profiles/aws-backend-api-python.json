@@ -1,0 +1,72 @@
+{
+  "id": "aws-backend-api-python",
+  "phase": 1,
+  "enabled": true,
+  "name": "AWS Backend API (Python)",
+  "description": "Servicio API AWS-first con runtime Python.",
+  "dimensions": {
+    "cloud": "aws",
+    "workload": "backend-api",
+    "runtime": "python",
+    "provisioner": "none",
+    "framework": "none",
+    "features": ["api", "serverless", "python"]
+  },
+  "wizard": {
+    "workload": "backend-api",
+    "runtime": "python"
+  },
+  "detection": {
+    "priority": 210,
+    "anyFiles": ["pyproject.toml", "requirements.txt"],
+    "anyGlobs": ["api/**/*.py", "src/api/**/*.py", "app/**/*.py"],
+    "textPatterns": [
+      {
+        "path": "template.yaml",
+        "pattern": "AWS::Serverless::Api"
+      }
+    ]
+  },
+  "tooling": {
+    "linters": ["ruff"],
+    "formatters": ["black"],
+    "tests": ["pytest"],
+    "typecheck": ["mypy"],
+    "aws": ["awscli"],
+    "notes": ["Alinear API, validacion y testing con runtime Python."]
+  },
+  "agents": ["orbit", "aws-architect", "aws-api-integration", "aws-iam-security", "aws-observability", "aws-test-quality"],
+  "steeringPacks": ["core", "git", "security", "aws-shared", "runtime-python", "api", "testing", "observability"],
+  "localSkills": ["orbit-bootstrap", "python-runtime", "aws-api", "aws-testing", "aws-observability"],
+  "remoteSkills": ["supercent-api-documentation"],
+  "hooks": ["python-format-on-save.kiro.hook", "python-lint-on-save.kiro.hook", "python-test-after-task.kiro.hook"],
+  "extensionPacks": ["base", "python-aws"],
+  "validations": [
+    {
+      "tool": "python3",
+      "command": "python3 --version",
+      "minVersion": "3.10.0",
+      "required": true,
+      "installHint": "brew install python3 (macOS) | sudo apt install python3 (Linux)"
+    },
+    {
+      "tool": "aws",
+      "command": "aws --version",
+      "minVersion": "2.0.0",
+      "required": true,
+      "installHint": "brew install awscli (macOS) | sudo apt install awscli (Linux)"
+    },
+    {
+      "tool": "git",
+      "command": "git --version",
+      "minVersion": "2.30.0",
+      "required": true,
+      "installHint": "brew install git (macOS) | sudo apt install git (Linux)"
+    }
+  ],
+  "envCheck": {
+    "files": [".env", ".env.local"],
+    "requiredVars": []
+  },
+  "awsCheck": true
+}

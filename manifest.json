@@ -1,156 +1,107 @@
 {
-  "version": "1.0.0",
+  "version": "2.0.0",
+  "brand": {
+    "name": "Orbit",
+    "bootstrapAgent": "orbit",
+    "bootstrapModel": "haiku-4.5",
+    "installDir": "~/.kiro/orbit"
+  },
   "pipeline": {
     "steps": [
       {
-        "id": "detect-profile",
-        "name": "Detección de Perfil de Proyecto",
+        "id": "session-gates",
+        "name": "Session Gates",
         "enabled": true,
         "order": 1,
+        "type": "session"
+      },
+      {
+        "id": "detect-profile",
+        "name": "Detect Or Select Profile",
+        "enabled": true,
+        "order": 2,
         "type": "detection"
       },
       {
         "id": "validate-environment",
-        "name": "Validación de Entorno",
+        "name": "Validate Environment",
         "enabled": true,
-        "order": 2,
+        "order": 3,
         "type": "validation"
       },
       {
         "id": "load-artifacts",
-        "name": "Carga de Artefactos",
+        "name": "Load Orbit Artifacts",
         "enabled": true,
-        "order": 3,
+        "order": 4,
         "type": "loading"
+      },
+      {
+        "id": "write-project-state",
+        "name": "Write Project State",
+        "enabled": true,
+        "order": 5,
+        "type": "state"
       }
     ]
   },
-  "profiles": {
-    "frontend-nuxt": {
-      "name": "Frontend Nuxt",
-      "description": "Proyecto frontend con Nuxt 4, Vue 3, PrimeVue, Tailwind",
-      "detection": {
-        "requiredFiles": ["nuxt.config.ts"],
-        "packageDependencies": ["nuxt"]
-      },
-      "agents": [
-        "vue-dev",
-        "server-api",
-        "composables-stores",
-        "test-agent",
-        "orchestrator"
-      ],
-      "validations": [
-        {
-          "tool": "node",
-          "command": "node --version",
-          "minVersion": "18.0.0",
-          "required": true,
-          "installHint": "brew install node (macOS) | sudo apt install nodejs (Linux)"
-        },
-        {
-          "tool": "npm",
-          "command": "npm --version",
-          "minVersion": "9.0.0",
-          "required": true,
-          "installHint": "Se instala con Node.js"
-        },
-        {
-          "tool": "git",
-          "command": "git --version",
-          "minVersion": "2.30.0",
-          "required": true,
-          "installHint": "brew install git (macOS) | sudo apt install git (Linux)"
-        }
-      ],
-      "envCheck": {
-        "required": true,
-        "files": [".env", ".env.local"],
-        "requiredVars": [
-          "NUXT_PUBLIC_API_BASE",
-          "NUXT_PUBLIC_COGNITO_USER_POOL_ID"
+  "policies": {
+    "toolingMode": "prepare-and-validate",
+    "conflictStrategy": {
+      "default": "keep",
+      "options": ["keep", "overwrite", "diff"]
+    },
+    "remoteSkills": {
+      "mode": "confirm-before-install",
+      "commandTemplate": "npx skills add <package> -g -y"
+    },
+    "sessionOptOut": {
+      "bootstrap": "session",
+      "homePrompt": "session"
+    }
+  },
+  "sharedPacks": {
+    "steering": ["core", "git", "security", "aws-shared", "testing", "observability"],
+    "localSkills": ["orbit-bootstrap"],
+    "extensionPacks": ["base"]
+  },
+  "commands": {
+    "install": "install.sh",
+    "update": "install.sh --update",
+    "resyncProject": "install.sh --resync-project [path]",
+    "help": "install.sh --help"
+  },
+  "wizard": {
+    "questions": [
+      {
+        "id": "workload",
+        "label": "Que tipo de proyecto AWS quieres preparar?",
+        "options": [
+          "backend-api",
+          "backend-worker",
+          "infra",
+          "shared-lib",
+          "frontend-amplify"
         ]
       },
-      "awsCheck": true
-    },
-    "infraestructura-terraform": {
-      "name": "Infraestructura Terraform",
-      "description": "Proyecto de infraestructura como código con Terraform",
-      "detection": {
-        "requiredFiles": ["backend.tf"],
-        "filePatterns": ["*.tf"]
+      {
+        "id": "runtime",
+        "label": "Que runtime necesitas?",
+        "whenWorkloads": ["backend-api", "backend-worker", "shared-lib"],
+        "options": ["python", "typescript", "javascript"]
       },
-      "agents": ["terraform-agent"],
-      "validations": [
-        {
-          "tool": "terraform",
-          "command": "terraform --version",
-          "minVersion": "1.5.0",
-          "required": true,
-          "installHint": "brew install terraform (macOS) | sudo apt install terraform (Linux)"
-        },
-        {
-          "tool": "aws",
-          "command": "aws --version",
-          "minVersion": "2.0.0",
-          "required": true,
-          "installHint": "brew install awscli (macOS) | sudo apt install awscli (Linux)"
-        },
-        {
-          "tool": "git",
-          "command": "git --version",
-          "minVersion": "2.30.0",
-          "required": true,
-          "installHint": "brew install git (macOS) | sudo apt install git (Linux)"
-        }
-      ],
-      "awsCheck": true
-    },
-    "backend-lambda": {
-      "name": "Backend Lambda",
-      "description": "Proyecto backend serverless con AWS Lambda y TypeScript",
-      "detection": {
-        "requiredFiles": ["package.json"],
-        "packageDependencies": ["@aws-sdk/*"],
-        "excludeFiles": ["nuxt.config.ts"]
+      {
+        "id": "provisioner",
+        "label": "Que provisionador usas?",
+        "whenWorkloads": ["infra"],
+        "options": ["terraform", "cdk"]
       },
-      "agents": ["lambda-agent", "test-agent"],
-      "validations": [
-        {
-          "tool": "node",
-          "command": "node --version",
-          "minVersion": "18.0.0",
-          "required": true,
-          "installHint": "brew install node (macOS) | sudo apt install nodejs (Linux)"
-        },
-        {
-          "tool": "aws",
-          "command": "aws --version",
-          "minVersion": "2.0.0",
-          "required": true,
-          "installHint": "brew install awscli (macOS) | sudo apt install awscli (Linux)"
-        }
-      ],
-      "awsCheck": true
-    },
-    "backend-python": {
-      "name": "Backend Python",
-      "description": "Proyecto backend con Python",
-      "detection": {
-        "requiredFiles": ["pyproject.toml"],
-        "alternativeFiles": ["requirements.txt"]
-      },
-      "agents": ["python-agent", "test-agent"],
-      "validations": [
-        {
-          "tool": "python3",
-          "command": "python3 --version",
-          "minVersion": "3.10.0",
-          "required": true,
-          "installHint": "brew install python3 (macOS) | sudo apt install python3 (Linux)"
-        }
-      ],
-      "awsCheck": false
-    }
+      {
+        "id": "framework",
+        "label": "Que framework frontend quieres con Amplify?",
+        "whenWorkloads": ["frontend-amplify"],
+        "options": ["react", "vue", "nuxt"]
+      }
+    ]
   }
 }

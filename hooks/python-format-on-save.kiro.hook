@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Python Format On Save",
+  "description": "Formatea proyectos Python con black al guardar.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "filePatterns": ["**/*.py"]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "python3 -m black ."
+  }
+}

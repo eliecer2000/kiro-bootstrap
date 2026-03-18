@@ -1,0 +1,65 @@
+{
+  "id": "aws-backend-lambda-python",
+  "phase": 1,
+  "enabled": true,
+  "name": "AWS Backend Lambda (Python)",
+  "description": "Funciones Lambda AWS-first con Python.",
+  "dimensions": {
+    "cloud": "aws",
+    "workload": "backend-worker",
+    "runtime": "python",
+    "provisioner": "none",
+    "framework": "none",
+    "features": ["lambda", "python"]
+  },
+  "wizard": {
+    "workload": "backend-worker",
+    "runtime": "python"
+  },
+  "detection": {
+    "priority": 230,
+    "anyFiles": ["pyproject.toml", "requirements.txt"],
+    "anyGlobs": ["handlers/**/*.py", "src/handlers/**/*.py", "**/*lambda*.py"],
+    "textPatterns": [
+      {
+        "path": "template.yaml",
+        "pattern": "AWS::Serverless::Function"
+      }
+    ]
+  },
+  "tooling": {
+    "linters": ["ruff"],
+    "formatters": ["black"],
+    "tests": ["pytest"],
+    "typecheck": ["mypy"],
+    "aws": ["awscli"],
+    "notes": ["Alinear empaquetado, handlers y pruebas con Lambda."]
+  },
+  "agents": ["orbit", "aws-architect", "aws-lambda-python", "aws-iam-security", "aws-observability", "aws-test-quality"],
+  "steeringPacks": ["core", "git", "security", "aws-shared", "runtime-python", "lambda", "testing", "observability"],
+  "localSkills": ["orbit-bootstrap", "python-runtime", "aws-lambda-python", "aws-testing", "aws-observability"],
+  "remoteSkills": ["supercent-code-review"],
+  "hooks": ["python-format-on-save.kiro.hook", "python-lint-on-save.kiro.hook", "python-test-after-task.kiro.hook"],
+  "extensionPacks": ["base", "python-aws"],
+  "validations": [
+    {
+      "tool": "python3",
+      "command": "python3 --version",
+      "minVersion": "3.10.0",
+      "required": true,
+      "installHint": "brew install python3 (macOS) | sudo apt install python3 (Linux)"
+    },
+    {
+      "tool": "aws",
+      "command": "aws --version",
+      "minVersion": "2.0.0",
+      "required": true,
+      "installHint": "brew install awscli (macOS) | sudo apt install awscli (Linux)"
+    }
+  ],
+  "envCheck": {
+    "files": [".env", ".env.local"],
+    "requiredVars": []
+  },
+  "awsCheck": true
+}

@@ -1,17 +1,11 @@
-# Stack Tecnológico
+# Runtime Checklist
 
-## Frontend
+## Runtime
 
-<!-- Frameworks, librerías y herramientas del frontend -->
+## Linter y Formatter
 
-## Backend
+## Testing y Quality Gates
 
-<!-- Servicios, runtime y herramientas del backend -->
+## Tooling AWS
 
-## Infraestructura
-
-<!-- Servicios AWS, IaC y herramientas de infraestructura -->
-
-## CI/CD
-
-<!-- Pipeline, herramientas de despliegue y ambientes -->
+## Observabilidad

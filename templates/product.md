@@ -1,17 +1,11 @@
-# Producto
+# Project Overview
 
-## Nombre del Producto
+## Nombre
 
-<!-- Nombre del producto o servicio -->
+## Objetivo del Proyecto
 
-## Descripción
+## Perfil Orbit
 
-<!-- Descripción breve del producto y su propósito -->
+## Servicios AWS Involucrados
 
-## Usuarios Objetivo
-
-<!-- Quiénes son los usuarios principales -->
-
-## Funcionalidades Clave
-
-<!-- Lista de funcionalidades principales -->
+## Riesgos Operativos

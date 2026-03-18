@@ -1,15 +1,9 @@
 {
-  "description": "Extensiones base recomendadas para todos los perfiles de Escala 24x7",
+  "description": "Extensiones base recomendadas para Orbit.",
   "recommendations": [
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
     "editorconfig.editorconfig",
     "streetsidesoftware.code-spell-checker",
-    "streetsidesoftware.code-spell-checker-spanish",
-    "ms-ceintl.vscode-language-pack-es",
-    "mikestead.dotenv",
     "mhutchie.git-graph",
-    "christian-kohler.path-intellisense",
-    "beardedbear.beardedtheme"
+    "streetsidesoftware.code-spell-checker-spanish"
   ]
 }

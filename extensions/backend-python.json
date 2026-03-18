@@ -1,7 +1,0 @@
-{
-  "description": "Extensiones para perfil backend-python",
-  "recommendations": [
-    "ms-python.python",
-    "ms-python.vscode-pylance"
-  ]
-}

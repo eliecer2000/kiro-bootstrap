@@ -1,0 +1,44 @@
+{
+  "id": "aws-amplify-vue",
+  "phase": 2,
+  "enabled": false,
+  "name": "AWS Amplify Vue",
+  "description": "Fase 2: frontend Amplify con Vue.",
+  "dimensions": {
+    "cloud": "aws",
+    "workload": "frontend-amplify",
+    "runtime": "typescript",
+    "provisioner": "amplify",
+    "framework": "vue",
+    "features": ["frontend", "amplify", "vue"]
+  },
+  "wizard": {
+    "workload": "frontend-amplify",
+    "framework": "vue"
+  },
+  "detection": {
+    "priority": 120,
+    "requiredFiles": ["package.json"],
+    "packageJsonDependencies": ["aws-amplify", "vue"]
+  },
+  "tooling": {
+    "linters": ["eslint"],
+    "formatters": ["prettier"],
+    "tests": ["vitest"],
+    "typecheck": ["tsc"],
+    "aws": ["node"],
+    "notes": ["Reservado para fase 2."]
+  },
+  "agents": ["orbit", "aws-amplify-vue"],
+  "steeringPacks": ["core", "git", "security", "aws-shared", "amplify", "runtime-typescript", "testing", "observability"],
+  "localSkills": ["orbit-bootstrap", "typescript-runtime"],
+  "remoteSkills": ["github-documentation-writer"],
+  "hooks": ["node-format-on-save.kiro.hook", "node-lint-on-save.kiro.hook", "node-test-after-task.kiro.hook"],
+  "extensionPacks": ["base", "amplify-vue"],
+  "validations": [],
+  "envCheck": {
+    "files": [],
+    "requiredVars": []
+  },
+  "awsCheck": false
+}

@@ -1,0 +1,14 @@
+{
+  "enabled": true,
+  "name": "Node Lint On Save",
+  "description": "Ejecuta lint en proyectos Node.js al guardar.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "filePatterns": ["**/*.js", "**/*.cjs", "**/*.mjs", "**/*.ts", "**/*.tsx"]
+  },
+  "then": {
+    "type": "runCommand",
+    "command": "npm run lint"
+  }
+}

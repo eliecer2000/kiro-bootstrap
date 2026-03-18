@@ -1,0 +1,68 @@
+{
+  "id": "aws-backend-api-javascript",
+  "phase": 1,
+  "enabled": true,
+  "name": "AWS Backend API (JavaScript)",
+  "description": "Servicio API AWS-first con runtime JavaScript.",
+  "dimensions": {
+    "cloud": "aws",
+    "workload": "backend-api",
+    "runtime": "javascript",
+    "provisioner": "none",
+    "framework": "none",
+    "features": ["api", "serverless", "javascript"]
+  },
+  "wizard": {
+    "workload": "backend-api",
+    "runtime": "javascript"
+  },
+  "detection": {
+    "priority": 200,
+    "requiredFiles": ["package.json"],
+    "packageJsonDependencies": ["@aws-sdk/*"],
+    "anyGlobs": ["api/**/*.js", "src/api/**/*.js", "src/**/*.js"],
+    "excludeFiles": ["tsconfig.json"]
+  },
+  "tooling": {
+    "linters": ["eslint"],
+    "formatters": ["prettier"],
+    "tests": ["vitest"],
+    "typecheck": ["jsdoc"],
+    "aws": ["awscli", "node"],
+    "notes": ["Mantener scripts npm para lint, format y test."]
+  },
+  "agents": ["orbit", "aws-architect", "aws-api-integration", "aws-iam-security", "aws-observability", "aws-test-quality"],
+  "steeringPacks": ["core", "git", "security", "aws-shared", "runtime-javascript", "api", "testing", "observability"],
+  "localSkills": ["orbit-bootstrap", "javascript-runtime", "aws-api", "aws-testing", "aws-observability"],
+  "remoteSkills": ["supercent-api-documentation"],
+  "hooks": ["node-format-on-save.kiro.hook", "node-lint-on-save.kiro.hook", "node-test-after-task.kiro.hook"],
+  "extensionPacks": ["base", "javascript-aws"],
+  "validations": [
+    {
+      "tool": "node",
+      "command": "node --version",
+      "minVersion": "18.0.0",
+      "required": true,
+      "installHint": "brew install node (macOS) | sudo apt install nodejs (Linux)"
+    },
+    {
+      "tool": "npm",
+      "command": "npm --version",
+      "minVersion": "9.0.0",
+      "required": true,
+      "installHint": "Se instala con Node.js"
+    },
+    {
+      "tool": "aws",
+      "command": "aws --version",
+      "minVersion": "2.0.0",
+      "required": true,
+      "installHint": "brew install awscli (macOS) | sudo apt install awscli (Linux)"
+    }
+  ],
+  "envCheck": {
+    "files": [".env", ".env.local"],
+    "requiredVars": []
+  },
+  "awsCheck": true
+}

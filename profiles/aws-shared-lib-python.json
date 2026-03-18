@@ -1,0 +1,53 @@
+{
+  "id": "aws-shared-lib-python",
+  "phase": 1,
+  "enabled": true,
+  "name": "AWS Shared Library (Python)",
+  "description": "Libreria compartida Python para workloads AWS.",
+  "dimensions": {
+    "cloud": "aws",
+    "workload": "shared-lib",
+    "runtime": "python",
+    "provisioner": "none",
+    "framework": "none",
+    "features": ["shared-lib", "python"]
+  },
+  "wizard": {
+    "workload": "shared-lib",
+    "runtime": "python"
+  },
+  "detection": {
+    "priority": 180,
+    "anyFiles": ["pyproject.toml", "requirements.txt"],
+    "anyGlobs": ["src/**/*.py", "lib/**/*.py"],
+    "excludeFiles": ["template.yaml", "serverless.yml"]
+  },
+  "tooling": {
+    "linters": ["ruff"],
+    "formatters": ["black"],
+    "tests": ["pytest"],
+    "typecheck": ["mypy"],
+    "aws": [],
+    "notes": ["Perfil para librerias, SDK wrappers o utilidades compartidas."]
+  },
+  "agents": ["orbit", "aws-architect", "aws-test-quality"],
+  "steeringPacks": ["core", "git", "security", "aws-shared", "runtime-python", "testing"],
+  "localSkills": ["orbit-bootstrap", "python-runtime", "aws-testing"],
+  "remoteSkills": [],
+  "hooks": ["python-format-on-save.kiro.hook", "python-lint-on-save.kiro.hook", "python-test-after-task.kiro.hook"],
+  "extensionPacks": ["base", "python-aws"],
+  "validations": [
+    {
+      "tool": "python3",
+      "command": "python3 --version",
+      "minVersion": "3.10.0",
+      "required": true,
+      "installHint": "brew install python3 (macOS) | sudo apt install python3 (Linux)"
+    }
+  ],
+  "envCheck": {
+    "files": [],
+    "requiredVars": []
+  },
+  "awsCheck": false
+}
