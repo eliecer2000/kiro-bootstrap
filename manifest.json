@@ -37,10 +37,17 @@
         "type": "loading"
       },
       {
+        "id": "install-tooling",
+        "name": "Install Project Tooling",
+        "enabled": true,
+        "order": 5,
+        "type": "tooling"
+      },
+      {
         "id": "write-project-state",
         "name": "Write Project State",
         "enabled": true,
-        "order": 5,
+        "order": 6,
         "type": "state"
       }
     ]
@@ -62,7 +69,7 @@
   },
   "sharedPacks": {
     "steering": ["core", "git", "security", "aws-shared", "testing", "observability"],
-    "localSkills": ["orbit-bootstrap"],
+    "localSkills": ["orbit-bootstrap", "find-skills"],
     "extensionPacks": ["base"]
   },
   "commands": {

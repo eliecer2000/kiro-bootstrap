@@ -15,6 +15,7 @@ _DETECTED_PROFILE=""
 
 source "${_PL_BOOTSTRAP_DIR}/lib/session.sh"
 source "${_PL_BOOTSTRAP_DIR}/lib/load-artifacts.sh"
+source "${_PL_BOOTSTRAP_DIR}/lib/install-tooling.sh"
 source "${_PL_BOOTSTRAP_DIR}/validations/common.sh"
 
 _pl_catalog() {
@@ -80,6 +81,16 @@ execute_step() {
         project_dir="${ORBIT_SESSION_PROJECT_DIR}"
       fi
       write_project_state "$project_dir" "$bootstrap_dir" "$_DETECTED_PROFILE"
+      return $?
+      ;;
+    tooling)
+      if [[ "${ORBIT_SESSION_ABORTED:-0}" == "1" ]]; then
+        return 0
+      fi
+      if [[ -n "${ORBIT_SESSION_PROJECT_DIR:-}" ]]; then
+        project_dir="${ORBIT_SESSION_PROJECT_DIR}"
+      fi
+      install_profile_tooling "$project_dir" "$bootstrap_dir" "$_DETECTED_PROFILE"
       return $?
       ;;
     *)

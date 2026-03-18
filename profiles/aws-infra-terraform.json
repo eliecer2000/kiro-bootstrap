@@ -31,7 +31,7 @@
   },
   "agents": ["orbit", "aws-architect", "aws-terraform", "aws-iam-security", "aws-observability"],
   "steeringPacks": ["core", "git", "security", "aws-shared", "terraform", "observability"],
-  "localSkills": ["orbit-bootstrap", "aws-terraform", "aws-security", "aws-observability"],
+  "localSkills": ["orbit-bootstrap", "find-skills", "aws-terraform", "aws-security", "aws-observability"],
   "remoteSkills": ["supercent-code-review"],
   "hooks": ["terraform-fmt-on-save.kiro.hook", "terraform-validate-after-task.kiro.hook"],
   "extensionPacks": ["base", "terraform"],

@@ -63,7 +63,7 @@
       ],
       "supportedProfiles": ["*"],
       "steeringPacks": ["core", "git", "security", "aws-shared", "testing", "observability"],
-      "localSkills": ["orbit-bootstrap"],
+      "localSkills": ["orbit-bootstrap", "find-skills"],
       "remoteSkills": ["github-documentation-writer", "github-refactor-plan"],
       "modelDefault": "sonnet-4.6",
       "acceptanceChecklist": [
@@ -116,7 +116,7 @@
         "aws-shared-lib-javascript"
       ],
       "steeringPacks": ["core", "security", "aws-shared", "observability"],
-      "localSkills": ["aws-architecture"],
+      "localSkills": ["aws-architecture", "find-skills"],
       "remoteSkills": ["github-documentation-writer"],
       "modelDefault": "sonnet-4",
       "acceptanceChecklist": [
@@ -149,7 +149,7 @@
       ],
       "supportedProfiles": ["aws-backend-lambda-python"],
       "steeringPacks": ["core", "aws-shared", "runtime-python", "lambda", "testing", "observability"],
-      "localSkills": ["python-runtime", "aws-lambda-python", "aws-testing"],
+      "localSkills": ["python-runtime", "aws-lambda-python", "aws-serverless", "aws-testing", "find-skills"],
       "remoteSkills": ["supercent-code-review"],
       "modelDefault": "sonnet-4",
       "acceptanceChecklist": [
@@ -185,7 +185,7 @@
         "aws-backend-lambda-javascript"
       ],
       "steeringPacks": ["core", "aws-shared", "runtime-typescript", "runtime-javascript", "lambda", "testing", "observability"],
-      "localSkills": ["typescript-runtime", "javascript-runtime", "aws-lambda-typescript", "aws-testing"],
+      "localSkills": ["typescript-runtime", "javascript-runtime", "aws-lambda-typescript", "aws-serverless", "aws-testing", "find-skills"],
       "remoteSkills": ["supercent-code-review"],
       "modelDefault": "sonnet-4",
       "acceptanceChecklist": [
@@ -222,7 +222,7 @@
         "aws-backend-api-javascript"
       ],
       "steeringPacks": ["core", "aws-shared", "api", "testing", "observability"],
-      "localSkills": ["aws-api", "aws-testing"],
+      "localSkills": ["aws-api", "aws-serverless", "aws-testing", "find-skills"],
       "remoteSkills": ["supercent-api-documentation"],
       "modelDefault": "sonnet-4",
       "acceptanceChecklist": [
@@ -250,7 +250,7 @@
       ],
       "supportedProfiles": ["aws-infra-terraform"],
       "steeringPacks": ["core", "security", "aws-shared", "terraform", "observability"],
-      "localSkills": ["aws-terraform"],
+      "localSkills": ["aws-terraform", "find-skills"],
       "remoteSkills": ["supercent-code-review"],
       "modelDefault": "sonnet-4",
       "acceptanceChecklist": [
@@ -278,7 +278,7 @@
       ],
       "supportedProfiles": ["aws-infra-cdk-typescript"],
       "steeringPacks": ["core", "security", "aws-shared", "runtime-typescript", "cdk", "observability"],
-      "localSkills": ["typescript-runtime", "aws-cdk"],
+      "localSkills": ["typescript-runtime", "aws-cdk", "find-skills"],
       "remoteSkills": ["supercent-code-review"],
       "modelDefault": "sonnet-4",
       "acceptanceChecklist": [
@@ -306,7 +306,7 @@
       ],
       "supportedProfiles": ["*"],
       "steeringPacks": ["core", "security", "aws-shared", "observability"],
-      "localSkills": ["aws-security"],
+      "localSkills": ["aws-security", "find-skills"],
       "remoteSkills": ["supercent-code-review"],
       "modelDefault": "sonnet-4",
       "acceptanceChecklist": [
@@ -342,7 +342,7 @@
         "aws-backend-lambda-javascript"
       ],
       "steeringPacks": ["core", "aws-shared", "observability"],
-      "localSkills": ["aws-dynamodb"],
+      "localSkills": ["aws-dynamodb", "find-skills"],
       "remoteSkills": [],
       "modelDefault": "sonnet-4",
       "acceptanceChecklist": [
@@ -370,7 +370,7 @@
       ],
       "supportedProfiles": ["*"],
       "steeringPacks": ["core", "aws-shared", "observability", "testing"],
-      "localSkills": ["aws-observability"],
+      "localSkills": ["aws-observability", "find-skills"],
       "remoteSkills": [],
       "modelDefault": "sonnet-4",
       "acceptanceChecklist": [
@@ -398,7 +398,7 @@
       ],
       "supportedProfiles": ["*"],
       "steeringPacks": ["core", "testing", "observability"],
-      "localSkills": ["aws-testing"],
+      "localSkills": ["aws-testing", "find-skills"],
       "remoteSkills": ["supercent-code-review"],
       "modelDefault": "sonnet-4",
       "acceptanceChecklist": [
@@ -421,7 +421,7 @@
       "handoffs": [],
       "supportedProfiles": ["aws-amplify-react"],
       "steeringPacks": ["core", "aws-shared", "amplify", "runtime-typescript", "testing"],
-      "localSkills": ["typescript-runtime"],
+      "localSkills": ["typescript-runtime", "find-skills"],
       "remoteSkills": ["github-documentation-writer"],
       "modelDefault": "sonnet-4",
       "acceptanceChecklist": ["Reservado para fase 2."],
@@ -440,7 +440,7 @@
       "handoffs": [],
       "supportedProfiles": ["aws-amplify-vue"],
       "steeringPacks": ["core", "aws-shared", "amplify", "runtime-typescript", "testing"],
-      "localSkills": ["typescript-runtime"],
+      "localSkills": ["typescript-runtime", "find-skills"],
       "remoteSkills": ["github-documentation-writer"],
       "modelDefault": "sonnet-4",
       "acceptanceChecklist": ["Reservado para fase 2."],
@@ -459,7 +459,7 @@
       "handoffs": [],
       "supportedProfiles": ["aws-amplify-nuxt"],
       "steeringPacks": ["core", "aws-shared", "amplify", "runtime-typescript", "testing"],
-      "localSkills": ["typescript-runtime"],
+      "localSkills": ["typescript-runtime", "find-skills"],
       "remoteSkills": ["github-documentation-writer"],
       "modelDefault": "sonnet-4",
       "acceptanceChecklist": ["Reservado para fase 2."],

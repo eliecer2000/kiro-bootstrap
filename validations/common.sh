@@ -51,6 +51,137 @@ format_missing_tool_message() {
   echo "Herramienta '$1' no encontrada. Instalar con: $2"
 }
 
+# Intenta instalar una herramienta de sistema automáticamente
+auto_install_system_tool() {
+  local tool_name="$1"
+  local install_hint="$2"
+  local os_name
+
+  if [[ "${ORBIT_AUTO_INSTALL_TOOLS:-yes}" == "no" ]]; then
+    return 1
+  fi
+
+  os_name="$(uname -s)"
+
+  case "$tool_name" in
+    git)
+      case "$os_name" in
+        Darwin)
+          if command -v brew >/dev/null 2>&1; then
+            echo -e "    ${_VC_YELLOW}Instalando git via Homebrew...${_VC_NC}"
+            brew install git 2>/dev/null && return 0
+          fi
+          echo -e "    ${_VC_YELLOW}Instalando git via Xcode Command Line Tools...${_VC_NC}"
+          xcode-select --install 2>/dev/null && return 0
+          ;;
+        Linux)
+          if command -v apt-get >/dev/null 2>&1; then
+            echo -e "    ${_VC_YELLOW}Instalando git via apt...${_VC_NC}"
+            sudo apt-get install -y git 2>/dev/null && return 0
+          fi
+          if command -v yum >/dev/null 2>&1; then
+            echo -e "    ${_VC_YELLOW}Instalando git via yum...${_VC_NC}"
+            sudo yum install -y git 2>/dev/null && return 0
+          fi
+          ;;
+      esac
+      ;;
+    node|npm)
+      case "$os_name" in
+        Darwin)
+          if command -v brew >/dev/null 2>&1; then
+            echo -e "    ${_VC_YELLOW}Instalando Node.js via Homebrew...${_VC_NC}"
+            brew install node 2>/dev/null && return 0
+          fi
+          ;;
+        Linux)
+          if command -v apt-get >/dev/null 2>&1; then
+            echo -e "    ${_VC_YELLOW}Instalando Node.js via apt...${_VC_NC}"
+            sudo apt-get install -y nodejs npm 2>/dev/null && return 0
+          fi
+          ;;
+      esac
+      # Fallback: nvm
+      if command -v nvm >/dev/null 2>&1; then
+        echo -e "    ${_VC_YELLOW}Instalando Node.js via nvm...${_VC_NC}"
+        nvm install --lts 2>/dev/null && return 0
+      fi
+      ;;
+    python3)
+      case "$os_name" in
+        Darwin)
+          if command -v brew >/dev/null 2>&1; then
+            echo -e "    ${_VC_YELLOW}Instalando Python 3 via Homebrew...${_VC_NC}"
+            brew install python3 2>/dev/null && return 0
+          fi
+          ;;
+        Linux)
+          if command -v apt-get >/dev/null 2>&1; then
+            echo -e "    ${_VC_YELLOW}Instalando Python 3 via apt...${_VC_NC}"
+            sudo apt-get install -y python3 python3-pip 2>/dev/null && return 0
+          fi
+          ;;
+      esac
+      ;;
+    aws)
+      case "$os_name" in
+        Darwin)
+          if command -v brew >/dev/null 2>&1; then
+            echo -e "    ${_VC_YELLOW}Instalando AWS CLI via Homebrew...${_VC_NC}"
+            brew install awscli 2>/dev/null && return 0
+          fi
+          ;;
+        Linux)
+          echo -e "    ${_VC_YELLOW}Instalando AWS CLI...${_VC_NC}"
+          curl -s "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip" 2>/dev/null \
+            && unzip -qo /tmp/awscliv2.zip -d /tmp 2>/dev/null \
+            && sudo /tmp/aws/install 2>/dev/null \
+            && rm -rf /tmp/awscliv2.zip /tmp/aws \
+            && return 0
+          ;;
+      esac
+      ;;
+    terraform)
+      case "$os_name" in
+        Darwin)
+          if command -v brew >/dev/null 2>&1; then
+            echo -e "    ${_VC_YELLOW}Instalando Terraform via Homebrew...${_VC_NC}"
+            brew install terraform 2>/dev/null && return 0
+          fi
+          ;;
+        Linux)
+          if command -v apt-get >/dev/null 2>&1; then
+            echo -e "    ${_VC_YELLOW}Instalando Terraform via apt...${_VC_NC}"
+            sudo apt-get install -y terraform 2>/dev/null && return 0
+          fi
+          ;;
+      esac
+      ;;
+    pnpm)
+      if command -v npm >/dev/null 2>&1; then
+        echo -e "    ${_VC_YELLOW}Instalando pnpm via npm...${_VC_NC}"
+        npm install -g pnpm 2>/dev/null && return 0
+      fi
+      if command -v corepack >/dev/null 2>&1; then
+        echo -e "    ${_VC_YELLOW}Habilitando pnpm via corepack...${_VC_NC}"
+        corepack enable pnpm 2>/dev/null && return 0
+      fi
+      ;;
+    yarn)
+      if command -v corepack >/dev/null 2>&1; then
+        echo -e "    ${_VC_YELLOW}Habilitando yarn via corepack...${_VC_NC}"
+        corepack enable yarn 2>/dev/null && return 0
+      fi
+      if command -v npm >/dev/null 2>&1; then
+        echo -e "    ${_VC_YELLOW}Instalando yarn via npm...${_VC_NC}"
+        npm install -g yarn 2>/dev/null && return 0
+      fi
+      ;;
+  esac
+
+  return 1
+}
+
 validate_tool() {
   local tool_name="$1"
   local version_command="$2"
@@ -60,7 +191,16 @@ validate_tool() {
   local installed_version
 
   if ! check_tool_present "$tool_name"; then
+    # Intentar auto-instalación si es requerida
     if [[ "$required" == "true" ]]; then
+      if auto_install_system_tool "$tool_name" "$install_hint"; then
+        # Verificar que se instaló correctamente
+        if check_tool_present "$tool_name"; then
+          installed_version="$(get_tool_version "$version_command")"
+          echo "PASS ${tool_name} ${installed_version:-instalado} ${tool_name} instalado automaticamente (${installed_version:-version desconocida})"
+          return 0
+        fi
+      fi
       echo "FAIL ${tool_name} no-instalado $(format_missing_tool_message "$tool_name" "$install_hint")"
       return 1
     fi

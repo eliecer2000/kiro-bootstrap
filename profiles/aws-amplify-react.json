@@ -31,11 +31,33 @@
   },
   "agents": ["orbit", "aws-amplify-react"],
   "steeringPacks": ["core", "git", "security", "aws-shared", "amplify", "runtime-typescript", "testing", "observability"],
-  "localSkills": ["orbit-bootstrap", "typescript-runtime"],
+  "localSkills": ["orbit-bootstrap", "find-skills", "typescript-runtime"],
   "remoteSkills": ["github-documentation-writer"],
   "hooks": ["node-format-on-save.kiro.hook", "node-lint-on-save.kiro.hook", "node-test-after-task.kiro.hook"],
   "extensionPacks": ["base", "amplify-react"],
-  "validations": [],
+  "validations": [
+    {
+      "tool": "git",
+      "command": "git --version",
+      "minVersion": "2.30.0",
+      "required": true,
+      "installHint": "brew install git (macOS) | sudo apt install git (Linux)"
+    },
+    {
+      "tool": "node",
+      "command": "node --version",
+      "minVersion": "18.0.0",
+      "required": true,
+      "installHint": "brew install node (macOS) | sudo apt install nodejs (Linux)"
+    },
+    {
+      "tool": "npm",
+      "command": "npm --version",
+      "minVersion": "9.0.0",
+      "required": true,
+      "installHint": "Se instala con Node.js"
+    }
+  ],
   "envCheck": {
     "files": [],
     "requiredVars": []

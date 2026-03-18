@@ -37,11 +37,18 @@
   },
   "agents": ["orbit", "aws-architect", "aws-lambda-python", "aws-iam-security", "aws-observability", "aws-test-quality"],
   "steeringPacks": ["core", "git", "security", "aws-shared", "runtime-python", "lambda", "testing", "observability"],
-  "localSkills": ["orbit-bootstrap", "python-runtime", "aws-lambda-python", "aws-testing", "aws-observability"],
+  "localSkills": ["orbit-bootstrap", "find-skills", "python-runtime", "aws-lambda-python", "aws-serverless", "aws-testing", "aws-observability"],
   "remoteSkills": ["supercent-code-review"],
   "hooks": ["python-format-on-save.kiro.hook", "python-lint-on-save.kiro.hook", "python-test-after-task.kiro.hook"],
   "extensionPacks": ["base", "python-aws"],
   "validations": [
+    {
+      "tool": "git",
+      "command": "git --version",
+      "minVersion": "2.30.0",
+      "required": true,
+      "installHint": "brew install git (macOS) | sudo apt install git (Linux)"
+    },
     {
       "tool": "python3",
       "command": "python3 --version",

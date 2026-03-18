@@ -178,6 +178,18 @@ def emit_pipeline_steps(bootstrap_dir: pathlib.Path) -> None:
         print(f"{order}|{step_id}|{name}|{enabled}|{step_type}")
 
 
+def _resolve_nested_field(data: dict[str, Any], field: str) -> Any:
+    """Resolve dot-notation field paths like 'dimensions.runtime'."""
+    parts = field.split(".")
+    current: Any = data
+    for part in parts:
+        if isinstance(current, dict):
+            current = current.get(part, "")
+        else:
+            return ""
+    return current
+
+
 def emit_profile_field(bootstrap_dir: pathlib.Path, profile_id: str, field: str | None) -> None:
     profiles = load_profiles(bootstrap_dir)
     if profile_id not in profiles:
@@ -186,7 +198,7 @@ def emit_profile_field(bootstrap_dir: pathlib.Path, profile_id: str, field: str 
     if not field:
         print(json.dumps(profile, indent=2))
         return
-    value = profile.get(field, "")
+    value = _resolve_nested_field(profile, field) if "." in field else profile.get(field, "")
     if isinstance(value, list):
         print("\n".join(str(item) for item in value))
     elif isinstance(value, dict):

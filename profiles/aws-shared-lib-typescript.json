@@ -32,11 +32,18 @@
   },
   "agents": ["orbit", "aws-architect", "aws-test-quality"],
   "steeringPacks": ["core", "git", "security", "aws-shared", "runtime-typescript", "testing"],
-  "localSkills": ["orbit-bootstrap", "typescript-runtime", "aws-testing"],
+  "localSkills": ["orbit-bootstrap", "find-skills", "typescript-runtime", "aws-testing"],
   "remoteSkills": [],
   "hooks": ["node-format-on-save.kiro.hook", "node-lint-on-save.kiro.hook", "node-test-after-task.kiro.hook"],
   "extensionPacks": ["base", "typescript-aws"],
   "validations": [
+    {
+      "tool": "git",
+      "command": "git --version",
+      "minVersion": "2.30.0",
+      "required": true,
+      "installHint": "brew install git (macOS) | sudo apt install git (Linux)"
+    },
     {
       "tool": "node",
       "command": "node --version",
