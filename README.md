@@ -1,8 +1,6 @@
 # Orbit Bootstrap
 
-Framework personal de bootstrap para Kiro con enfoque AWS-first. Orbit detecta o resuelve el tipo de proyecto, valida el entorno, carga agentes/steering/skills por perfil, recomienda extensiones y puede resincronizar `.kiro` cuando el proyecto cambia.
-
-Orbit usa `sonnet-4.6` para la configuracion del entorno y onboarding del proyecto.
+Framework de bootstrap para [Kiro](https://kiro.dev) con enfoque AWS-first. Orbit prepara workspaces de desarrollo detectando el tipo de proyecto, validando e instalando herramientas, cargando agentes y skills por perfil, y dejando el entorno listo para trabajar.
 
 ## Instalacion
 
@@ -10,112 +8,144 @@ Orbit usa `sonnet-4.6` para la configuracion del entorno y onboarding del proyec
 curl -sL https://raw.githubusercontent.com/eliecer2000/kiro-bootstrap/main/install.sh | bash
 ```
 
-Comandos principales:
+Despues de instalar:
 
 ```bash
+# Ver opciones disponibles
 ~/.kiro/orbit/install.sh --help
+
+# Actualizar el framework
 ~/.kiro/orbit/install.sh --update
+
+# Resincronizar un proyecto existente
 ~/.kiro/orbit/install.sh --resync-project .
 ```
 
-## Que Hace Orbit
+## Como funciona
 
-- Pregunta si deseas preparar el entorno antes de ejecutar bootstrap.
-- Si arrancas en `HOME`, ofrece crear una carpeta de proyecto una sola vez por sesion.
-- Detecta perfiles AWS-first o lanza un wizard guiado por workload, runtime y provisioner.
-- Valida tooling del runtime.
-- Carga agentes, steering, skills locales y hooks compatibles con el perfil.
-- Propone skills remotas via `skills.sh` con confirmacion explicita.
-- Escribe `.kiro/.orbit-project.json` para registrar perfil y ultima resincronizacion.
+Orbit ejecuta un pipeline de 6 pasos cuando preparas un proyecto:
 
-## Ejecucion Desde Kiro
+```
+1. Session Gates         → Pregunta si deseas preparar el entorno
+2. Detect/Select Profile → Detecta el perfil o lanza un wizard
+3. Validate Environment  → Valida herramientas de sistema (git, node, python3, aws, terraform)
+                           e intenta instalarlas si faltan
+4. Load Artifacts        → Copia agentes, steering, skills y hooks del perfil a .kiro/
+5. Install Tooling       → Instala devDependencies del proyecto (eslint, prettier, vitest, ruff, etc.)
+6. Write Project State   → Escribe .kiro/.orbit-project.json con metadata del perfil
+```
 
-Cuando el usuario pide configurar el entorno, Orbit debe ejecutar primero el pipeline real del framework y solo despues continuar con el scaffolding del stack. El patron esperado es:
+El perfil se resuelve con un wizard basado en 4 dimensiones:
+
+| Dimension | Opciones |
+|---|---|
+| Workload | backend-api, backend-worker, infra, shared-lib, frontend-amplify |
+| Runtime | typescript, javascript, python |
+| Provisioner | cdk, terraform, amplify |
+| Framework | react, vue, nuxt (solo frontend-amplify) |
+
+## Perfiles disponibles
+
+### Fase 1 (activos)
+
+| Perfil | Workload | Runtime | Provisioner |
+|---|---|---|---|
+| `aws-backend-api-typescript` | API Backend | TypeScript | — |
+| `aws-backend-api-python` | API Backend | Python | — |
+| `aws-backend-api-javascript` | API Backend | JavaScript | — |
+| `aws-backend-lambda-typescript` | Lambda Worker | TypeScript | — |
+| `aws-backend-lambda-python` | Lambda Worker | Python | — |
+| `aws-backend-lambda-javascript` | Lambda Worker | JavaScript | — |
+| `aws-infra-cdk-typescript` | Infraestructura | TypeScript | CDK |
+| `aws-infra-terraform` | Infraestructura | HCL | Terraform |
+| `aws-shared-lib-typescript` | Shared Library | TypeScript | — |
+| `aws-shared-lib-python` | Shared Library | Python | — |
+| `aws-shared-lib-javascript` | Shared Library | JavaScript | — |
+
+### Fase 2 (preparados, deshabilitados)
+
+| Perfil | Framework |
+|---|---|
+| `aws-amplify-react` | React |
+| `aws-amplify-vue` | Vue |
+| `aws-amplify-nuxt` | Nuxt |
+
+## Agentes
+
+Orbit incluye 14 agentes especializados que se asignan segun el perfil del proyecto:
+
+| Agente | Rol |
+|---|---|
+| `orbit` | Bootstrap, onboarding, resincronizacion y coordinacion |
+| `aws-architect` | Arquitectura AWS, patrones serverless y decisiones de diseno |
+| `aws-lambda-python` | Funciones Lambda con Python |
+| `aws-lambda-typescript` | Funciones Lambda con TypeScript/JavaScript |
+| `aws-api-integration` | Contratos API, eventos, auth e integraciones |
+| `aws-cdk` | Infraestructura con AWS CDK |
+| `aws-terraform` | Infraestructura con Terraform |
+| `aws-iam-security` | IAM, secretos, cifrado y least privilege |
+| `aws-data-dynamodb` | Modelado DynamoDB y access patterns |
+| `aws-observability` | Logs, metricas, alarmas y trazas |
+| `aws-test-quality` | Pruebas, quality gates y aceptacion tecnica |
+| `aws-amplify-react` | Frontend Amplify + React (fase 2) |
+| `aws-amplify-vue` | Frontend Amplify + Vue (fase 2) |
+| `aws-amplify-nuxt` | Frontend Amplify + Nuxt (fase 2) |
+
+## Skills
+
+22 skills locales organizadas por dominio:
+
+| Categoria | Skills |
+|---|---|
+| Runtime | `typescript-runtime`, `javascript-runtime`, `python-runtime` |
+| Serverless | `aws-lambda-typescript`, `aws-lambda-python`, `aws-serverless` |
+| API & Data | `aws-api`, `aws-dynamodb` |
+| Infraestructura | `aws-cdk`, `aws-terraform`, `aws-ec2`, `aws-rds`, `aws-s3`, `aws-cloudfront` |
+| Seguridad | `aws-security` |
+| Operaciones | `aws-observability`, `aws-cost-operations`, `aws-diagrams` |
+| Testing | `aws-testing` |
+| Arquitectura | `aws-architecture` |
+| Framework | `orbit-bootstrap`, `find-skills` |
+
+`find-skills` es obligatoria en todos los perfiles — permite descubrir e instalar skills adicionales via `npx skills`.
+
+## Estructura del repositorio
+
+```
+agents/          Definiciones JSON de cada agente
+profiles/        Perfiles de proyecto (deteccion, tooling, validaciones, agentes, skills)
+steering/        Packs de reglas por capa tecnica
+skills/          Skills locales con documentacion completa
+hooks/           Hooks automatizados por runtime (format, lint, test)
+extensions/      Packs de extensiones de Kiro por perfil
+lib/             Runtime: pipeline, sesion, catalogo, carga de artefactos, instalacion de tooling
+validations/     Validacion y auto-instalacion de herramientas de sistema
+docs/            Documentacion tecnica del framework
+templates/       Plantillas de contexto para onboarding de proyectos
+tests/           Suite de tests del framework
+```
+
+## Ejecucion desde Kiro
+
+Cuando Orbit opera desde el chat de Kiro, ejecuta el pipeline real antes de cualquier scaffolding:
 
 ```bash
-ORBIT_BOOTSTRAP_DECISION=yes ORBIT_HOME_DECISION=no ORBIT_PROJECT_PROFILE_ID=<project-profile-id> ORBIT_REMOTE_SKILL_DECISION=no ~/.kiro/orbit/install.sh --resync-project "<ruta>"
+ORBIT_BOOTSTRAP_DECISION=yes \
+ORBIT_HOME_DECISION=no \
+ORBIT_PROJECT_PROFILE_ID=<profile-id> \
+ORBIT_REMOTE_SKILL_DECISION=no \
+~/.kiro/orbit/install.sh --resync-project "<ruta>"
 ```
 
-Si el usuario aprueba skills remotas, `ORBIT_REMOTE_SKILL_DECISION` debe ir en `yes`.
-
-No se debe iniciar `cdk init`, `terraform init` ni scaffolding de aplicacion hasta que existan `.kiro/.orbit-project.json`, `.kiro/agents`, `.kiro/steering`, `.kiro/skills` y `.kiro/hooks`.
-
-Durante el bootstrap normal no se deben pedir perfiles de AWS CLI, credenciales ni validar identidad AWS. Eso se difiere hasta que el usuario diga explicitamente que quiere desplegar o verificar su conexion AWS.
-
-## Perfiles Soportados
-
-Fase 1:
-
-- `aws-backend-api-python`
-- `aws-backend-api-typescript`
-- `aws-backend-api-javascript`
-- `aws-backend-lambda-python`
-- `aws-backend-lambda-typescript`
-- `aws-backend-lambda-javascript`
-- `aws-infra-terraform`
-- `aws-infra-cdk-typescript`
-- `aws-shared-lib-python`
-- `aws-shared-lib-typescript`
-- `aws-shared-lib-javascript`
-
-Fase 2 preparada en catalogo:
-
-- `aws-amplify-react`
-- `aws-amplify-vue`
-- `aws-amplify-nuxt`
-
-## Catalogo de Agentes AWS
-
-- `orbit`: bootstrap, onboarding, resincronizacion, gating de skills remotas y escritura del estado del proyecto.
-- `aws-architect`: arquitectura, segmentacion del sistema y decisiones AWS-first.
-- `aws-lambda-python`: Lambda Python, handlers, empaquetado, pruebas y observabilidad.
-- `aws-lambda-typescript`: Lambda TypeScript/JavaScript, bundling, AWS SDK v3 y runtime Node.js.
-- `aws-api-integration`: contratos HTTP, eventos, auth e integraciones.
-- `aws-terraform`: Terraform, modulos, state y despliegue IaC.
-- `aws-cdk`: stacks, constructs y flujos CDK.
-- `aws-iam-security`: IAM, secretos, cifrado y endurecimiento basico.
-- `aws-data-dynamodb`: modelado DynamoDB y access patterns.
-- `aws-observability`: logs, metricas, alarmas y trazas.
-- `aws-test-quality`: pruebas, contratos y quality gates.
-
-## Estructura
-
-```text
-agents/       Definiciones JSON de agentes Orbit
-profiles/     Fuente de verdad por perfil
-steering/     Packs de reglas por capa
-skills/       Skills locales del framework
-hooks/        Automatizaciones segmentadas por runtime
-extensions/   Packs de extensiones de Kiro
-lib/          Runtime shell + parser del catalogo
-validations/  Validacion declarativa por perfil
-docs/         Guias de uso, catalogo y authoring
-templates/    Plantillas de contexto tecnico y onboarding
-```
-
-## Skills.sh
-
-Orbit usa un allowlist de skills remotas en `agents-registry.json`. Cuando una skill remota es necesaria:
-
-1. Muestra el paquete, el proposito y el comando exacto.
-2. Pide confirmacion.
-3. Ejecuta `npx skills add <package> -g -y` solo si el usuario acepta.
-
-## Agregar Nuevos Agentes
-
-1. Crear el JSON del agente en `agents/`.
-2. Registrar el contrato completo en `agents-registry.json`.
-3. Asociar steering packs, skills locales y remote skills permitidas.
-4. Declarar perfiles soportados.
-5. Documentar el agente y agregar cobertura minima en tests.
+Orbit resuelve el `profile-id` internamente a partir del wizard. No pide el ID crudo al usuario, ni credenciales AWS durante el bootstrap normal.
 
 ## Documentacion
 
-- [Arquitectura](docs/architecture.md)
-- [Flujo de Bootstrap](docs/bootstrap-flow.md)
-- [Matriz de Perfiles](docs/profile-matrix.md)
-- [Catalogo de Agentes](docs/agent-catalog.md)
-- [Authoring](docs/authoring.md)
+- [Arquitectura](docs/architecture.md) — Componentes, catalogo declarativo y runtime
+- [Flujo de Bootstrap](docs/bootstrap-flow.md) — Pipeline paso a paso
+- [Matriz de Perfiles](docs/profile-matrix.md) — Detalle de cada perfil
+- [Catalogo de Agentes](docs/agent-catalog.md) — Roles, responsabilidades y handoffs
+- [Guia de Authoring](docs/authoring.md) — Como agregar agentes, skills, perfiles y steering
 
 ## Tests
 
