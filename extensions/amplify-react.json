@@ -2,6 +2,10 @@
   "description": "Fase 2: tooling para Amplify con React.",
   "recommendations": [
     "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "amazonwebservices.aws-toolkit-vscode",
+    "bradlc.vscode-tailwindcss",
+    "wix.vscode-import-cost",
+    "ritwickdey.liveserver"
   ]
 }

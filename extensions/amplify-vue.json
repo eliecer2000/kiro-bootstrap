@@ -2,7 +2,12 @@
   "description": "Fase 2: tooling para Amplify con Vue.",
   "recommendations": [
     "vue.volar",
+    "octref.vetur",
     "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode"
+    "esbenp.prettier-vscode",
+    "amazonwebservices.aws-toolkit-vscode",
+    "bradlc.vscode-tailwindcss",
+    "wix.vscode-import-cost",
+    "ritwickdey.liveserver"
   ]
 }

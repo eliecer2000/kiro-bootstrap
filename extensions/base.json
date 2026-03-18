@@ -3,7 +3,22 @@
   "recommendations": [
     "editorconfig.editorconfig",
     "streetsidesoftware.code-spell-checker",
+    "streetsidesoftware.code-spell-checker-spanish",
+    "ms-ceintl.vscode-language-pack-es",
     "mhutchie.git-graph",
-    "streetsidesoftware.code-spell-checker-spanish"
+    "wayou.vscode-todo-highlight",
+    "dirsouza.reload-cursor-editor",
+    "beardedbear.beardedtheme",
+    "christian-kohler.path-intellisense",
+    "mikestead.dotenv",
+    "pflannery.vscode-versionlens",
+    "krish-r.vscode-toggle-terminal",
+    "trybick.terminal-zoom",
+    "wraith13.zoombar-vscode",
+    "imgildev.vscode-code-log-plus",
+    "cweijan.vscode-ssh",
+    "jajera.vsx-remote-ssh",
+    "virgointernetservicesltd.virgo-ssh",
+    "ms-azuretools.vscode-containers"
   ]
 }

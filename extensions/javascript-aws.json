@@ -3,6 +3,9 @@
   "recommendations": [
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
-    "christian-kohler.npm-intellisense"
+    "christian-kohler.npm-intellisense",
+    "amazonwebservices.aws-toolkit-vscode",
+    "bradlc.vscode-tailwindcss",
+    "wix.vscode-import-cost"
   ]
 }

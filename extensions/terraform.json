@@ -1,6 +1,7 @@
 {
   "description": "Tooling para Terraform en AWS.",
   "recommendations": [
-    "hashicorp.terraform"
+    "hashicorp.terraform",
+    "amazonwebservices.aws-toolkit-vscode"
   ]
 }
