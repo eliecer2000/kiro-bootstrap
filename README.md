@@ -1,6 +1,17 @@
 # Orbit Bootstrap
 
-Framework de bootstrap para [Kiro](https://kiro.dev) con enfoque AWS-first. Orbit prepara workspaces de desarrollo detectando el tipo de proyecto, validando e instalando herramientas, cargando agentes y skills por perfil, y dejando el entorno listo para trabajar.
+> Framework AWS-first para [Kiro](https://kiro.dev) que detecta tu tipo de proyecto, valida e instala herramientas, carga agentes y skills por perfil, y deja el entorno listo para trabajar — en segundos.
+
+[![GitHub stars](https://img.shields.io/github/stars/eliecer2000/kiro-bootstrap?style=social)](https://github.com/eliecer2000/kiro-bootstrap/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/eliecer2000/kiro-bootstrap?style=social)](https://github.com/eliecer2000/kiro-bootstrap/network)
+[![Last commit](https://img.shields.io/github/last-commit/eliecer2000/kiro-bootstrap)](https://github.com/eliecer2000/kiro-bootstrap/commits/main)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue)](https://github.com/eliecer2000/kiro-bootstrap/releases)
+
+---
+
+![Orbit Bootstrap Demo](assets/REC-20260318140741.gif)
+
+---
 
 ## Instalacion
 
