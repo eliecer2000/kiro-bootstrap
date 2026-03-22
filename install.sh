@@ -403,12 +403,11 @@ orbit_doctor() {
     checks_fail=$((checks_fail + 1))
   fi
 
-  # 5. Base artifacts in ~/.kiro
+  # 5. Base artifacts in ~/.kiro (warning only — may not exist in CI or fresh clones)
   local base_ok=true
   for f in "$HOME/.kiro/agents/orbit.json" "$HOME/.kiro/steering/orbit-session.md" "$HOME/.kiro/hooks/orbit-session.kiro.hook"; do
     if [[ ! -f "$f" ]]; then
-      echo -e "  ${RED}x${NC} Falta artefacto base: ${f}"
-      checks_fail=$((checks_fail + 1))
+      echo -e "  ${YELLOW}~${NC} Artefacto base ausente: ${f} (ejecuta instalacion inicial)"
       base_ok=false
     fi
   done
