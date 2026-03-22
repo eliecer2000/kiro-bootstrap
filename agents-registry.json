@@ -1,5 +1,5 @@
 {
-  "version": "2.4.0",
+  "version": "2.5.0",
   "bootstrapAgent": "orbit",
   "bootstrapModel": "claude-sonnet-4",
   "remoteSkillsAllowlist": [
@@ -61,10 +61,25 @@
           "when": "Se necesitan pruebas, criterios de aceptacion o quality gates."
         }
       ],
-      "supportedProfiles": ["*"],
-      "steeringPacks": ["core", "git", "security", "aws-shared", "testing", "observability"],
-      "localSkills": ["orbit-bootstrap", "find-skills"],
-      "remoteSkills": ["github-documentation-writer", "github-refactor-plan"],
+      "supportedProfiles": [
+        "*"
+      ],
+      "steeringPacks": [
+        "core",
+        "git",
+        "security",
+        "aws-shared",
+        "testing",
+        "observability"
+      ],
+      "localSkills": [
+        "orbit-bootstrap",
+        "find-skills"
+      ],
+      "remoteSkills": [
+        "github-documentation-writer",
+        "github-refactor-plan"
+      ],
       "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "No insistir tras rechazo de bootstrap en la misma sesion.",
@@ -115,9 +130,19 @@
         "aws-shared-lib-typescript",
         "aws-shared-lib-javascript"
       ],
-      "steeringPacks": ["core", "security", "aws-shared", "observability"],
-      "localSkills": ["aws-architecture", "find-skills"],
-      "remoteSkills": ["github-documentation-writer"],
+      "steeringPacks": [
+        "core",
+        "security",
+        "aws-shared",
+        "observability"
+      ],
+      "localSkills": [
+        "aws-architecture",
+        "find-skills"
+      ],
+      "remoteSkills": [
+        "github-documentation-writer"
+      ],
       "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "Documentar decisiones de arquitectura y restricciones.",
@@ -136,7 +161,10 @@
         "Observabilidad, testing y cold starts.",
         "Integracion con AWS SDK para Python."
       ],
-      "ownedTasks": ["lambda-python-runtime", "python-serverless-implementation"],
+      "ownedTasks": [
+        "lambda-python-runtime",
+        "python-serverless-implementation"
+      ],
       "handoffs": [
         {
           "to": "aws-api-integration",
@@ -147,10 +175,27 @@
           "when": "Se requieren tests unitarios o de integracion."
         }
       ],
-      "supportedProfiles": ["aws-backend-lambda-python"],
-      "steeringPacks": ["core", "aws-shared", "runtime-python", "lambda", "testing", "observability"],
-      "localSkills": ["python-runtime", "aws-lambda-python", "aws-serverless", "aws-testing", "find-skills"],
-      "remoteSkills": ["supercent-code-review"],
+      "supportedProfiles": [
+        "aws-backend-lambda-python"
+      ],
+      "steeringPacks": [
+        "core",
+        "aws-shared",
+        "runtime-python",
+        "lambda",
+        "testing",
+        "observability"
+      ],
+      "localSkills": [
+        "python-runtime",
+        "aws-lambda-python",
+        "aws-serverless",
+        "aws-testing",
+        "find-skills"
+      ],
+      "remoteSkills": [
+        "supercent-code-review"
+      ],
       "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "Mantener handlers claros y pequenos.",
@@ -169,7 +214,10 @@
         "Configuracion Node para runtimes AWS.",
         "Testing y trazabilidad operativa."
       ],
-      "ownedTasks": ["lambda-node-runtime", "node-serverless-implementation"],
+      "ownedTasks": [
+        "lambda-node-runtime",
+        "node-serverless-implementation"
+      ],
       "handoffs": [
         {
           "to": "aws-api-integration",
@@ -184,9 +232,26 @@
         "aws-backend-lambda-typescript",
         "aws-backend-lambda-javascript"
       ],
-      "steeringPacks": ["core", "aws-shared", "runtime-typescript", "runtime-javascript", "lambda", "testing", "observability"],
-      "localSkills": ["typescript-runtime", "javascript-runtime", "aws-lambda-typescript", "aws-serverless", "aws-testing", "find-skills"],
-      "remoteSkills": ["supercent-code-review"],
+      "steeringPacks": [
+        "core",
+        "aws-shared",
+        "runtime-typescript",
+        "runtime-javascript",
+        "lambda",
+        "testing",
+        "observability"
+      ],
+      "localSkills": [
+        "typescript-runtime",
+        "javascript-runtime",
+        "aws-lambda-typescript",
+        "aws-serverless",
+        "aws-testing",
+        "find-skills"
+      ],
+      "remoteSkills": [
+        "supercent-code-review"
+      ],
       "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "Alinear bundling y runtime con Lambda.",
@@ -205,7 +270,10 @@
         "Modelar auth, errores y compatibilidad de contratos.",
         "Alinear integraciones con pruebas y observabilidad."
       ],
-      "ownedTasks": ["api-contracts", "event-integration"],
+      "ownedTasks": [
+        "api-contracts",
+        "event-integration"
+      ],
       "handoffs": [
         {
           "to": "aws-lambda-python",
@@ -221,9 +289,22 @@
         "aws-backend-api-typescript",
         "aws-backend-api-javascript"
       ],
-      "steeringPacks": ["core", "aws-shared", "api", "testing", "observability"],
-      "localSkills": ["aws-api", "aws-serverless", "aws-testing", "find-skills"],
-      "remoteSkills": ["supercent-api-documentation"],
+      "steeringPacks": [
+        "core",
+        "aws-shared",
+        "api",
+        "testing",
+        "observability"
+      ],
+      "localSkills": [
+        "aws-api",
+        "aws-serverless",
+        "aws-testing",
+        "find-skills"
+      ],
+      "remoteSkills": [
+        "supercent-api-documentation"
+      ],
       "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "Documentar contratos y errores.",
@@ -241,17 +322,33 @@
         "Seguridad, validaciones y despliegue IaC.",
         "Estandarizar naming, tags y estructura."
       ],
-      "ownedTasks": ["terraform-modules", "terraform-environment-design"],
+      "ownedTasks": [
+        "terraform-modules",
+        "terraform-environment-design"
+      ],
       "handoffs": [
         {
           "to": "aws-iam-security",
           "when": "Los cambios incluyen IAM, redes o secretos."
         }
       ],
-      "supportedProfiles": ["aws-infra-terraform"],
-      "steeringPacks": ["core", "security", "aws-shared", "terraform", "observability"],
-      "localSkills": ["aws-terraform", "find-skills"],
-      "remoteSkills": ["supercent-code-review"],
+      "supportedProfiles": [
+        "aws-infra-terraform"
+      ],
+      "steeringPacks": [
+        "core",
+        "security",
+        "aws-shared",
+        "terraform",
+        "observability"
+      ],
+      "localSkills": [
+        "aws-terraform",
+        "find-skills"
+      ],
+      "remoteSkills": [
+        "supercent-code-review"
+      ],
       "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "Mantener configuraciones Terraform validables.",
@@ -269,17 +366,35 @@
         "Separacion entre app, stacks y constructs reutilizables.",
         "Alineacion con seguridad y observabilidad."
       ],
-      "ownedTasks": ["cdk-stacks", "cdk-constructs"],
+      "ownedTasks": [
+        "cdk-stacks",
+        "cdk-constructs"
+      ],
       "handoffs": [
         {
           "to": "aws-iam-security",
           "when": "La infraestructura exige revisiones de permisos y secretos."
         }
       ],
-      "supportedProfiles": ["aws-infra-cdk-typescript"],
-      "steeringPacks": ["core", "security", "aws-shared", "runtime-typescript", "cdk", "observability"],
-      "localSkills": ["typescript-runtime", "aws-cdk", "find-skills"],
-      "remoteSkills": ["supercent-code-review"],
+      "supportedProfiles": [
+        "aws-infra-cdk-typescript"
+      ],
+      "steeringPacks": [
+        "core",
+        "security",
+        "aws-shared",
+        "runtime-typescript",
+        "cdk",
+        "observability"
+      ],
+      "localSkills": [
+        "typescript-runtime",
+        "aws-cdk",
+        "find-skills"
+      ],
+      "remoteSkills": [
+        "supercent-code-review"
+      ],
       "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "Mantener stacks pequenos y constructs reutilizables.",
@@ -297,17 +412,33 @@
         "Revisar secretos, cifrado y configuracion de red.",
         "Endurecer configuraciones de servicios y datos."
       ],
-      "ownedTasks": ["iam-review", "secret-management", "networking-review"],
+      "ownedTasks": [
+        "iam-review",
+        "secret-management",
+        "networking-review"
+      ],
       "handoffs": [
         {
           "to": "aws-architect",
           "when": "Se necesitan ajustes mayores de arquitectura."
         }
       ],
-      "supportedProfiles": ["*"],
-      "steeringPacks": ["core", "security", "aws-shared", "observability"],
-      "localSkills": ["aws-security", "find-skills"],
-      "remoteSkills": ["supercent-code-review"],
+      "supportedProfiles": [
+        "*"
+      ],
+      "steeringPacks": [
+        "core",
+        "security",
+        "aws-shared",
+        "observability"
+      ],
+      "localSkills": [
+        "aws-security",
+        "find-skills"
+      ],
+      "remoteSkills": [
+        "supercent-code-review"
+      ],
       "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "Aplicar least privilege.",
@@ -326,7 +457,10 @@
         "Alinear consultas, capacidad y consistencia.",
         "Optimizar modelado para cargas serverless."
       ],
-      "ownedTasks": ["dynamodb-modeling", "query-patterns"],
+      "ownedTasks": [
+        "dynamodb-modeling",
+        "query-patterns"
+      ],
       "handoffs": [
         {
           "to": "aws-architect",
@@ -341,8 +475,15 @@
         "aws-backend-lambda-typescript",
         "aws-backend-lambda-javascript"
       ],
-      "steeringPacks": ["core", "aws-shared", "observability"],
-      "localSkills": ["aws-dynamodb", "find-skills"],
+      "steeringPacks": [
+        "core",
+        "aws-shared",
+        "observability"
+      ],
+      "localSkills": [
+        "aws-dynamodb",
+        "find-skills"
+      ],
       "remoteSkills": [],
       "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
@@ -361,16 +502,31 @@
         "Alinear metricas, alarmas y dashboards.",
         "Introducir trazabilidad minima desde el bootstrap."
       ],
-      "ownedTasks": ["logging", "metrics", "alarms", "dashboards"],
+      "ownedTasks": [
+        "logging",
+        "metrics",
+        "alarms",
+        "dashboards"
+      ],
       "handoffs": [
         {
           "to": "aws-test-quality",
           "when": "La observabilidad debe cubrirse con pruebas o smoke checks."
         }
       ],
-      "supportedProfiles": ["*"],
-      "steeringPacks": ["core", "aws-shared", "observability", "testing"],
-      "localSkills": ["aws-observability", "find-skills"],
+      "supportedProfiles": [
+        "*"
+      ],
+      "steeringPacks": [
+        "core",
+        "aws-shared",
+        "observability",
+        "testing"
+      ],
+      "localSkills": [
+        "aws-observability",
+        "find-skills"
+      ],
       "remoteSkills": [],
       "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
@@ -389,17 +545,32 @@
         "Alinear tooling de test con cada runtime.",
         "Revisar quality gates y escenarios criticos."
       ],
-      "ownedTasks": ["test-plan", "quality-gates", "contract-tests"],
+      "ownedTasks": [
+        "test-plan",
+        "quality-gates",
+        "contract-tests"
+      ],
       "handoffs": [
         {
           "to": "orbit",
           "when": "Se requiere actualizar documentacion o estado del proyecto."
         }
       ],
-      "supportedProfiles": ["*"],
-      "steeringPacks": ["core", "testing", "observability"],
-      "localSkills": ["aws-testing", "find-skills"],
-      "remoteSkills": ["supercent-code-review"],
+      "supportedProfiles": [
+        "*"
+      ],
+      "steeringPacks": [
+        "core",
+        "testing",
+        "observability"
+      ],
+      "localSkills": [
+        "aws-testing",
+        "find-skills"
+      ],
+      "remoteSkills": [
+        "supercent-code-review"
+      ],
       "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "Definir escenarios minimos por perfil.",
@@ -417,14 +588,31 @@
         "Preparar entorno React + Amplify.",
         "Guiar integracion con autenticacion y hosting Amplify."
       ],
-      "ownedTasks": ["amplify-react"],
+      "ownedTasks": [
+        "amplify-react"
+      ],
       "handoffs": [],
-      "supportedProfiles": ["aws-amplify-react"],
-      "steeringPacks": ["core", "aws-shared", "amplify", "runtime-typescript", "testing"],
-      "localSkills": ["typescript-runtime", "find-skills"],
-      "remoteSkills": ["github-documentation-writer"],
+      "supportedProfiles": [
+        "aws-amplify-react"
+      ],
+      "steeringPacks": [
+        "core",
+        "aws-shared",
+        "amplify",
+        "runtime-typescript",
+        "testing"
+      ],
+      "localSkills": [
+        "typescript-runtime",
+        "find-skills"
+      ],
+      "remoteSkills": [
+        "github-documentation-writer"
+      ],
       "modelDefault": "claude-sonnet-4",
-      "acceptanceChecklist": ["Reservado para fase 2."],
+      "acceptanceChecklist": [
+        "Reservado para fase 2."
+      ],
       "phase": 2
     },
     "aws-amplify-vue": {
@@ -436,14 +624,31 @@
         "Preparar entorno Vue + Amplify.",
         "Guiar integracion con autenticacion y hosting Amplify."
       ],
-      "ownedTasks": ["amplify-vue"],
+      "ownedTasks": [
+        "amplify-vue"
+      ],
       "handoffs": [],
-      "supportedProfiles": ["aws-amplify-vue"],
-      "steeringPacks": ["core", "aws-shared", "amplify", "runtime-typescript", "testing"],
-      "localSkills": ["typescript-runtime", "find-skills"],
-      "remoteSkills": ["github-documentation-writer"],
+      "supportedProfiles": [
+        "aws-amplify-vue"
+      ],
+      "steeringPacks": [
+        "core",
+        "aws-shared",
+        "amplify",
+        "runtime-typescript",
+        "testing"
+      ],
+      "localSkills": [
+        "typescript-runtime",
+        "find-skills"
+      ],
+      "remoteSkills": [
+        "github-documentation-writer"
+      ],
       "modelDefault": "claude-sonnet-4",
-      "acceptanceChecklist": ["Reservado para fase 2."],
+      "acceptanceChecklist": [
+        "Reservado para fase 2."
+      ],
       "phase": 2
     },
     "aws-amplify-nuxt": {
@@ -455,14 +660,31 @@
         "Preparar entorno Nuxt + Amplify.",
         "Guiar integracion con autenticacion y hosting Amplify."
       ],
-      "ownedTasks": ["amplify-nuxt"],
+      "ownedTasks": [
+        "amplify-nuxt"
+      ],
       "handoffs": [],
-      "supportedProfiles": ["aws-amplify-nuxt"],
-      "steeringPacks": ["core", "aws-shared", "amplify", "runtime-typescript", "testing"],
-      "localSkills": ["typescript-runtime", "find-skills"],
-      "remoteSkills": ["github-documentation-writer"],
+      "supportedProfiles": [
+        "aws-amplify-nuxt"
+      ],
+      "steeringPacks": [
+        "core",
+        "aws-shared",
+        "amplify",
+        "runtime-typescript",
+        "testing"
+      ],
+      "localSkills": [
+        "typescript-runtime",
+        "find-skills"
+      ],
+      "remoteSkills": [
+        "github-documentation-writer"
+      ],
       "modelDefault": "claude-sonnet-4",
-      "acceptanceChecklist": ["Reservado para fase 2."],
+      "acceptanceChecklist": [
+        "Reservado para fase 2."
+      ],
       "phase": 2
     }
   }

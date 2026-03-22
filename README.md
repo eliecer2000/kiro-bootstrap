@@ -5,7 +5,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/eliecer2000/kiro-bootstrap?style=social)](https://github.com/eliecer2000/kiro-bootstrap/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/eliecer2000/kiro-bootstrap?style=social)](https://github.com/eliecer2000/kiro-bootstrap/network)
 [![Last commit](https://img.shields.io/github/last-commit/eliecer2000/kiro-bootstrap)](https://github.com/eliecer2000/kiro-bootstrap/commits/main)
-[![Version](https://img.shields.io/badge/version-2.4.0-blue)](https://github.com/eliecer2000/kiro-bootstrap/releases)
+[![Version](https://img.shields.io/badge/version-2.5.0-blue)](https://github.com/eliecer2000/kiro-bootstrap/releases)
 
 ---
 
