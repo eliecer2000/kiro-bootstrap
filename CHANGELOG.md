@@ -7,9 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [Unreleased]
+## [2.2.0] — 2026-03-22
 
 ### Added
+
 - GitHub Actions CI workflow: JSON lint, shellcheck, markdownlint, ruff, catalog/skills/steering validation, test suite
 - GitHub Actions release workflow: auto-creates GitHub Release from tag with changelog extraction
 - `.markdownlint.json` configuration
@@ -17,7 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Branching strategy and CI documentation in CONTRIBUTING.md
 
 ### Fixed
+
 - Replaced `rg` (ripgrep) with `grep` in test scripts for CI portability
+- ShellCheck warnings in install.sh, session.sh, and test-install.sh
 
 ---
 
@@ -85,6 +88,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Validation system for required environment tooling
 - Docs: architecture, bootstrap flow, profile matrix, agent catalog, authoring guide
 
+[2.2.0]: https://github.com/eliecer2000/kiro-bootstrap/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/eliecer2000/kiro-bootstrap/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/eliecer2000/kiro-bootstrap/compare/v0.1.0...v2.0.0
 [0.1.0]: https://github.com/eliecer2000/kiro-bootstrap/releases/tag/v0.1.0
