@@ -22,7 +22,7 @@ else
 fi
 
 INSTALL_CONTENT="$(cat "${BOOTSTRAP_DIR}/install.sh")"
-for token in "--help" "--update" "--resync-project" "Orbit Bootstrap" "~/.kiro/orbit"; do
+for token in "--help" "--update" "--resync-project" "Orbit Bootstrap" '$HOME/.kiro/orbit'; do
   if echo "${INSTALL_CONTENT}" | grep -q -- "${token}"; then
     pass "install.sh contiene ${token}"
   else
