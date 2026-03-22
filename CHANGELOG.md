@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.4.0] — 2026-03-22
+
+### Added
+
+- `--status` command: shows installed version, active profile, last sync, and artifact counts
+- `--doctor` command: runs 8+ health checks on framework, catalog, tools, and project state
+- 4 new tests for doctor/status commands (total: 88)
+
+---
+
 ## [2.3.0] — 2026-03-22
 
 ### Added
@@ -121,6 +131,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Validation system for required environment tooling
 - Docs: architecture, bootstrap flow, profile matrix, agent catalog, authoring guide
 
+[2.4.0]: https://github.com/eliecer2000/kiro-bootstrap/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/eliecer2000/kiro-bootstrap/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/eliecer2000/kiro-bootstrap/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/eliecer2000/kiro-bootstrap/compare/v2.0.0...v2.1.0
