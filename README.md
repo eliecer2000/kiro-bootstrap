@@ -30,6 +30,12 @@ Despues de instalar:
 
 # Resincronizar un proyecto existente
 ~/.kiro/orbit/install.sh --resync-project .
+
+# Ver estado de la instalacion y proyecto
+~/.kiro/orbit/install.sh --status
+
+# Diagnosticar problemas
+~/.kiro/orbit/install.sh --doctor
 ```
 
 ## Como funciona

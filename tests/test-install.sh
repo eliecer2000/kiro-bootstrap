@@ -21,8 +21,20 @@ else
   fail "help no documenta resincronizacion"
 fi
 
+if echo "${output}" | grep -q -- "--doctor"; then
+  pass "help documenta doctor"
+else
+  fail "help no documenta doctor"
+fi
+
+if echo "${output}" | grep -q -- "--status"; then
+  pass "help documenta status"
+else
+  fail "help no documenta status"
+fi
+
 INSTALL_CONTENT="$(cat "${BOOTSTRAP_DIR}/install.sh")"
-for token in "--help" "--update" "--resync-project" "Orbit Bootstrap" '$HOME/.kiro/orbit'; do
+for token in "--help" "--update" "--resync-project" "--doctor" "--status" "Orbit Bootstrap" '$HOME/.kiro/orbit'; do
   if echo "${INSTALL_CONTENT}" | grep -q -- "${token}"; then
     pass "install.sh contiene ${token}"
   else
@@ -58,6 +70,12 @@ if grep -rn 'credenciales AWS diferida\|credenciales ni validar identidad AWS\|p
   pass "Orbit difiere credenciales AWS hasta despliegue"
 else
   fail "Orbit no documenta el diferimiento de credenciales AWS"
+fi
+
+if INSTALL_DIR="${BOOTSTRAP_DIR}" orbit_doctor >/dev/null 2>&1; then
+  pass "orbit_doctor pasa sin errores"
+else
+  fail "orbit_doctor reporta problemas"
 fi
 
 echo ""

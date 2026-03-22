@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `--status` command: shows installed version, active profile, and project artifacts
+- `--doctor` command: diagnoses installation and project health with actionable fixes
 - Enhanced catalog validator: cross-references steering packs, local skills, hooks, and extension packs against actual files
 - Enhanced catalog validator: verifies agent JSON files have correct `model` and `resources` fields
 - Enhanced catalog validator: checks manifest/registry version sync

@@ -15,6 +15,8 @@ INSTALL_DIR="${ORBIT_INSTALL_DIR:-$HOME/.kiro/orbit}"
 UPDATE_MODE=false
 SHOW_HELP=false
 RESYNC_PROJECT_DIR=""
+DOCTOR_MODE=false
+STATUS_MODE=false
 
 log_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
 log_success() { echo -e "${GREEN}[OK]${NC} $1"; }
@@ -29,11 +31,15 @@ Uso:
   curl -sL <repo>/install.sh | bash
   ~/.kiro/orbit/install.sh --update
   ~/.kiro/orbit/install.sh --resync-project [ruta]
+  ~/.kiro/orbit/install.sh --status
+  ~/.kiro/orbit/install.sh --doctor
   ~/.kiro/orbit/install.sh --help
 
 Opciones:
   --update                 Actualiza el repositorio central de Orbit.
   --resync-project [ruta]  Re-ejecuta el bootstrap del proyecto actual o de la ruta indicada.
+  --status                 Muestra version instalada, perfil activo y artefactos del proyecto.
+  --doctor                 Diagnostica problemas en la instalacion y el proyecto actual.
   --help                   Muestra esta ayuda.
 
 Variables de entorno:
@@ -106,6 +112,14 @@ parse_args() {
           RESYNC_PROJECT_DIR="$PWD"
           shift
         fi
+        ;;
+      --doctor)
+        DOCTOR_MODE=true
+        shift
+        ;;
+      --status)
+        STATUS_MODE=true
+        shift
         ;;
       *)
         log_error "Argumento desconocido: $1"
@@ -289,6 +303,179 @@ resync_project_artifacts() {
   execute_pipeline "$INSTALL_DIR/manifest.json" "$project_dir" "$INSTALL_DIR"
 }
 
+orbit_status() {
+  local version_file="$HOME/.kiro/.orbit-version"
+  local project_state=".kiro/.orbit-project.json"
+
+  echo -e "${BOLD}Orbit Status${NC}"
+  echo "============================================"
+
+  # Framework installation
+  if [[ -d "$INSTALL_DIR" ]]; then
+    local fw_version
+    fw_version="$(read_manifest_version)"
+    local fw_agents
+    fw_agents="$(count_registered_agents)"
+    echo -e "  Framework:  ${GREEN}instalado${NC}"
+    echo -e "  Version:    ${GREEN}${fw_version}${NC}"
+    echo -e "  Agentes:    ${GREEN}${fw_agents}${NC}"
+    echo -e "  Ruta:       ${INSTALL_DIR}"
+  else
+    echo -e "  Framework:  ${RED}no instalado${NC}"
+    return 0
+  fi
+
+  # Version info
+  if [[ -f "$version_file" ]]; then
+    local installed_at commit_hash
+    installed_at="$(python3 -c "import json; print(json.load(open('${version_file}')).get('installedAt','?'))")"
+    commit_hash="$(python3 -c "import json; print(json.load(open('${version_file}')).get('commitHash','?')[:12])")"
+    echo -e "  Commit:     ${commit_hash}"
+    echo -e "  Instalado:  ${installed_at}"
+  fi
+
+  echo ""
+
+  # Project state
+  if [[ -f "$project_state" ]]; then
+    local profile_id last_sync sync_mode
+    profile_id="$(python3 -c "import json; print(json.load(open('${project_state}')).get('profileId','?'))")"
+    last_sync="$(python3 -c "import json; print(json.load(open('${project_state}')).get('lastSyncAt','?'))")"
+    sync_mode="$(python3 -c "import json; print(json.load(open('${project_state}')).get('lastSyncMode','?'))")"
+    echo -e "  Proyecto:   ${GREEN}configurado${NC}"
+    echo -e "  Perfil:     ${GREEN}${profile_id}${NC}"
+    echo -e "  Ultimo sync: ${last_sync} (${sync_mode})"
+
+    local agents_count steering_count skills_count hooks_count
+    agents_count="$(python3 -c "import json; print(len(json.load(open('${project_state}')).get('installedPacks',{}).get('agents',[])))")"
+    steering_count="$(python3 -c "import json; print(len(json.load(open('${project_state}')).get('installedPacks',{}).get('steering',[])))")"
+    skills_count="$(python3 -c "import json; print(len(json.load(open('${project_state}')).get('installedPacks',{}).get('localSkills',[])))")"
+    hooks_count="$(python3 -c "import json; print(len(json.load(open('${project_state}')).get('installedPacks',{}).get('hooks',[])))")"
+    echo -e "  Artefactos: ${agents_count} agentes, ${steering_count} steering, ${skills_count} skills, ${hooks_count} hooks"
+  else
+    echo -e "  Proyecto:   ${YELLOW}no configurado (ejecuta --resync-project)${NC}"
+  fi
+}
+
+orbit_doctor() {
+  local checks_pass=0
+  local checks_fail=0
+
+  echo -e "${BOLD}Orbit Doctor${NC}"
+  echo "============================================"
+
+  # 1. Framework installed
+  if [[ -d "$INSTALL_DIR" ]]; then
+    echo -e "  ${GREEN}+${NC} Framework instalado en ${INSTALL_DIR}"
+    checks_pass=$((checks_pass + 1))
+  else
+    echo -e "  ${RED}x${NC} Framework no instalado. Ejecuta: curl -sL <repo>/install.sh | bash"
+    checks_fail=$((checks_fail + 1))
+    echo ""
+    echo -e "  Resultado: ${checks_pass} ok, ${checks_fail} problemas"
+    return 1
+  fi
+
+  # 2. Manifest valid
+  if python3 -m json.tool "$INSTALL_DIR/manifest.json" >/dev/null 2>&1; then
+    echo -e "  ${GREEN}+${NC} manifest.json valido"
+    checks_pass=$((checks_pass + 1))
+  else
+    echo -e "  ${RED}x${NC} manifest.json invalido o corrupto"
+    checks_fail=$((checks_fail + 1))
+  fi
+
+  # 3. Registry valid
+  if python3 -m json.tool "$INSTALL_DIR/agents-registry.json" >/dev/null 2>&1; then
+    echo -e "  ${GREEN}+${NC} agents-registry.json valido"
+    checks_pass=$((checks_pass + 1))
+  else
+    echo -e "  ${RED}x${NC} agents-registry.json invalido o corrupto"
+    checks_fail=$((checks_fail + 1))
+  fi
+
+  # 4. Catalog validation
+  if python3 "$INSTALL_DIR/lib/orbit_catalog.py" --bootstrap-dir "$INSTALL_DIR" validate-catalog >/dev/null 2>&1; then
+    echo -e "  ${GREEN}+${NC} Catalogo consistente"
+    checks_pass=$((checks_pass + 1))
+  else
+    echo -e "  ${RED}x${NC} Catalogo inconsistente. Ejecuta: python3 ${INSTALL_DIR}/lib/orbit_catalog.py --bootstrap-dir ${INSTALL_DIR} validate-catalog"
+    checks_fail=$((checks_fail + 1))
+  fi
+
+  # 5. Base artifacts in ~/.kiro
+  local base_ok=true
+  for f in "$HOME/.kiro/agents/orbit.json" "$HOME/.kiro/steering/orbit-session.md" "$HOME/.kiro/hooks/orbit-session.kiro.hook"; do
+    if [[ ! -f "$f" ]]; then
+      echo -e "  ${RED}x${NC} Falta artefacto base: ${f}"
+      checks_fail=$((checks_fail + 1))
+      base_ok=false
+    fi
+  done
+  if [[ "$base_ok" == true ]]; then
+    echo -e "  ${GREEN}+${NC} Artefactos base presentes en ~/.kiro"
+    checks_pass=$((checks_pass + 1))
+  fi
+
+  # 6. System tools
+  local tools_ok=true
+  for tool in git python3 curl; do
+    if ! command -v "$tool" >/dev/null 2>&1; then
+      echo -e "  ${RED}x${NC} Herramienta faltante: ${tool}"
+      checks_fail=$((checks_fail + 1))
+      tools_ok=false
+    fi
+  done
+  if [[ "$tools_ok" == true ]]; then
+    echo -e "  ${GREEN}+${NC} Herramientas de sistema disponibles (git, python3, curl)"
+    checks_pass=$((checks_pass + 1))
+  fi
+
+  # 7. Project state (if in a project)
+  if [[ -f ".kiro/.orbit-project.json" ]]; then
+    if python3 -m json.tool ".kiro/.orbit-project.json" >/dev/null 2>&1; then
+      echo -e "  ${GREEN}+${NC} Estado del proyecto valido"
+      checks_pass=$((checks_pass + 1))
+    else
+      echo -e "  ${RED}x${NC} .kiro/.orbit-project.json corrupto"
+      checks_fail=$((checks_fail + 1))
+    fi
+
+    # Check project artifacts
+    local dirs_ok=true
+    for d in .kiro/agents .kiro/steering .kiro/skills .kiro/hooks; do
+      if [[ ! -d "$d" ]]; then
+        echo -e "  ${RED}x${NC} Directorio faltante: ${d}"
+        checks_fail=$((checks_fail + 1))
+        dirs_ok=false
+      fi
+    done
+    if [[ "$dirs_ok" == true ]]; then
+      echo -e "  ${GREEN}+${NC} Directorios de proyecto completos"
+      checks_pass=$((checks_pass + 1))
+    fi
+  else
+    echo -e "  ${YELLOW}~${NC} No hay proyecto Orbit en el directorio actual"
+  fi
+
+  # 8. Version file
+  if [[ -f "$HOME/.kiro/.orbit-version" ]]; then
+    echo -e "  ${GREEN}+${NC} Archivo de version presente"
+    checks_pass=$((checks_pass + 1))
+  else
+    echo -e "  ${YELLOW}~${NC} Sin archivo de version (instalacion antigua?)"
+  fi
+
+  echo ""
+  if [[ $checks_fail -eq 0 ]]; then
+    echo -e "  ${GREEN}Todo en orden: ${checks_pass} verificaciones pasaron${NC}"
+  else
+    echo -e "  Resultado: ${GREEN}${checks_pass} ok${NC}, ${RED}${checks_fail} problemas${NC}"
+  fi
+
+  [[ $checks_fail -eq 0 ]]
+}
+
 main() {
   parse_args "$@"
 
@@ -306,6 +493,16 @@ main() {
   if [[ -n "$RESYNC_PROJECT_DIR" ]]; then
     resync_project_artifacts "$RESYNC_PROJECT_DIR"
     return 0
+  fi
+
+  if [[ "$STATUS_MODE" == true ]]; then
+    orbit_status
+    return 0
+  fi
+
+  if [[ "$DOCTOR_MODE" == true ]]; then
+    orbit_doctor
+    return $?
   fi
 
   if [[ "$UPDATE_MODE" == true ]]; then
