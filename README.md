@@ -163,3 +163,17 @@ Orbit resuelve el `profile-id` internamente a partir del wizard. No pide el ID c
 ```bash
 bash tests/test-all.sh
 ```
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how to add profiles, agents, skills, and steering packs.
+
+Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before participating.
+
+## Security
+
+To report a vulnerability, see [SECURITY.md](SECURITY.md). Do not open public issues for security concerns.
+
+## License
+
+[MIT](LICENSE) — Eliezer Rangel

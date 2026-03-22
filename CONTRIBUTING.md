@@ -61,29 +61,45 @@ See `docs/agent-catalog.md` for existing agents and naming conventions.
 
 ### 3. Add a new skill
 
-Skills live in `skills/`. Two categories:
+Skills live in `skills/<skill-name>/SKILL.md`. Each skill must include YAML frontmatter for Kiro discovery:
 
-| Path | Purpose |
-|---|---|
-| `skills/core/` | Available to all profiles |
-| `skills/custom/` | Profile-specific, referenced from `profiles/<key>/skills/` |
+```markdown
+---
+name: my-skill
+description: Short English description of what this skill does and when to use it.
+---
 
-```bash
-cp templates/skill-templates/base-skill.md skills/core/<skill-name>.md
-# or for profile-specific:
-cp templates/skill-templates/base-skill.md profiles/<profile>/skills/<skill-name>.md
+# My Skill
+
+Content here...
 ```
 
-Document the skill trigger conditions clearly in the frontmatter (`when_to_use`).
+The `name` and `description` fields are required by Kiro to discover and activate skills.
 
 ---
 
 ### 4. Add or update a steering pack
 
-Steering packs are Markdown files in `steering/`. They provide always-on context to the AI agent (coding standards, AWS guidelines, etc.).
+Steering packs are Markdown files in `steering/`. They provide contextual instructions to Kiro agents.
 
-Shared packs (all profiles): `steering/core/`, `steering/git/`, `steering/security/`, etc.
-Profile-specific packs: `profiles/<key>/steering/`.
+Each steering file must include YAML frontmatter with an `inclusion` mode:
+
+```markdown
+---
+inclusion: always
+---
+```
+
+or for file-pattern-based activation:
+
+```markdown
+---
+inclusion: fileMatch
+fileMatchPattern: ["**/*.ts", "**/*.tsx"]
+---
+```
+
+Use `always` for universal rules (core, security, git). Use `fileMatch` for runtime/tool-specific packs.
 
 Keep packs focused and under ~200 lines. Split by concern, not by length.
 
@@ -94,11 +110,15 @@ Keep packs focused and under ~200 lines. Split by concern, not by length.
 `install.sh` is the main entrypoint. Helper functions live in `lib/`. Before submitting a fix:
 
 ```bash
-# Run the test suite
-bash tests/run-tests.sh
+# Run the full test suite
+bash tests/test-all.sh
 
-# Validate the manifest
-bash validations/validate-manifest.sh
+# Validate JSON files
+python3 -m json.tool agents-registry.json > /dev/null
+python3 -m json.tool manifest.json > /dev/null
+
+# Validate the catalog
+python3 lib/orbit_catalog.py validate-catalog
 ```
 
 ---
@@ -108,7 +128,12 @@ bash validations/validate-manifest.sh
 - [ ] Tested locally with `bash install.sh`
 - [ ] No hardcoded paths outside of `~/.kiro/orbit` or the repo root
 - [ ] New profiles added to `agents-registry.json` and `docs/profile-matrix.md`
-- [ ] `CHANGELOG.md` updated under `[Unreleased]`
+- [ ] All JSON files pass `python3 -m json.tool` validation
+- [ ] Skills include YAML frontmatter with `name` and `description`
+- [ ] Steering files have correct `inclusion` mode (`always` or `fileMatch`)
+- [ ] Agent model set to `claude-sonnet-4`
+- [ ] Agent includes `"resources": ["skill://.kiro/skills/**/SKILL.md"]`
+- [ ] `CHANGELOG.md` updated
 - [ ] PR title follows conventional commits: `feat:`, `fix:`, `docs:`, `chore:`
 
 ---
