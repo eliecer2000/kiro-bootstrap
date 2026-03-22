@@ -23,6 +23,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - YAML frontmatter with English descriptions on all skills for optimal Kiro keyword matching
 - Skill resource bindings on every agent (previously only orbit had resources)
+- CODE_OF_CONDUCT.md (Contributor Covenant 2.1)
+- SECURITY.md with vulnerability reporting policy
+- GitHub issue templates: bug report, feature request, profile request
+- GitHub pull request template with v2.1.0 checklist
+- Contributing, Security, and License sections in README
+
+### Docs
+- Updated CONTRIBUTING.md with v2.1.0 conventions (skill frontmatter, steering inclusion, agent resources)
+- Fixed incorrect script references in CONTRIBUTING (tests/run-tests.sh → tests/test-all.sh)
+- Expanded agent-catalog.md with handoff matrix and configuration requirements
+- Fixed authoring.md: corrected model ID, added skill frontmatter and steering inclusion examples
+- Synced README version badge to 2.1.0
 
 ---
 

@@ -20,20 +20,48 @@ Como agregar nuevos componentes al framework Orbit.
   "steeringPacks": ["core", "..."],
   "localSkills": ["skill-1", "find-skills"],
   "remoteSkills": [],
-  "modelDefault": "sonnet-4",
+  "modelDefault": "claude-sonnet-4",
   "acceptanceChecklist": ["..."],
   "phase": 1
 }
 ```
 
-3. Asociar el agente a los perfiles correspondientes en `profiles/*.json` (campo `agents`)
+3. Crear el archivo JSON del agente en `agents/<nombre>.json` con `resources` para cargar skills:
+
+```json
+{
+  "name": "mi-agente",
+  "description": "Descripcion clara para que Kiro enrute correctamente",
+  "model": "claude-sonnet-4",
+  "prompt": "Instrucciones del agente...",
+  "tools": ["*"],
+  "resources": ["skill://.kiro/skills/**/SKILL.md"]
+}
+```
+
+4. Asociar el agente a los perfiles correspondientes en `profiles/*.json` (campo `agents`)
 4. Validar con `python3 lib/orbit_catalog.py --bootstrap-dir . validate-catalog`
 5. Ejecutar `bash tests/test-catalog.sh`
 
 ## Agregar una skill local
 
 1. Crear directorio `skills/<nombre>/`
-2. Crear `skills/<nombre>/SKILL.md` con contenido completo:
+2. Crear `skills/<nombre>/SKILL.md` con YAML frontmatter y contenido completo:
+
+```markdown
+---
+name: mi-skill
+description: Short English description for Kiro discovery and activation.
+---
+
+# Mi Skill
+
+Contenido aqui...
+```
+
+   El frontmatter `name` y `description` es obligatorio para que Kiro descubra y active la skill.
+   La descripcion debe estar en ingles para mejor matching de keywords en Kiro.
+   El contenido debe incluir:
    - Principios y reglas del dominio
    - Ejemplos de codigo (buenas practicas y anti-patrones)
    - Checklist de validacion
@@ -101,7 +129,31 @@ Las skills deben ser documentos completos y utiles, no placeholders de una linea
 
 ## Agregar steering
 
-1. Crear `steering/<nombre>.md` con reglas claras y accionables
+1. Crear `steering/<nombre>.md` con YAML frontmatter y reglas claras:
+
+```markdown
+---
+inclusion: always
+---
+
+# Mi Steering Pack
+
+Reglas aqui...
+```
+
+   Modos de inclusion disponibles:
+   - `always` — se carga en cada sesion (usar para reglas universales: core, security, git)
+   - `fileMatch` — se carga cuando se abre un archivo que coincide con el patron:
+
+```markdown
+---
+inclusion: fileMatch
+fileMatchPattern: ["**/*.ts", "**/*.tsx"]
+---
+```
+
+   - `manual` — solo se carga cuando el usuario lo referencia explicitamente con `#` en el chat
+
 2. Orientar por capa tecnica (seguridad, testing, runtime) no por proyecto
 3. Agregar el nombre del pack a los perfiles y agentes que lo necesiten (campo `steeringPacks`)
 
