@@ -48,16 +48,16 @@ for path in agents/*.json profiles/*.json hooks/*.kiro.hook extensions/*.json; d
   fi
 done
 
-if rg -n "Escala 24x7|Escala24x7|Jarvis" "${BOOTSTRAP_DIR}" --glob '!tests/**' >/dev/null; then
+if grep -rn 'Escala 24x7\|Escala24x7\|Jarvis' "${BOOTSTRAP_DIR}" --include='*.json' --include='*.md' --include='*.sh' --exclude-dir=tests >/dev/null 2>&1; then
   fail "persisten referencias al branding anterior"
 else
   pass "rebrand a Orbit completo"
 fi
 
-if rg -n '"bootstrapModel": "sonnet-4.6"|"model": "sonnet-4.6"' "${BOOTSTRAP_DIR}/manifest.json" "${BOOTSTRAP_DIR}/agents-registry.json" "${BOOTSTRAP_DIR}/agents/orbit.json" >/dev/null; then
-  pass "Orbit usa sonnet-4.6 para bootstrap"
+if grep -rn '"bootstrapModel": "claude-sonnet-4"\|"model": "claude-sonnet-4"' "${BOOTSTRAP_DIR}/manifest.json" "${BOOTSTRAP_DIR}/agents-registry.json" "${BOOTSTRAP_DIR}/agents/orbit.json" >/dev/null 2>&1; then
+  pass "Orbit usa claude-sonnet-4 para bootstrap"
 else
-  fail "Orbit no usa sonnet-4.6 para bootstrap"
+  fail "Orbit no usa claude-sonnet-4 para bootstrap"
 fi
 
 echo ""
