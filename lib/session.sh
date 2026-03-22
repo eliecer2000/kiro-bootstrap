@@ -124,6 +124,7 @@ orbit_session_gate() {
   fi
 
   _orbit_prompt_choice "Deseas configurar el entorno con Orbit? [yes/no]: " bootstrap "yes"
+  # shellcheck disable=SC2154 # bootstrap is assigned by _orbit_prompt_choice via printf -v
   if [[ "$bootstrap" != "yes" && "$bootstrap" != "y" ]]; then
     ORBIT_SESSION_BOOTSTRAP_DECLINED=1
     ORBIT_SESSION_ABORTED=1
@@ -138,6 +139,7 @@ orbit_session_gate() {
 
   if [[ "$project_dir" == "$HOME" ]]; then
     _orbit_prompt_choice "Estas en HOME. Quieres crear una carpeta de proyecto ahora? [yes/no]: " home "no"
+    # shellcheck disable=SC2154 # home is assigned by _orbit_prompt_choice via printf -v
     if [[ "$home" == "yes" || "$home" == "y" ]]; then
       project_name="$(_orbit_prompt_project_name)"
       new_project_dir="${HOME}/${project_name}"

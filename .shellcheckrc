@@ -1,0 +1,5 @@
+# Shellcheck configuration
+# Allow sourcing from paths relative to the script
+source-path=SCRIPTDIR
+# Disable SC2034 (unused variables) - many are used by sourced scripts
+disable=SC2034

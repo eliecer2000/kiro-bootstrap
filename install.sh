@@ -117,7 +117,8 @@ parse_args() {
 
 backup_existing_installation() {
   if [[ -d "$INSTALL_DIR" ]] && [[ -n "$(ls -A "$INSTALL_DIR" 2>/dev/null)" ]]; then
-    local backup_dir="${INSTALL_DIR}.backup.$(date +%Y%m%d_%H%M%S)"
+    local backup_dir
+    backup_dir="${INSTALL_DIR}.backup.$(date +%Y%m%d_%H%M%S)"
     log_info "Instalacion previa detectada en ${INSTALL_DIR}"
     log_info "Creando respaldo en ${backup_dir}..."
     cp -R "$INSTALL_DIR" "$backup_dir"

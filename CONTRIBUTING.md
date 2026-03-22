@@ -15,6 +15,41 @@ No build step required — the framework is pure shell + JSON + Markdown.
 
 ---
 
+## Branching strategy
+
+All changes go through pull requests. Never push directly to `main`.
+
+```
+main              ← protected, requires PR + CI green
+  └── feat/xxx    ← new features
+  └── fix/xxx     ← bug fixes
+  └── docs/xxx    ← documentation changes
+  └── chore/xxx   ← maintenance, CI, tooling
+```
+
+Branch naming follows the conventional commit prefix: `feat/`, `fix/`, `docs/`, `chore/`.
+
+### Workflow
+
+1. Create a branch from `main`: `git checkout -b feat/my-feature`
+2. Make your changes and commit using conventional commits
+3. Push and open a PR against `main`
+4. CI runs automatically (JSON lint, shellcheck, markdownlint, ruff, catalog validation, tests)
+5. Fix any CI failures before requesting review
+6. After merge, the maintainer tags and releases
+
+### Versioning
+
+This project follows [Semantic Versioning](https://semver.org/):
+
+- `MAJOR` — breaking changes to the pipeline, profile schema, or agent contract
+- `MINOR` — new profiles, agents, skills, or features
+- `PATCH` — bug fixes, doc updates, CI improvements
+
+Update `CHANGELOG.md` in your PR under an `[Unreleased]` section. The maintainer moves it to the version section at release time.
+
+---
+
 ## Types of contributions
 
 ### 1. Add a new profile
@@ -140,9 +175,29 @@ python3 lib/orbit_catalog.py validate-catalog
 
 ## Code style
 
-- Shell: POSIX-compatible where possible; use `#!/usr/bin/env bash` for Bash-specific scripts
-- JSON: 2-space indent, no trailing commas
-- Markdown: ATX headings (`#`), fenced code blocks with language tags
+- Shell: POSIX-compatible where possible; use `#!/usr/bin/env bash` for Bash-specific scripts. Must pass `shellcheck -S warning`.
+- JSON: 2-space indent, no trailing commas. Must pass `python3 -m json.tool`.
+- Markdown: ATX headings (`#`), fenced code blocks with language tags. Must pass `markdownlint`.
+- Python: Must pass `ruff check`.
+
+---
+
+## CI pipeline
+
+Every PR triggers these checks automatically:
+
+| Job | What it checks |
+|---|---|
+| lint-json | All `.json` and `.kiro.hook` files are valid JSON |
+| lint-shell | All `.sh` files pass shellcheck |
+| lint-markdown | All `.md` files pass markdownlint |
+| lint-python | Python files pass ruff |
+| validate-catalog | `orbit_catalog.py validate-catalog` passes |
+| validate-skills | All SKILL.md have `name` + `description` frontmatter |
+| validate-steering | All steering files have `inclusion` mode |
+| test | Full test suite (`tests/test-all.sh`) |
+
+All jobs must pass before a PR can be merged.
 
 ---
 

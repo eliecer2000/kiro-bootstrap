@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Added
+- GitHub Actions CI workflow: JSON lint, shellcheck, markdownlint, ruff, catalog/skills/steering validation, test suite
+- GitHub Actions release workflow: auto-creates GitHub Release from tag with changelog extraction
+- `.markdownlint.json` configuration
+- `.shellcheckrc` configuration
+- Branching strategy and CI documentation in CONTRIBUTING.md
+
+### Fixed
+- Replaced `rg` (ripgrep) with `grep` in test scripts for CI portability
+
+---
+
 ## [2.1.0] — 2026-03-22
 
 ### Fixed
