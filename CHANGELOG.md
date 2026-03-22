@@ -20,6 +20,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - CI test job now depends on `validate-agents` in addition to existing gates
+- Enriched all 3 scaffolding templates (product.md, structure.md, tech.md) with real content, tables, and examples
+- Enriched all 12 steering packs with actionable rules, conventions, and anti-patterns:
+  - `core.md`: idioma, principios, convenciones de codigo, limites
+  - `security.md`: IAM, secretos, datos, validacion de entrada
+  - `git.md`: commits, ramas, PRs, .gitignore
+  - `aws-shared.md`: naming, tags, entornos, costos, observabilidad
+  - `testing.md`: estrategia, quality gates, herramientas por runtime
+  - `lambda.md`: handlers, errores, performance, logs, empaquetado
+  - `api.md`: contratos, errores, auth, eventos, rate limiting
+  - `observability.md`: logs, metricas, alarmas, trazas, dashboards
+  - `runtime-typescript.md`: tsconfig, scripts, SDK v3, estructura
+  - `runtime-python.md`: pyproject, ruff/black/mypy, boto3, empaquetado
+  - `runtime-javascript.md`: ESM, JSDoc, SDK v3, estructura
+  - `cdk.md`: stacks, constructs, synth, seguridad
+  - `terraform.md`: state remoto, modulos, tags, seguridad
 
 ---
 
