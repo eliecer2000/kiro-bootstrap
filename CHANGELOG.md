@@ -7,12 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [Unreleased]
+## [2.5.0] — 2026-03-22
 
 ### Added
 
 - `release.sh` — automated release script (version bump → PR → CI → merge → tag)
 - Release process documentation in CONTRIBUTING.md
+- Release section in README.md
+- `[Unreleased]` workflow for CHANGELOG.md
 
 ---
 
@@ -140,6 +142,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Validation system for required environment tooling
 - Docs: architecture, bootstrap flow, profile matrix, agent catalog, authoring guide
 
+[2.5.0]: https://github.com/eliecer2000/kiro-bootstrap/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/eliecer2000/kiro-bootstrap/compare/v2.3.0...v2.4.0
 [2.3.0]: https://github.com/eliecer2000/kiro-bootstrap/compare/v2.2.0...v2.3.0
 [2.2.0]: https://github.com/eliecer2000/kiro-bootstrap/compare/v2.1.0...v2.2.0

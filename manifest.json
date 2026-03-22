@@ -1,5 +1,5 @@
 {
-  "version": "2.4.0",
+  "version": "2.5.0",
   "brand": {
     "name": "Orbit",
     "bootstrapAgent": "orbit",
@@ -56,7 +56,11 @@
     "toolingMode": "prepare-and-validate",
     "conflictStrategy": {
       "default": "keep",
-      "options": ["keep", "overwrite", "diff"]
+      "options": [
+        "keep",
+        "overwrite",
+        "diff"
+      ]
     },
     "remoteSkills": {
       "mode": "confirm-before-install",
@@ -68,9 +72,21 @@
     }
   },
   "sharedPacks": {
-    "steering": ["core", "git", "security", "aws-shared", "testing", "observability"],
-    "localSkills": ["orbit-bootstrap", "find-skills"],
-    "extensionPacks": ["base"]
+    "steering": [
+      "core",
+      "git",
+      "security",
+      "aws-shared",
+      "testing",
+      "observability"
+    ],
+    "localSkills": [
+      "orbit-bootstrap",
+      "find-skills"
+    ],
+    "extensionPacks": [
+      "base"
+    ]
   },
   "commands": {
     "install": "install.sh",
@@ -94,20 +110,39 @@
       {
         "id": "runtime",
         "label": "Que runtime necesitas?",
-        "whenWorkloads": ["backend-api", "backend-worker", "shared-lib"],
-        "options": ["python", "typescript", "javascript"]
+        "whenWorkloads": [
+          "backend-api",
+          "backend-worker",
+          "shared-lib"
+        ],
+        "options": [
+          "python",
+          "typescript",
+          "javascript"
+        ]
       },
       {
         "id": "provisioner",
         "label": "Que provisionador usas?",
-        "whenWorkloads": ["infra"],
-        "options": ["terraform", "cdk"]
+        "whenWorkloads": [
+          "infra"
+        ],
+        "options": [
+          "terraform",
+          "cdk"
+        ]
       },
       {
         "id": "framework",
         "label": "Que framework frontend quieres con Amplify?",
-        "whenWorkloads": ["frontend-amplify"],
-        "options": ["react", "vue", "nuxt"]
+        "whenWorkloads": [
+          "frontend-amplify"
+        ],
+        "options": [
+          "react",
+          "vue",
+          "nuxt"
+        ]
       }
     ]
   }
