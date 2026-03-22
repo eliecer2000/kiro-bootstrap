@@ -264,6 +264,3 @@ To report a vulnerability, see [SECURITY.md](SECURITY.md). Do not open public is
 ## License
 
 [MIT](LICENSE) — Eliezer Rangel
-
-
-
