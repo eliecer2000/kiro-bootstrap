@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Added
+
+- Enhanced catalog validator: cross-references steering packs, local skills, hooks, and extension packs against actual files
+- Enhanced catalog validator: verifies agent JSON files have correct `model` and `resources` fields
+- Enhanced catalog validator: checks manifest/registry version sync
+- New CI job `validate-agents`: validates agent JSON integrity (model + resources)
+- 5 new tests in test-catalog.sh: agent JSON integrity, version sync, steering/skills/hooks existence
+
+### Changed
+
+- CI test job now depends on `validate-agents` in addition to existing gates
+
+---
+
 ## [2.2.0] — 2026-03-22
 
 ### Added

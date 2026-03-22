@@ -192,7 +192,8 @@ Every PR triggers these checks automatically:
 | lint-shell | All `.sh` files pass shellcheck |
 | lint-markdown | All `.md` files pass markdownlint |
 | lint-python | Python files pass ruff |
-| validate-catalog | `orbit_catalog.py validate-catalog` passes |
+| validate-catalog | `orbit_catalog.py validate-catalog` — cross-references manifest, profiles, registry, steering, skills, hooks, extensions |
+| validate-agents | All agent JSON files have correct `model` and `resources` |
 | validate-skills | All SKILL.md have `name` + `description` frontmatter |
 | validate-steering | All steering files have `inclusion` mode |
 | test | Full test suite (`tests/test-all.sh`) |
