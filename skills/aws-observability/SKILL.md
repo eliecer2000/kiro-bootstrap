@@ -29,7 +29,47 @@ logger.info("Order created", extra={
     "items_count": len(order.items),
 })
 ```
-NOT_BREACHING,
+
+### Con Powertools (TypeScript)
+```typescript
+import { Logger } from '@aws-lambda-powertools/logger';
+const logger = new Logger({ serviceName: 'order-service' });
+
+logger.info('Order created', {
+  orderId: order.id,
+  customerId: order.customerId,
+  total: order.total,
+  itemsCount: order.items.length,
+});
+```
+
+### Log retention por ambiente
+| Ambiente | Retención |
+|---|---|
+| dev | 7 días |
+| staging | 30 días |
+| prod | 365 días |
+
+## Métricas custom
+
+### Con Powertools (CDK + Lambda)
+```typescript
+import { Metrics, MetricUnit } from '@aws-lambda-powertools/metrics';
+const metrics = new Metrics({ namespace: 'MiApp', serviceName: 'order-service' });
+
+metrics.addMetric('OrderCreated', MetricUnit.Count, 1);
+metrics.addDimension('Environment', process.env.STAGE ?? 'dev');
+```
+
+## Alarmas
+
+### Alarma de errores Lambda (CDK)
+```typescript
+const errorAlarm = new cloudwatch.Alarm(this, 'LambdaErrorAlarm', {
+  metric: fn.metricErrors({ period: cdk.Duration.minutes(5) }),
+  threshold: 5,
+  evaluationPeriods: 2,
+  treatMissingData: cloudwatch.TreatMissingData.NOT_BREACHING,
   alarmDescription: 'Lambda errors > 5 in 10 min. Runbook: https://wiki/runbooks/lambda-errors',
 });
 

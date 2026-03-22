@@ -60,7 +60,6 @@ import boto3
 dynamodb = boto3.resource("dynamodb")
 table = dynamodb.Table(os.environ["TABLE_NAME"])
 
-
 @app.get("/items")
 @tracer.capture_method
 def list_items():
@@ -69,7 +68,6 @@ def list_items():
         ExpressionAttributeValues={":pk": "ITEMS"},
     )
     return {"items": items.get("Items", [])}
-
 
 @app.post("/items")
 @tracer.capture_method
@@ -80,7 +78,6 @@ def create_item():
     table.put_item(Item=item.to_dynamo())
     metrics.add_metric(name="ItemCreated", unit=MetricUnit.Count, value=1)
     return {"id": item.id}, 201
-
 
 @logger.inject_lambda_context(correlation_id_path=correlation_paths.API_GATEWAY_HTTP)
 @tracer.capture_lambda_handler
@@ -95,7 +92,6 @@ def handler(event: dict, context: LambdaContext) -> dict:
 from pydantic import BaseModel, Field, validator
 from uuid import uuid4
 from datetime import datetime
-
 
 class ItemCreate(BaseModel):
     name: str = Field(..., min_length=1, max_length=255)
@@ -130,13 +126,11 @@ from aws_lambda_powertools.event_handler.exceptions import (
     InternalServerError,
 )
 
-
 class AppError(Exception):
     def __init__(self, message: str, code: str, status_code: int = 400):
         self.message = message
         self.code = code
         self.status_code = status_code
-
 
 @app.exception_handler(AppError)
 def handle_app_error(ex: AppError):
@@ -145,7 +139,6 @@ def handle_app_error(ex: AppError):
         {"error": {"code": ex.code, "message": ex.message}},
         ex.status_code,
     )
-
 
 @app.exception_handler(Exception)
 def handle_unexpected_error(ex: Exception):
@@ -167,7 +160,6 @@ from aws_lambda_powertools.utilities.idempotency import (
 
 persistence = DynamoDBPersistenceLayer(table_name=os.environ["IDEMPOTENCY_TABLE"])
 config = IdempotencyConfig(expires_after_seconds=3600)
-
 
 @idempotent_function(
     data_keyword_argument="order",
@@ -215,12 +207,10 @@ import pytest
 from unittest.mock import patch, MagicMock
 from functions.mi_funcion.service import ItemService
 
-
 @pytest.fixture
 def mock_table():
     with patch("functions.mi_funcion.repository.table") as mock:
         yield mock
-
 
 def test_create_item_success(mock_table):
     mock_table.put_item.return_value = {}
@@ -228,7 +218,6 @@ def test_create_item_success(mock_table):
     result = service.create({"name": "Test", "price": 9.99, "category": "test"})
     assert result["name"] == "Test"
     mock_table.put_item.assert_called_once()
-
 
 def test_create_item_invalid_price(mock_table):
     service = ItemService(mock_table)
@@ -239,7 +228,6 @@ def test_create_item_invalid_price(mock_table):
 ### Test de handler con evento API Gateway
 ```python
 from aws_lambda_powertools.utilities.data_classes import APIGatewayProxyEventV2
-
 
 def test_handler_list_items(mock_table):
     mock_table.query.return_value = {"Items": [{"name": "Item1"}]}
