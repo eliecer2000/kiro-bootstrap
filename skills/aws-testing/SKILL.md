@@ -1,3 +1,8 @@
+---
+name: aws-testing
+description: Testing strategies for AWS workloads. Use when writing unit tests, integration tests, contract tests, mocking AWS services, or setting up quality gates and CI/CD test pipelines.
+---
+
 # AWS Testing
 
 Skill para estrategias de testing en workloads AWS: pruebas unitarias, integración, contratos, end-to-end, property-based testing, mocking de servicios AWS y quality gates en CI/CD.

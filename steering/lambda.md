@@ -1,5 +1,6 @@
 ---
-inclusion: manual
+inclusion: fileMatch
+fileMatchPattern: ["**/lambda/**", "**/functions/**", "**/handlers/**"]
 ---
 
 # Lambda

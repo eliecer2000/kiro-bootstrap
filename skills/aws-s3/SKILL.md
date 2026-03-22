@@ -1,3 +1,8 @@
+---
+name: aws-s3
+description: Amazon S3 bucket and object management. Use when configuring buckets, encryption, versioning, lifecycle policies, presigned URLs, replication or CloudFront CDN origins.
+---
+
 # AWS S3
 
 Skill para gestión de Amazon S3: buckets, objetos, cifrado, versionado, lifecycle policies, presigned URLs, replicación, CloudFront como CDN origin y mejores prácticas de seguridad y costos.

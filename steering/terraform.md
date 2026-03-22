@@ -1,5 +1,6 @@
 ---
-inclusion: manual
+inclusion: fileMatch
+fileMatchPattern: ["**/*.tf", "**/*.tfvars", "**/terraform/**", "**/.terraform*"]
 ---
 
 # Terraform

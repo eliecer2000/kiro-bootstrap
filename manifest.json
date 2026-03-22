@@ -3,7 +3,7 @@
   "brand": {
     "name": "Orbit",
     "bootstrapAgent": "orbit",
-    "bootstrapModel": "sonnet-4.6",
+    "bootstrapModel": "claude-sonnet-4",
     "installDir": "~/.kiro/orbit"
   },
   "pipeline": {

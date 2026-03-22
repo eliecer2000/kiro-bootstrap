@@ -1,7 +1,7 @@
 {
   "version": "2.0.0",
   "bootstrapAgent": "orbit",
-  "bootstrapModel": "sonnet-4.6",
+  "bootstrapModel": "claude-sonnet-4",
   "remoteSkillsAllowlist": [
     {
       "id": "github-documentation-writer",
@@ -65,7 +65,7 @@
       "steeringPacks": ["core", "git", "security", "aws-shared", "testing", "observability"],
       "localSkills": ["orbit-bootstrap", "find-skills"],
       "remoteSkills": ["github-documentation-writer", "github-refactor-plan"],
-      "modelDefault": "sonnet-4.6",
+      "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "No insistir tras rechazo de bootstrap en la misma sesion.",
         "No insistir tras rechazo del prompt HOME en la misma sesion.",
@@ -118,7 +118,7 @@
       "steeringPacks": ["core", "security", "aws-shared", "observability"],
       "localSkills": ["aws-architecture", "find-skills"],
       "remoteSkills": ["github-documentation-writer"],
-      "modelDefault": "sonnet-4",
+      "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "Documentar decisiones de arquitectura y restricciones.",
         "Explicitar tradeoffs entre servicios AWS.",
@@ -151,7 +151,7 @@
       "steeringPacks": ["core", "aws-shared", "runtime-python", "lambda", "testing", "observability"],
       "localSkills": ["python-runtime", "aws-lambda-python", "aws-serverless", "aws-testing", "find-skills"],
       "remoteSkills": ["supercent-code-review"],
-      "modelDefault": "sonnet-4",
+      "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "Mantener handlers claros y pequenos.",
         "Usar tooling Python del perfil.",
@@ -187,7 +187,7 @@
       "steeringPacks": ["core", "aws-shared", "runtime-typescript", "runtime-javascript", "lambda", "testing", "observability"],
       "localSkills": ["typescript-runtime", "javascript-runtime", "aws-lambda-typescript", "aws-serverless", "aws-testing", "find-skills"],
       "remoteSkills": ["supercent-code-review"],
-      "modelDefault": "sonnet-4",
+      "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "Alinear bundling y runtime con Lambda.",
         "Usar scripts Node coherentes con el perfil.",
@@ -224,7 +224,7 @@
       "steeringPacks": ["core", "aws-shared", "api", "testing", "observability"],
       "localSkills": ["aws-api", "aws-serverless", "aws-testing", "find-skills"],
       "remoteSkills": ["supercent-api-documentation"],
-      "modelDefault": "sonnet-4",
+      "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "Documentar contratos y errores.",
         "Mantener integraciones consistentes con auth y observabilidad."
@@ -252,7 +252,7 @@
       "steeringPacks": ["core", "security", "aws-shared", "terraform", "observability"],
       "localSkills": ["aws-terraform", "find-skills"],
       "remoteSkills": ["supercent-code-review"],
-      "modelDefault": "sonnet-4",
+      "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "Mantener configuraciones Terraform validables.",
         "Aplicar estructura de modulos y naming coherente."
@@ -280,7 +280,7 @@
       "steeringPacks": ["core", "security", "aws-shared", "runtime-typescript", "cdk", "observability"],
       "localSkills": ["typescript-runtime", "aws-cdk", "find-skills"],
       "remoteSkills": ["supercent-code-review"],
-      "modelDefault": "sonnet-4",
+      "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "Mantener stacks pequenos y constructs reutilizables.",
         "Alinear scripts de synth y deploy con el perfil."
@@ -308,7 +308,7 @@
       "steeringPacks": ["core", "security", "aws-shared", "observability"],
       "localSkills": ["aws-security", "find-skills"],
       "remoteSkills": ["supercent-code-review"],
-      "modelDefault": "sonnet-4",
+      "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "Aplicar least privilege.",
         "No introducir secretos en configuracion publica.",
@@ -344,7 +344,7 @@
       "steeringPacks": ["core", "aws-shared", "observability"],
       "localSkills": ["aws-dynamodb", "find-skills"],
       "remoteSkills": [],
-      "modelDefault": "sonnet-4",
+      "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "Explicitar access patterns antes del esquema.",
         "Evitar modelado centrado en tablas sin queries reales."
@@ -372,7 +372,7 @@
       "steeringPacks": ["core", "aws-shared", "observability", "testing"],
       "localSkills": ["aws-observability", "find-skills"],
       "remoteSkills": [],
-      "modelDefault": "sonnet-4",
+      "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "Agregar convenciones de logs y metricas desde el inicio.",
         "No dejar alarmas y trazas fuera del diseno."
@@ -400,7 +400,7 @@
       "steeringPacks": ["core", "testing", "observability"],
       "localSkills": ["aws-testing", "find-skills"],
       "remoteSkills": ["supercent-code-review"],
-      "modelDefault": "sonnet-4",
+      "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": [
         "Definir escenarios minimos por perfil.",
         "Cubrir contratos y errores principales.",
@@ -423,7 +423,7 @@
       "steeringPacks": ["core", "aws-shared", "amplify", "runtime-typescript", "testing"],
       "localSkills": ["typescript-runtime", "find-skills"],
       "remoteSkills": ["github-documentation-writer"],
-      "modelDefault": "sonnet-4",
+      "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": ["Reservado para fase 2."],
       "phase": 2
     },
@@ -442,7 +442,7 @@
       "steeringPacks": ["core", "aws-shared", "amplify", "runtime-typescript", "testing"],
       "localSkills": ["typescript-runtime", "find-skills"],
       "remoteSkills": ["github-documentation-writer"],
-      "modelDefault": "sonnet-4",
+      "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": ["Reservado para fase 2."],
       "phase": 2
     },
@@ -461,7 +461,7 @@
       "steeringPacks": ["core", "aws-shared", "amplify", "runtime-typescript", "testing"],
       "localSkills": ["typescript-runtime", "find-skills"],
       "remoteSkills": ["github-documentation-writer"],
-      "modelDefault": "sonnet-4",
+      "modelDefault": "claude-sonnet-4",
       "acceptanceChecklist": ["Reservado para fase 2."],
       "phase": 2
     }

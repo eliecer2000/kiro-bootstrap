@@ -1,3 +1,8 @@
+---
+name: aws-lambda-python
+description: AWS Lambda development with Python. Use when writing Lambda handlers, packaging with layers, using boto3/Powertools, structured logging or optimizing Python Lambda performance.
+---
+
 # AWS Lambda Python
 
 Skill para desarrollo de funciones Lambda en Python: handlers, empaquetado, layers, AWS SDK (boto3), Powertools, logging estructurado, manejo de errores, testing y mejores prácticas de rendimiento.

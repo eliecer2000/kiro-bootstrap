@@ -1,5 +1,6 @@
 ---
-inclusion: manual
+inclusion: fileMatch
+fileMatchPattern: ["**/amplify/**", "**/amplify.yml", "**/amplify-config.*"]
 ---
 
 # Amplify

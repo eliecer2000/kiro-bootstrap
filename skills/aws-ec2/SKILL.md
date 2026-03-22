@@ -1,3 +1,8 @@
+---
+name: aws-ec2
+description: Amazon EC2 instance configuration. Use when setting up AMIs, instance types, security groups, IAM roles, Auto Scaling Groups, EBS volumes or Packer golden images.
+---
+
 # AWS EC2
 
 Skill para configurar instancias EC2: AMIs, instance types, security groups, IAM roles, user data, Auto Scaling Groups, EBS volumes, Packer para golden images y mejores prácticas de seguridad y costos.

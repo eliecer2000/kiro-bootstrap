@@ -1,5 +1,6 @@
 ---
-inclusion: manual
+inclusion: fileMatch
+fileMatchPattern: ["**/cdk.json", "**/cdk/**", "**/lib/**/*.ts", "**/bin/**/*.ts"]
 ---
 
 # AWS CDK

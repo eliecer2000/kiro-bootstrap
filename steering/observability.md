@@ -1,5 +1,6 @@
 ---
-inclusion: manual
+inclusion: fileMatch
+fileMatchPattern: ["**/cloudwatch/**", "**/monitoring/**", "**/alarms/**", "**/dashboards/**", "**/logging/**"]
 ---
 
 # Observability

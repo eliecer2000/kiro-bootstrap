@@ -1,3 +1,8 @@
+---
+name: aws-security
+description: AWS security implementation. Use when configuring IAM policies, managing secrets, setting up encryption, securing networking, hardening services or auditing configurations.
+---
+
 # AWS Security
 
 Skill para implementar seguridad en workloads AWS: IAM least privilege, gestión de secretos, cifrado en tránsito y reposo, networking seguro, endurecimiento de servicios y auditoría de configuraciones.

@@ -1,3 +1,8 @@
+---
+name: aws-api
+description: AWS API design, implementation and integration patterns. Use when creating or modifying API Gateway endpoints, OpenAPI contracts, authentication, error handling or event integrations.
+---
+
 # AWS API Integration
 
 Skill para diseño, implementación y documentación de APIs HTTP en AWS usando API Gateway (REST y HTTP API), contratos OpenAPI, autenticación, autorización, validación de requests, manejo de errores y patrones de integración con servicios backend.

@@ -1,3 +1,8 @@
+---
+name: python-runtime
+description: Python toolchain configuration and best practices. Use when setting up Ruff, pytest, mypy type hints, dependency management, virtual environments or Python project standards.
+---
+
 # Python Runtime
 
 Skill para configurar y mantener toolchains Python modernos: Ruff (linting + formatting), pytest, type hints con mypy, gestión de dependencias, virtual environments y estándares de proyecto.

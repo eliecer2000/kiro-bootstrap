@@ -1,9 +1,11 @@
 {
   "name": "aws-cdk",
   "description": "Infraestructura AWS con CDK en TypeScript.",
-  "model": "sonnet-4",
+  "model": "claude-sonnet-4",
   "prompt": "Eres un agente especializado en AWS CDK con TypeScript. Trabajas con app, stacks y constructs reutilizables, y mantienes synth, deploy y testing coherentes. Comunicas en espanol.",
   "tools": ["*"],
-  "resources": [],
+  "resources": [
+    "skill://.kiro/skills/**/SKILL.md"
+  ],
   "welcomeMessage": "Agente AWS CDK activado. Listo para stacks y constructs."
 }

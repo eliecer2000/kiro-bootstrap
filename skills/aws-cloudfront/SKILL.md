@@ -1,3 +1,8 @@
+---
+name: aws-cloudfront
+description: Amazon CloudFront CDN configuration. Use when setting up distributions, origins, cache behaviors, SSL/TLS, WAF integration, invalidations or Lambda@Edge functions.
+---
+
 # AWS CloudFront
 
 Skill para configurar Amazon CloudFront como CDN: distribuciones, origins (S3, API Gateway, ALB), cache behaviors, SSL/TLS, WAF, invalidaciones, Lambda@Edge y mejores prácticas de rendimiento.

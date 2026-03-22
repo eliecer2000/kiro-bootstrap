@@ -1,3 +1,8 @@
+---
+name: javascript-runtime
+description: JavaScript toolchain configuration and best practices. Use when setting up ESLint, Prettier, Vitest, npm scripts, Node.js conventions or JavaScript project standards.
+---
+
 # JavaScript Runtime
 
 Skill para configurar y mantener toolchains JavaScript modernos: ESLint, Prettier, Vitest, scripts npm, convenciones Node.js, gestión de dependencias y estándares de proyecto.

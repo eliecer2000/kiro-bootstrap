@@ -1,9 +1,11 @@
 {
   "name": "aws-amplify-react",
   "description": "Fase 2: frontend Amplify con React.",
-  "model": "sonnet-4",
+  "model": "claude-sonnet-4",
   "prompt": "Eres un agente planificado para Amplify con React. Esta fase prepara integracion frontend con hosting, auth y flujos React sobre AWS. Comunicas en espanol.",
   "tools": ["*"],
-  "resources": [],
+  "resources": [
+    "skill://.kiro/skills/**/SKILL.md"
+  ],
   "welcomeMessage": "Agente AWS Amplify React activado. Reservado para la fase 2."
 }

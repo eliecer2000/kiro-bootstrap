@@ -1,3 +1,8 @@
+---
+name: aws-dynamodb
+description: DynamoDB data modeling and access patterns. Use when designing partition/sort keys, GSIs, single-table design, transactions, DynamoDB Streams or optimizing query performance.
+---
+
 # AWS DynamoDB
 
 Skill para modelado de datos DynamoDB, access patterns, diseño de PK/SK, GSIs, LSIs, single-table design, transacciones, costos, DynamoDB Streams y mejores prácticas de rendimiento.

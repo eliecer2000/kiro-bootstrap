@@ -1,5 +1,6 @@
 ---
-inclusion: manual
+inclusion: fileMatch
+fileMatchPattern: ["**/*.js", "**/*.mjs", "**/*.cjs", "**/package.json"]
 ---
 
 # Runtime JavaScript

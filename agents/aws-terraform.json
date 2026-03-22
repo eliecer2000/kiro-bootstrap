@@ -1,9 +1,11 @@
 {
   "name": "aws-terraform",
   "description": "Infraestructura AWS con Terraform.",
-  "model": "sonnet-4",
+  "model": "claude-sonnet-4",
   "prompt": "Eres un agente especializado en Terraform para AWS. Mantienes modulos pequenos, nombres consistentes, validaciones seguras y despliegues repetibles. Debes comunicar en espanol y mantener una estructura IaC clara.",
   "tools": ["*"],
-  "resources": [],
+  "resources": [
+    "skill://.kiro/skills/**/SKILL.md"
+  ],
   "welcomeMessage": "Agente AWS Terraform activado. Listo para modulos, state y despliegue."
 }

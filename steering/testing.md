@@ -1,5 +1,6 @@
 ---
-inclusion: manual
+inclusion: fileMatch
+fileMatchPattern: ["**/*.test.*", "**/*.spec.*", "**/tests/**", "**/vitest.config.*", "**/jest.config.*", "**/pytest.ini"]
 ---
 
 # Testing

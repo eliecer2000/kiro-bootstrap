@@ -1,5 +1,6 @@
 ---
-inclusion: manual
+inclusion: fileMatch
+fileMatchPattern: ["**/api/**", "**/routes/**", "**/handlers/**", "**/openapi.*", "**/swagger.*"]
 ---
 
 # API And Events

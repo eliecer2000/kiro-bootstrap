@@ -1,3 +1,8 @@
+---
+name: aws-architecture
+description: AWS architecture decisions, serverless patterns, event-driven design, service boundaries and Well-Architected Framework. Use when designing system architecture or making infrastructure tradeoffs.
+---
+
 # AWS Architecture
 
 Skill para decisiones de arquitectura AWS-first, patrones serverless, event-driven, límites de servicios, segmentación por perfil, Well-Architected Framework y diseño de sistemas escalables.

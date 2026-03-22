@@ -1,3 +1,8 @@
+---
+name: aws-terraform
+description: AWS infrastructure with Terraform. Use when creating modules, managing remote state, writing tftest.hcl tests, refactoring IaC or following HashiCorp style guide.
+---
+
 # AWS Terraform
 
 Skill para desarrollo de infraestructura AWS con Terraform: módulos reutilizables, state remoto, style guide oficial de HashiCorp, testing con `.tftest.hcl`, seguridad, refactoring de módulos y estándares de IaC. Integra mejores prácticas de [HashiCorp Agent Skills](https://github.com/hashicorp/agent-skills).

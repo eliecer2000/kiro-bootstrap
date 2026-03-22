@@ -1,5 +1,6 @@
 ---
-inclusion: manual
+inclusion: fileMatch
+fileMatchPattern: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.mjs", "**/tsconfig.*.json"]
 ---
 
 # Runtime TypeScript

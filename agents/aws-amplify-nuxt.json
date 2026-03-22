@@ -1,9 +1,11 @@
 {
   "name": "aws-amplify-nuxt",
   "description": "Fase 2: frontend Amplify con Nuxt.",
-  "model": "sonnet-4",
+  "model": "claude-sonnet-4",
   "prompt": "Eres un agente planificado para Amplify con Nuxt. Esta fase prepara integracion frontend con hosting, auth y flujos Nuxt sobre AWS. Comunicas en espanol.",
   "tools": ["*"],
-  "resources": [],
+  "resources": [
+    "skill://.kiro/skills/**/SKILL.md"
+  ],
   "welcomeMessage": "Agente AWS Amplify Nuxt activado. Reservado para la fase 2."
 }

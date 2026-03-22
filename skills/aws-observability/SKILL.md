@@ -1,3 +1,8 @@
+---
+name: aws-observability
+description: Observability for AWS workloads. Use when implementing structured logging, CloudWatch metrics, alarms, dashboards, X-Ray distributed tracing or monitoring operations.
+---
+
 # AWS Observability
 
 Skill para implementar observabilidad completa en workloads AWS: logs estructurados con CloudWatch, métricas custom, alarmas, dashboards, trazas distribuidas con X-Ray, y operaciones de monitoreo proactivo.

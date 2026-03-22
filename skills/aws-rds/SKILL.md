@@ -1,3 +1,8 @@
+---
+name: aws-rds
+description: Amazon RDS and Aurora database configuration. Use when setting up PostgreSQL/MySQL engines, Multi-AZ, read replicas, backups, encryption, IAM auth or parameter groups.
+---
+
 # AWS RDS
 
 Skill para configurar Amazon RDS y Aurora: engines (PostgreSQL, MySQL), Multi-AZ, read replicas, backups, cifrado, IAM auth, parameter groups, Secrets Manager y mejores prácticas de seguridad y rendimiento.

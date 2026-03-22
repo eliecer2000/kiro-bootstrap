@@ -1,3 +1,8 @@
+---
+name: typescript-runtime
+description: TypeScript toolchain configuration and best practices. Use when setting up tsconfig, ESLint, Prettier, Vitest, bundling, type patterns or TypeScript project standards.
+---
+
 # TypeScript Runtime
 
 Skill para configurar y mantener toolchains TypeScript modernos: tsconfig estricto, ESLint con typescript-eslint, Prettier, Vitest, bundling, gestión de tipos y estándares de proyecto.

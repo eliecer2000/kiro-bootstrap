@@ -1,3 +1,8 @@
+---
+name: aws-lambda-typescript
+description: AWS Lambda development with TypeScript. Use when writing Lambda handlers, bundling with esbuild, using AWS SDK v3/Powertools, strict typing or optimizing Node.js Lambda performance.
+---
+
 # AWS Lambda TypeScript
 
 Skill para desarrollo de funciones Lambda en TypeScript: handlers, bundling con esbuild, AWS SDK v3, Powertools, tipado estricto, manejo de errores, testing y mejores prácticas de rendimiento.

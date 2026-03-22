@@ -1,5 +1,6 @@
 ---
-inclusion: manual
+inclusion: fileMatch
+fileMatchPattern: ["**/*.py", "**/pyproject.toml", "**/requirements*.txt", "**/setup.py"]
 ---
 
 # Runtime Python

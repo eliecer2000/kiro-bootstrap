@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.0] — 2026-03-22
+
+### Fixed
+- All 22 SKILL.md files now include YAML frontmatter (`name` + `description`) required by Kiro for skill discovery and activation
+- Model IDs corrected from `sonnet-4`/`sonnet-4.6` to `claude-sonnet-4` across all 14 agents, agents-registry.json, and manifest.json
+- Agent descriptions improved for better Kiro auto-routing and context matching
+
+### Changed
+- Steering inclusion modes aligned with Kiro documentation:
+  - `always`: core, security, aws-shared, git (loaded in every session)
+  - `fileMatch`: runtime-typescript, runtime-python, runtime-javascript, api, testing, lambda, cdk, terraform, amplify, observability (loaded contextually by file pattern)
+- All 14 agent JSON files now include `"resources": ["skill://.kiro/skills/**/SKILL.md"]` for proper skill loading
+
+### Added
+- YAML frontmatter with English descriptions on all skills for optimal Kiro keyword matching
+- Skill resource bindings on every agent (previously only orbit had resources)
+
+---
+
 ## [2.0.0] — 2026-03-18
 
 ### Changed
@@ -40,5 +59,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Validation system for required environment tooling
 - Docs: architecture, bootstrap flow, profile matrix, agent catalog, authoring guide
 
+[2.1.0]: https://github.com/eliecer2000/kiro-bootstrap/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/eliecer2000/kiro-bootstrap/compare/v0.1.0...v2.0.0
 [0.1.0]: https://github.com/eliecer2000/kiro-bootstrap/releases/tag/v0.1.0

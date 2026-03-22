@@ -1,3 +1,8 @@
+---
+name: aws-cost-operations
+description: AWS cost optimization and operations. Use when analyzing costs with Cost Explorer, setting budgets, right-sizing resources, evaluating Savings Plans or reducing per-service costs.
+---
+
 # AWS Cost & Operations
 
 Skill para optimización de costos AWS, monitoreo de gastos, presupuestos, right-sizing, Savings Plans, análisis con Cost Explorer y estrategias de reducción de costos por servicio.

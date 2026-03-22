@@ -1,3 +1,8 @@
+---
+name: orbit-bootstrap
+description: Orbit bootstrap process, artifact resync, project profile resolution and workspace initialization. Use when bootstrapping a new project, resyncing artifacts or resolving project profiles.
+---
+
 # Orbit Bootstrap
 
 Skill para el proceso de bootstrap interactivo de Orbit, resincronización de artefactos, resolución de perfiles de proyecto, gestión de conflictos, políticas de sesión y flujo completo de inicialización de workspaces.

@@ -1,3 +1,8 @@
+---
+name: find-skills
+description: Discover, search and install skills from the open agent ecosystem. Use when looking for external skills, browsing the skills marketplace, or installing new capabilities via npx skills CLI.
+---
+
 # Find Skills
 
 Skill obligatoria para descubrir, buscar e instalar skills del ecosistema abierto de agentes. Permite a cualquier agente de Orbit localizar capacidades adicionales bajo demanda usando el CLI `npx skills`.

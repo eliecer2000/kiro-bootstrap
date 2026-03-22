@@ -1,3 +1,8 @@
+---
+name: aws-serverless
+description: Building production-ready serverless applications on AWS. Use when working with Lambda, API Gateway, SQS, SNS, DynamoDB Streams, SAM/CDK deployment or optimizing cold starts.
+---
+
 # AWS Serverless
 
 Skill para construir aplicaciones serverless production-ready en AWS. Cubre Lambda functions, API Gateway (REST/HTTP/WebSocket), arquitecturas event-driven con SQS/SNS/DynamoDB Streams, modelado DynamoDB, despliegue con SAM/CDK, y optimización de cold starts.

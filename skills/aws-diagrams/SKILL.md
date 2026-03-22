@@ -1,3 +1,8 @@
+---
+name: aws-diagrams
+description: Generate AWS architecture diagrams from CloudFormation, CDK, Terraform or natural language. Use when visualizing infrastructure with C4, Mermaid or Eraser DSL notation.
+---
+
 # AWS Diagrams
 
 Skill para generar diagramas de arquitectura AWS desde CloudFormation, CDK, Terraform o descripciones en lenguaje natural. Usa notación C4, Eraser DSL o Mermaid para visualizar infraestructura.

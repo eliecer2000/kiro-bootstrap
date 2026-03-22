@@ -1,3 +1,8 @@
+---
+name: aws-cdk
+description: AWS CDK infrastructure development in TypeScript. Use when creating stacks, constructs, L2/L3 patterns, CDK testing, synth/deploy pipelines or organizing IaC code.
+---
+
 # AWS CDK
 
 Skill para desarrollo de infraestructura con AWS CDK en TypeScript: stacks, constructs, patrones L2/L3, testing, synth, deploy, pipelines CI/CD y mejores prácticas de organización de código IaC.
