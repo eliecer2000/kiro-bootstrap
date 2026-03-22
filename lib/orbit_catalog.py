@@ -242,9 +242,16 @@ def validate_catalog(bootstrap_dir: pathlib.Path) -> int:
     remote_skill_ids = {item["id"] for item in registry.get("remoteSkillsAllowlist", [])}
     errors: list[str] = []
 
+    # --- Manifest / registry consistency ---
     if manifest.get("brand", {}).get("bootstrapAgent") != registry.get("bootstrapAgent"):
         errors.append("manifest.brand.bootstrapAgent debe coincidir con agents-registry.bootstrapAgent")
 
+    if manifest.get("version") != registry.get("version"):
+        errors.append("manifest.version debe coincidir con agents-registry.version")
+
+    expected_model = manifest.get("brand", {}).get("bootstrapModel", "claude-sonnet-4")
+
+    # --- Agent registry contract ---
     required_agent_fields = [
         "role",
         "responsibilities",
@@ -265,9 +272,25 @@ def validate_catalog(bootstrap_dir: pathlib.Path) -> int:
         for remote_skill in agent.get("remoteSkills", []):
             if remote_skill not in remote_skill_ids:
                 errors.append(f"Agente {agent_id} referencia remote skill no permitida: {remote_skill}")
-        if not (bootstrap_dir / agent["file"]).exists():
-            errors.append(f"Archivo faltante para agente {agent_id}: {agent['file']}")
+        agent_file = bootstrap_dir / agent.get("file", "")
+        if not agent_file.exists():
+            errors.append(f"Archivo faltante para agente {agent_id}: {agent.get('file', '?')}")
+        else:
+            agent_json = load_json(agent_file)
+            if agent_json.get("model") != expected_model:
+                errors.append(
+                    f"Agente {agent_id}: model en JSON es '{agent_json.get('model')}', "
+                    f"esperado '{expected_model}'"
+                )
+            if "skill://.kiro/skills/**/SKILL.md" not in agent_json.get("resources", []):
+                errors.append(f"Agente {agent_id}: falta resources skill:// en JSON")
+        if agent.get("modelDefault") != expected_model:
+            errors.append(
+                f"Agente {agent_id}: modelDefault es '{agent.get('modelDefault')}', "
+                f"esperado '{expected_model}'"
+            )
 
+    # --- Profile validation ---
     for profile_id, profile in profiles.items():
         for agent_id in profile.get("agents", []):
             if agent_id not in agents:
@@ -275,6 +298,19 @@ def validate_catalog(bootstrap_dir: pathlib.Path) -> int:
         for remote_skill in profile.get("remoteSkills", []):
             if remote_skill not in remote_skill_ids:
                 errors.append(f"Perfil {profile_id} referencia remote skill no permitida: {remote_skill}")
+        for pack in profile.get("steeringPacks", []):
+            if not (bootstrap_dir / "steering" / f"{pack}.md").exists():
+                errors.append(f"Perfil {profile_id} referencia steering inexistente: {pack}")
+        for skill in profile.get("localSkills", []):
+            skill_file = bootstrap_dir / "skills" / skill / "SKILL.md"
+            if not skill_file.exists():
+                errors.append(f"Perfil {profile_id} referencia skill inexistente: {skill}")
+        for hook in profile.get("hooks", []):
+            if not (bootstrap_dir / "hooks" / hook).exists():
+                errors.append(f"Perfil {profile_id} referencia hook inexistente: {hook}")
+        for ext in profile.get("extensionPacks", []):
+            if not (bootstrap_dir / "extensions" / f"{ext}.json").exists():
+                errors.append(f"Perfil {profile_id} referencia extension inexistente: {ext}")
 
     if errors:
         print("\n".join(errors))

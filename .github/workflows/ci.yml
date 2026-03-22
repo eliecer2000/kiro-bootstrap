@@ -103,6 +103,35 @@ jobs:
       - name: Validate Orbit catalog
         run: python3 lib/orbit_catalog.py --bootstrap-dir . validate-catalog
 
+  validate-agents:
+    name: Validate Agent JSON Integrity
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check agent model and resources
+        run: |
+          echo "=== Validating agent JSON integrity ==="
+          FAIL=0
+          for f in agents/*.json; do
+            NAME="$(basename "$f")"
+            MODEL="$(python3 -c "import json; print(json.load(open('$f')).get('model',''))")"
+            HAS_RES="$(python3 -c "import json; print('skill://.kiro/skills/**/SKILL.md' in json.load(open('$f')).get('resources',[]))")"
+            if [ "$MODEL" != "claude-sonnet-4" ]; then
+              echo "  x $NAME: model='$MODEL' (expected claude-sonnet-4)"
+              FAIL=$((FAIL + 1))
+            elif [ "$HAS_RES" != "True" ]; then
+              echo "  x $NAME: missing skill:// resource"
+              FAIL=$((FAIL + 1))
+            else
+              echo "  + $NAME"
+            fi
+          done
+          if [ "$FAIL" -gt 0 ]; then
+            echo "::error::$FAIL agents have incorrect model or missing resources"
+            exit 1
+          fi
+          echo "All agents valid."
+
   validate-skills:
     name: Validate Skills Frontmatter
     runs-on: ubuntu-latest
@@ -162,7 +191,7 @@ jobs:
   test:
     name: Test Suite
     runs-on: ubuntu-latest
-    needs: [lint-json, lint-shell, validate-catalog]
+    needs: [lint-json, lint-shell, validate-catalog, validate-agents]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
