@@ -202,6 +202,31 @@ All jobs must pass before a PR can be merged.
 
 ---
 
+## Release process
+
+Releases are automated via `release.sh`. The script handles everything: version bumps, PR creation, CI wait, merge, tagging, and GitHub Release trigger.
+
+```bash
+# Must be on main with clean working tree
+bash release.sh 2.5.0
+```
+
+What the script does:
+
+1. Validates version format, clean tree, and main branch
+2. Creates `chore/release-vX.Y.Z` branch
+3. Bumps version in `manifest.json`, `agents-registry.json`, `README.md`
+4. Updates `CHANGELOG.md` (renames `[Unreleased]` → `[X.Y.Z]`)
+5. Runs `tests/test-all.sh`
+6. Commits, pushes, creates PR
+7. Waits for CI to pass
+8. Squash-merges the PR
+9. Tags `vX.Y.Z` on main and pushes (triggers release workflow)
+
+Between releases, add changes under `## [Unreleased]` in CHANGELOG.md.
+
+---
+
 ## Questions?
 
 Open a [GitHub Discussion](https://github.com/eliecer2000/kiro-bootstrap/discussions) for design questions, or a [GitHub Issue](https://github.com/eliecer2000/kiro-bootstrap/issues) for bugs.

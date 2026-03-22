@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### Added
+
+- `release.sh` — automated release script (version bump → PR → CI → merge → tag)
+- Release process documentation in CONTRIBUTING.md
+
+---
+
 ## [2.4.0] — 2026-03-22
 
 ### Added

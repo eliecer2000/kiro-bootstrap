@@ -170,6 +170,15 @@ Orbit resuelve el `profile-id` internamente a partir del wizard. No pide el ID c
 bash tests/test-all.sh
 ```
 
+## Releases
+
+```bash
+# Automated release (must be on main, clean tree)
+bash release.sh 2.5.0
+```
+
+See [CONTRIBUTING.md](CONTRIBUTING.md#release-process) for details.
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) for how to add profiles, agents, skills, and steering packs.
