@@ -75,6 +75,16 @@ ORBIT_REMOTE_SKILL_DECISION=no \
 ~/.kiro/orbit/install.sh --resync-project "<ruta>"
 ```
 
+## Comandos de diagnostico
+
+```bash
+# Ver estado de la instalacion y proyecto actual
+~/.kiro/orbit/install.sh --status
+
+# Diagnosticar problemas en la instalacion
+~/.kiro/orbit/install.sh --doctor
+```
+
 ### Variables de entorno
 
 | Variable | Valores | Descripcion |
